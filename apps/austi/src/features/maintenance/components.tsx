@@ -11,6 +11,7 @@ import {
 } from '@workspace/ui/components/ui/dialog';
 import { Input } from '@workspace/ui/components/ui/input';
 import { Label } from '@workspace/ui/components/ui/label';
+import { ConvexError } from 'convex/values';
 import { Search } from 'lucide-react';
 import { useState, type ComponentProps, type ReactNode } from 'react';
 
@@ -84,9 +85,9 @@ export function SearchInput({
 
 export function StatusBadge({ status }: { status: CaseStatus }) {
   const variant =
-    status === 'Escalated'
+    status === 'Needs review'
       ? 'destructive'
-      : ['Needs approval', 'Unassigned', 'Resolved'].includes(status)
+      : ['Awaiting approval', 'New', 'Resolved'].includes(status)
         ? 'secondary'
         : 'outline';
   return (
@@ -111,22 +112,34 @@ export function Urgency({ value }: { value: MaintenanceCase['urgency'] }) {
   );
 }
 
-export function PreviewDialog({
+export function ActionDialog({
   title,
   trigger,
   triggerVariant = 'outline',
   confirmLabel = 'Confirm',
   children,
+  onSubmit,
 }: {
   title: string;
   trigger: ReactNode;
   triggerVariant?: ComponentProps<typeof Button>['variant'];
   confirmLabel?: string;
   children?: ReactNode;
+  onSubmit: (data: FormData) => Promise<unknown>;
 }) {
   const [open, setOpen] = useState(false);
+  const [pending, setPending] = useState(false);
+  const [error, setError] = useState('');
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={open}
+      onOpenChange={(value) => {
+        if (!pending) {
+          setOpen(value);
+          setError('');
+        }
+      }}
+    >
       <DialogTrigger render={<Button variant={triggerVariant} size='sm' />}>
         {trigger}
       </DialogTrigger>
@@ -137,12 +150,69 @@ export function PreviewDialog({
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
-        {open && children && <div className='space-y-4 py-2'>{children}</div>}
-        <DialogFooter>
-          <DialogClose render={<Button variant='outline' />}>Cancel</DialogClose>
-          <Button disabled>{confirmLabel}</Button>
-        </DialogFooter>
+        <form
+          className='space-y-4'
+          onSubmit={async (e) => {
+            e.preventDefault();
+            if (pending) return;
+            const data = new FormData(e.currentTarget);
+            setPending(true);
+            setError('');
+            try {
+              await onSubmit(data);
+              setOpen(false);
+            } catch (error) {
+              setError(errorMessage(error));
+            } finally {
+              setPending(false);
+            }
+          }}
+        >
+          <fieldset disabled={pending} className='space-y-4 py-2'>
+            {open && children}
+          </fieldset>
+          {error && (
+            <p role='alert' className='text-sm text-destructive'>
+              {error}
+            </p>
+          )}
+          <DialogFooter>
+            <DialogClose render={<Button type='button' variant='outline' disabled={pending} />}>
+              Cancel
+            </DialogClose>
+            <Button type='submit' disabled={pending}>
+              {pending ? 'Saving…' : confirmLabel}
+            </Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
+  );
+}
+
+export const errorMessage = (error: unknown) =>
+  error instanceof ConvexError
+    ? String(error.data)
+    : error instanceof Error
+      ? error.message
+      : 'Something went wrong. Please try again.';
+
+export function TextField({
+  name,
+  label,
+  defaultValue,
+  type = 'text',
+  required = true,
+}: {
+  name: string;
+  label: string;
+  defaultValue?: string | number;
+  type?: string;
+  required?: boolean;
+}) {
+  return (
+    <Field id={name} label={label}>
+      <Input id={name} name={name} type={type} defaultValue={defaultValue} required={required} />
+    </Field>
   );
 }

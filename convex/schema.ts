@@ -11,6 +11,8 @@ import {
   sourceImage,
 } from '#convex/chat/validators';
 
+import { austiTables } from './austi/tables';
+
 const runStatus = v.union(
   v.literal('queued'),
   v.literal('preparing'),
@@ -28,6 +30,7 @@ const flowNodeKind = v.union(v.literal('start'), v.literal('action'));
 const gateKind = v.union(...verificationGateKinds.map((kind) => v.literal(kind)));
 
 export default defineSchema({
+  ...austiTables,
   users: defineTable({}),
 
   identities: defineTable({

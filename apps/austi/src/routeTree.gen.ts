@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as RespondRouteImport } from './routes/respond'
 import { Route as MaintenanceRouteImport } from './routes/maintenance'
 import { Route as ContractorsRouteImport } from './routes/contractors'
 import { Route as IndexRouteImport } from './routes/index'
@@ -21,6 +22,11 @@ import { Route as ApiAuthCallbackRouteImport } from './routes/api/auth/callback'
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RespondRoute = RespondRouteImport.update({
+  id: '/respond',
+  path: '/respond',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MaintenanceRoute = MaintenanceRouteImport.update({
@@ -63,6 +69,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/contractors': typeof ContractorsRoute
   '/maintenance': typeof MaintenanceRouteWithChildren
+  '/respond': typeof RespondRoute
   '/settings': typeof SettingsRoute
   '/maintenance/$caseId': typeof MaintenanceCaseIdRoute
   '/maintenance/': typeof MaintenanceIndexRoute
@@ -72,6 +79,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contractors': typeof ContractorsRoute
+  '/respond': typeof RespondRoute
   '/settings': typeof SettingsRoute
   '/maintenance/$caseId': typeof MaintenanceCaseIdRoute
   '/maintenance': typeof MaintenanceIndexRoute
@@ -83,6 +91,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/contractors': typeof ContractorsRoute
   '/maintenance': typeof MaintenanceRouteWithChildren
+  '/respond': typeof RespondRoute
   '/settings': typeof SettingsRoute
   '/maintenance/$caseId': typeof MaintenanceCaseIdRoute
   '/maintenance/': typeof MaintenanceIndexRoute
@@ -95,6 +104,7 @@ export interface FileRouteTypes {
     | '/'
     | '/contractors'
     | '/maintenance'
+    | '/respond'
     | '/settings'
     | '/maintenance/$caseId'
     | '/maintenance/'
@@ -104,6 +114,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/contractors'
+    | '/respond'
     | '/settings'
     | '/maintenance/$caseId'
     | '/maintenance'
@@ -114,6 +125,7 @@ export interface FileRouteTypes {
     | '/'
     | '/contractors'
     | '/maintenance'
+    | '/respond'
     | '/settings'
     | '/maintenance/$caseId'
     | '/maintenance/'
@@ -125,6 +137,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ContractorsRoute: typeof ContractorsRoute
   MaintenanceRoute: typeof MaintenanceRouteWithChildren
+  RespondRoute: typeof RespondRoute
   SettingsRoute: typeof SettingsRoute
   ApiAuthCallbackRoute: typeof ApiAuthCallbackRoute
   ApiAuthSignInRoute: typeof ApiAuthSignInRoute
@@ -137,6 +150,13 @@ declare module '@tanstack/react-router' {
       path: '/settings'
       fullPath: '/settings'
       preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/respond': {
+      id: '/respond'
+      path: '/respond'
+      fullPath: '/respond'
+      preLoaderRoute: typeof RespondRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/maintenance': {
@@ -209,6 +229,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ContractorsRoute: ContractorsRoute,
   MaintenanceRoute: MaintenanceRouteWithChildren,
+  RespondRoute: RespondRoute,
   SettingsRoute: SettingsRoute,
   ApiAuthCallbackRoute: ApiAuthCallbackRoute,
   ApiAuthSignInRoute: ApiAuthSignInRoute,

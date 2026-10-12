@@ -6,6 +6,7 @@ import {
   Scripts,
   createRootRouteWithContext,
   redirect,
+  useRouterState,
 } from '@tanstack/react-router';
 import { getAuth, getSignInUrl, getSignUpUrl } from '@workos/authkit-tanstack-react-start';
 import {
@@ -13,9 +14,10 @@ import {
   fetchWorkosAuth,
   setConvexQueryClientAuthForSsr,
 } from '@workspace/web-foundation';
-import type { ConvexReactClient } from 'convex/react';
+import { ConvexProvider, type ConvexReactClient } from 'convex/react';
 import type { ReactNode } from 'react';
 
+import { WorkspaceProvider } from '#/features/maintenance/workspace';
 import { ThemeProvider } from '#/providers/theme-provider';
 import { AppShell } from '#/shell/app-shell';
 
@@ -51,12 +53,16 @@ export const Route = createRootRouteWithContext<Context>()({
       { rel: 'stylesheet', href: themeUrl },
     ],
   }),
-  beforeLoad: async ({ context }) => {
+  beforeLoad: async ({ context, location }) => {
+    if (location.pathname === '/respond' || location.pathname === '/respond/')
+      return { initialAuth: undefined };
     const { initialAuth, token } = await fetchWorkosAuth();
     setConvexQueryClientAuthForSsr(context.convexQueryClient, token);
     return { initialAuth };
   },
-  loader: async () => {
+  loader: async ({ location }) => {
+    if (location.pathname === '/respond' || location.pathname === '/respond/')
+      return { signInUrl: '', signUpUrl: '' };
     const { user } = await getAuth();
     if (!user) throw redirect({ to: '/api/auth/sign-in' });
     const [signInUrl, signUpUrl] = await Promise.all([getSignInUrl(), getSignUpUrl()]);
@@ -81,13 +87,24 @@ export function RootDocument({ children }: { children: ReactNode }) {
 }
 
 export function RootRoute() {
-  const { convexQueryClient, initialAuth } = Route.useRouteContext();
+  const { convexQueryClient, convexClient, initialAuth } = Route.useRouteContext();
   const { signInUrl, signUpUrl } = Route.useLoaderData();
+  const publicResponse = useRouterState({
+    select: (state) => state.location.pathname.replace(/\/$/, '') === '/respond',
+  });
+  if (publicResponse)
+    return (
+      <ConvexProvider client={convexClient}>
+        <Outlet />
+      </ConvexProvider>
+    );
 
   return (
     <WorkosConvexProvider convexQueryClient={convexQueryClient} initialAuth={initialAuth}>
       <AppShell signInUrl={signInUrl} signUpUrl={signUpUrl}>
-        <Outlet />
+        <WorkspaceProvider>
+          <Outlet />
+        </WorkspaceProvider>
       </AppShell>
     </WorkosConvexProvider>
   );

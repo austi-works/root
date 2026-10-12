@@ -2,6 +2,7 @@ import { httpRouter } from 'convex/server';
 
 import { internal } from '#convex/_generated/api';
 import { httpAction } from '#convex/_generated/server';
+import { webhook as austiTelegramWebhook } from '#convex/austi/telegramWebhook';
 import { getGitHubAppConfig } from '#convex/githubAppConfig';
 import { verifyGitHubWebhookSignature } from '#convex/githubWebhookVerify';
 import { preflight, stream } from '#convex/integrations/demo/http';
@@ -89,6 +90,7 @@ http.route({ path: '/demo/stream', method: 'OPTIONS', handler: preflight });
 http.route({ path: '/demo/stream', method: 'POST', handler: stream });
 
 http.route({ path: '/telegram/webhook', method: 'POST', handler: telegramWebhook });
+http.route({ path: '/austi/telegram/webhook', method: 'POST', handler: austiTelegramWebhook });
 
 http.route({
   path: '/github/webhook',

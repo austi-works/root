@@ -5,6 +5,11 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   plugins: [react()],
-  resolve: { alias: { '#': resolve(import.meta.dirname, 'src') } },
+  resolve: {
+    alias: {
+      '#': resolve(import.meta.dirname, 'src'),
+      '#convex': resolve(import.meta.dirname, '../../convex'),
+    },
+  },
   test: { environment: 'jsdom' },
 });

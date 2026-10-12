@@ -4,6 +4,8 @@ import { type ReactNode } from 'react';
 
 import { ThemeSelect } from '#/components/settings/theme-select';
 import { Page, Section } from '#/features/maintenance/components';
+import { IntegrationSettings } from '#/features/maintenance/integration-settings';
+import { StaffSettings } from '#/features/maintenance/staff-settings';
 
 export const Route = createFileRoute('/settings')({
   staticData: { breadcrumb: 'Settings' },
@@ -14,11 +16,13 @@ export const Route = createFileRoute('/settings')({
 function Settings() {
   return (
     <Page title='Settings'>
+      <IntegrationSettings />
       <Section title='Appearance'>
         <SettingRow label='Theme' htmlFor='appearance-theme'>
           <ThemeSelect id='appearance-theme' />
         </SettingRow>
       </Section>
+      <StaffSettings />
     </Page>
   );
 }
