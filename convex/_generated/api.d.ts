@@ -8,6 +8,25 @@
  * @module
  */
 
+import type * as austi_cases from "../austi/cases.js";
+import type * as austi_contractors from "../austi/contractors.js";
+import type * as austi_delivery from "../austi/delivery.js";
+import type * as austi_files from "../austi/files.js";
+import type * as austi_intake from "../austi/intake.js";
+import type * as austi_intakeAi from "../austi/intakeAi.js";
+import type * as austi_intakeCommands from "../austi/intakeCommands.js";
+import type * as austi_intakeProcessing from "../austi/intakeProcessing.js";
+import type * as austi_intakeValidators from "../austi/intakeValidators.js";
+import type * as austi_integrations from "../austi/integrations.js";
+import type * as austi_links from "../austi/links.js";
+import type * as austi_model from "../austi/model.js";
+import type * as austi_notifications from "../austi/notifications.js";
+import type * as austi_requests from "../austi/requests.js";
+import type * as austi_tables from "../austi/tables.js";
+import type * as austi_telegramApi from "../austi/telegramApi.js";
+import type * as austi_telegramWebhook from "../austi/telegramWebhook.js";
+import type * as austi_validators from "../austi/validators.js";
+import type * as austi_workspaces from "../austi/workspaces.js";
 import type * as chat_delivery from "../chat/delivery.js";
 import type * as chat_errors from "../chat/errors.js";
 import type * as chat_generation from "../chat/generation.js";
@@ -57,6 +76,25 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  "austi/cases": typeof austi_cases;
+  "austi/contractors": typeof austi_contractors;
+  "austi/delivery": typeof austi_delivery;
+  "austi/files": typeof austi_files;
+  "austi/intake": typeof austi_intake;
+  "austi/intakeAi": typeof austi_intakeAi;
+  "austi/intakeCommands": typeof austi_intakeCommands;
+  "austi/intakeProcessing": typeof austi_intakeProcessing;
+  "austi/intakeValidators": typeof austi_intakeValidators;
+  "austi/integrations": typeof austi_integrations;
+  "austi/links": typeof austi_links;
+  "austi/model": typeof austi_model;
+  "austi/notifications": typeof austi_notifications;
+  "austi/requests": typeof austi_requests;
+  "austi/tables": typeof austi_tables;
+  "austi/telegramApi": typeof austi_telegramApi;
+  "austi/telegramWebhook": typeof austi_telegramWebhook;
+  "austi/validators": typeof austi_validators;
+  "austi/workspaces": typeof austi_workspaces;
   "chat/delivery": typeof chat_delivery;
   "chat/errors": typeof chat_errors;
   "chat/generation": typeof chat_generation;
