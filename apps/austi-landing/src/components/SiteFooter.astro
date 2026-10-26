@@ -3,6 +3,20 @@ import './SiteFooter.css';
 ---
 
 <footer class="site-footer dark-field">
-  <a class="footer-brand" href="#top" aria-label="Austi, back to top"><strong>Austi</strong></a>
-  <div><a href="mailto:hello@austi.works?subject=Maintenance%20workflow%20conversation">Contact</a><a href="#top">Back to top ↑</a></div>
+  <div class="footer-content">
+    <a class="footer-brand" href="#top" aria-label="Austi, back to top"><strong>Austi</strong></a>
+    <div><a href="mailto:hello@austi.works?subject=Maintenance%20workflow%20conversation">Contact</a><a href="#top">Back to top ↑</a></div>
+  </div>
+  <div class="footer-overscroll" data-footer-overscroll aria-hidden="true">
+    <div class="footer-distortion" data-footer-distortion>
+      <canvas></canvas>
+    </div>
+  </div>
 </footer>
+
+<script>
+  import { initFooterDistortion } from '../scripts/footer-distortion';
+
+  const distortion = document.querySelector<HTMLElement>('[data-footer-distortion]');
+  if (distortion) initFooterDistortion(distortion);
+</script>

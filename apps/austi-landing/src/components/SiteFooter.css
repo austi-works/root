@@ -1,21 +1,123 @@
 .site-footer {
-  display: grid;
+  position: relative;
+  isolation: isolate;
   width: min(100%, var(--page-width));
-  min-height: 8rem;
   margin-inline: auto;
-  padding-inline: var(--page-gutter);
-  grid-template-columns: 1fr auto;
-  align-items: center;
   border-top: 1px solid var(--line-dark);
   color: var(--color-muted-dark);
   font-size: var(--font-size-sm);
 }
 
+.footer-content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  min-height: 8rem;
+  padding-inline: var(--page-gutter);
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+
 .footer-brand { display: inline-flex; width: fit-content; align-items: center; color: var(--color-text); font-size: var(--font-size-md); letter-spacing: -0.04em; }
-.site-footer > div { display: flex; justify-self: end; gap: var(--size-lg); }
+.footer-content > div { display: flex; justify-self: end; gap: var(--size-lg); }
 .site-footer a { transition: color 160ms ease-out; }
 .site-footer a:hover { color: var(--color-text); }
 
+html[data-footer-edge],
+html[data-footer-edge] body { overscroll-behavior-y: none; }
+html[data-footer-pulling] { scroll-behavior: auto; overflow-anchor: none; }
+
+.footer-overscroll {
+  position: relative;
+  left: 50%;
+  width: 100vw;
+  height: var(--footer-overscroll-space, 0px);
+  overflow: visible;
+  overflow-anchor: none;
+  background: var(--color-night);
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+.footer-distortion {
+  --glow-drift-x: 0.6%;
+  --glow-drift-y: 0.3%;
+  --glow-horizon: color-mix(in srgb, var(--color-glow-dusk), var(--color-accent) var(--footer-glow-warmth, 0%));
+  --glow-core: color-mix(in srgb, var(--color-glow-dusk), var(--color-signal) var(--footer-glow-warmth, 0%));
+  --glow-spread: max(clamp(4.32rem, 12.6dvh, 8.64rem), calc(var(--footer-overscroll-space, 0px) * 0.85));
+  position: absolute;
+  z-index: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: clamp(24rem, 70dvh, 48rem);
+  overflow: hidden;
+  contain: strict;
+  opacity: var(--footer-glow-opacity, 0);
+  pointer-events: none;
+  mask-image: linear-gradient(
+    to top,
+    var(--color-black),
+    var(--color-black) calc(var(--footer-overscroll-space, 0px) * 0.4),
+    transparent calc(var(--footer-overscroll-space, 0px) + clamp(7rem, 12vw, 12rem))
+  );
+}
+
+.footer-distortion::before,
+.footer-distortion::after {
+  position: absolute;
+  inset: 0;
+  animation: footer-glow-drift 9s ease-in-out infinite alternate paused;
+  content: '';
+}
+
+.footer-distortion::before {
+  opacity: calc(1 - var(--footer-glow-definition, 0));
+  background:
+    radial-gradient(
+      ellipse 95vw var(--glow-spread) at 50% calc(100% + var(--footer-overscroll-space, 0px) * 0.18),
+      color-mix(in srgb, var(--glow-core) 90%, transparent),
+      color-mix(in srgb, var(--glow-horizon) 50%, transparent) 40%,
+      transparent
+    ),
+    radial-gradient(
+      ellipse 120vw calc(var(--glow-spread) * 1.7) at 50% 100%,
+      color-mix(in srgb, var(--glow-horizon) 30%, transparent),
+      transparent
+    );
+}
+
+.footer-distortion::after {
+  animation-duration: 13s;
+  animation-direction: alternate-reverse;
+  opacity: var(--footer-glow-definition, 0);
+  background: radial-gradient(
+    circle 350vw at 50% calc(350vw + 100% - var(--footer-overscroll-space, 0px) * 0.62),
+    var(--glow-core) calc(100% - var(--footer-overscroll-space, 0px) * 0.4),
+    var(--glow-horizon) calc(100% - 0.5rem),
+    color-mix(in srgb, var(--glow-horizon) 70%, transparent) 100%,
+    color-mix(in srgb, var(--color-glow-dusk) 50%, transparent) calc(100% + 1rem),
+    transparent calc(100% + 4rem)
+  );
+}
+
+.footer-distortion canvas { display: block; width: 100%; height: 100%; opacity: 0; }
+.footer-distortion[data-ready] canvas { opacity: 1; }
+.footer-distortion[data-ready]::before,
+.footer-distortion[data-ready]::after { visibility: hidden; }
+.footer-distortion[data-moving]:not([data-ready])::before,
+.footer-distortion[data-moving]:not([data-ready])::after { animation-play-state: running; }
+
+@keyframes footer-glow-drift {
+  from { transform: scale(1.04) translate(calc(var(--glow-drift-x) * -1), var(--glow-drift-y)); }
+  to { transform: scale(1.04) translate(var(--glow-drift-x), calc(var(--glow-drift-y) * -1)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-overscroll { display: none; }
+}
+
 @media (max-width: 640px) {
-  .site-footer { min-height: 9rem; padding-block: var(--size-xl); gap: var(--size-lg); }
+  .footer-content { min-height: 9rem; padding-block: var(--size-xl); gap: var(--size-lg); }
+  .footer-distortion { --glow-drift-x: 0.21%; --glow-drift-y: 0.105%; }
 }
