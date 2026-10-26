@@ -46,6 +46,7 @@
   --color-muted-paper: #66645f;
   --color-accent: #ff4f42;
   --color-signal: #dfff57;
+  --color-glow-dusk: #0b1739;
   --color-success: #278a51;
 
   --line-dark: color-mix(in srgb, var(--color-text) 15%, transparent);
