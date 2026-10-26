@@ -22,7 +22,11 @@ export const getRouter = () => {
     defaultPreloadStaleTime: 0,
     defaultNotFoundComponent: () => <ErrorView title='Not found' />,
     defaultErrorComponent: ({ error, reset }) => (
-      <ErrorView title='Something went wrong' error={error} onRetry={reset} />
+      <ErrorView
+        title='Something went wrong'
+        error={error instanceof Error ? error : new Error(String(error))}
+        onRetry={reset}
+      />
     ),
     Wrap: ({ children }) => (
       <TooltipProvider>
