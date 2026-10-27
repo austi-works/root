@@ -63,11 +63,13 @@ animation.
 Keep the core narrative readable without interaction. Use CSS for hover and focus states on real
 controls and native details for FAQ disclosure.
 
-Keep native page scrolling. GSAP ScrollTrigger tracks the 20rem footer reveal and owns its
-snap-back: wait while touch is held, allow 0.3 seconds after scroll changes, then return over
+Keep scrolling direct, without ScrollSmoother. Use GSAP normalizeScroll with nested scrolling
+enabled to align touch momentum, viewport measurements and snapping on mobile browsers.
+GSAP ScrollTrigger tracks the 20rem footer reveal and owns its
+snap-back: wait while touch is held, allow 0.15 seconds after scroll changes, then return over
 0.65 seconds without overshooting. Keep the trigger end one pixel beyond the document boundary
 so snapping remains active during a maximum held pull. Use matchMedia for reduced motion and
-cleanup. Do not add release timers, input handlers, scroll wrappers or ScrollSmoother.
+cleanup, including disabling normalization. Do not add release timers, input handlers or scroll wrappers.
 
 Preserve the WebGL shader: diffuse dark blue on small pulls, a shallow coral/yellow horizon on
 deeper pulls, and an independently moving blue fringe joined to the coral. Keep 35% wave strength
