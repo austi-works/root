@@ -1,4 +1,5 @@
-import { animate, cancelFrame, frame, resize, scroll, type AnimationPlaybackControls } from 'motion';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 const smoothstep = (from: number, to: number, value: number) => {
@@ -173,54 +174,41 @@ const createRenderer = (canvas: HTMLCanvasElement, host: HTMLElement) => {
 };
 
 export const initFooterDistortion = (host: HTMLElement) => {
-  const spacer = host.closest<HTMLElement>('[data-footer-overscroll]')!;
-  const renderer = createRenderer(host.querySelector('canvas')!, host);
-  const events = new AbortController();
-  let opening = 0;
-  let pull = 0;
-  let restingY = 0;
-  let returning: AnimationPlaybackControls | undefined;
-
-  const paint = () => renderer?.draw(pull, performance.now() / 1000, opening);
-  const stopReturn = () => {
-    // Motion samples once on stop; release ownership before that final sample.
-    const animation = returning;
-    returning = undefined;
-    animation?.stop();
-  };
-  const stopScroll = scroll((progress, info) => {
-    pull = progress;
-    restingY = info.y.offset[0]!;
-    opening = progress * (info.y.offset[1]! - restingY);
-    host.style.setProperty('--footer-overscroll-space', `${opening}px`);
-    host.style.setProperty('--footer-glow-opacity', `${smoothstep(0, 0.18, progress)}`);
-    if (opening > 0) frame.render(paint, true);
-    else cancelFrame(paint);
-  }, { target: spacer, offset: ['start end', 'end end'] });
-
-  // Native scrollend waits for finger release and momentum, without a release timer.
-  document.addEventListener('scrollend', () => {
-    if (returning || window.scrollY <= Math.ceil(restingY)) return;
-    returning = animate(window.scrollY, restingY, {
-      type: 'spring', visualDuration: 0.55, bounce: 0, restDelta: 1,
-      onUpdate: (top) => {
-        if (returning) window.scrollTo({ top, behavior: 'instant' });
+  gsap.registerPlugin(ScrollTrigger);
+  const media = gsap.matchMedia();
+  media.add('(prefers-reduced-motion: no-preference)', () => {
+    const spacer = host.closest<HTMLElement>('[data-footer-overscroll]')!;
+    const renderer = createRenderer(host.querySelector('canvas')!, host);
+    let pull = 0;
+    let opening = 0;
+    const paint = (time: number) => renderer?.draw(pull, time, opening);
+    ScrollTrigger.create({
+      trigger: spacer,
+      start: 'top bottom',
+      // Keep snapping active at the bottom boundary, including during a held touch.
+      end: 'bottom bottom-=1',
+      snap: { snapTo: [0], delay: 0.3, duration: 0.65, ease: 'power3.inOut', inertia: false },
+      onUpdate: (self) => {
+        pull = self.progress;
+        opening = pull * (self.end - self.start);
+        host.style.setProperty('--footer-overscroll-space', `${opening}px`);
+        host.style.setProperty('--footer-glow-opacity', `${smoothstep(0, 0.18, pull)}`);
+        if (pull > 0) gsap.ticker.add(paint);
+        else gsap.ticker.remove(paint);
       },
-      onComplete: () => { returning = undefined; },
     });
-  }, { signal: events.signal });
-  for (const event of ['wheel', 'pointerdown', 'keydown']) {
-    window.addEventListener(event, stopReturn, { passive: true, signal: events.signal });
-  }
-  const stopResize = resize(host, () => renderer?.resize());
+    const resize = new ResizeObserver(() => renderer?.resize());
+    resize.observe(host);
+    return () => {
+      resize.disconnect();
+      gsap.ticker.remove(paint);
+      renderer?.destroy();
+    };
+  });
   const cleanup = () => {
-    events.abort();
-    stopReturn();
-    stopScroll();
-    stopResize();
-    cancelFrame(paint);
-    renderer?.destroy();
+    media.revert();
+    document.removeEventListener('astro:before-swap', cleanup);
   };
-  document.addEventListener('astro:before-swap', cleanup, { once: true, signal: events.signal });
+  document.addEventListener('astro:before-swap', cleanup, { once: true });
   return cleanup;
 };
