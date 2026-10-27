@@ -1,4 +1,4 @@
-import { animate, cancelFrame, frame, motionValue, type FrameData } from 'framer-motion/dom';
+import { animate, cancelFrame, frame, resize, scroll, type AnimationPlaybackControls } from 'motion';
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 const smoothstep = (from: number, to: number, value: number) => {
@@ -172,244 +172,54 @@ const createRenderer = (canvas: HTMLCanvasElement, host: HTMLElement) => {
   };
 };
 
-// Let nested scroll areas consume their own input, including the mobile menu.
-const canScrollInside = (target: EventTarget | null, direction = 1) => {
-  let element = target instanceof Element ? target : null;
-  while (element && element !== document.body && element !== document.documentElement) {
-    const styles = getComputedStyle(element);
-    if (/(auto|scroll)/.test(styles.overflowY) && element.scrollHeight > element.clientHeight + 1
-      && (direction < 0 ? element.scrollTop > 1
-        : element.scrollTop + element.clientHeight < element.scrollHeight - 1)) return true;
-    element = element.parentElement;
-  }
-  return false;
-};
-
 export const initFooterDistortion = (host: HTMLElement) => {
-  const canvas = host.querySelector('canvas');
-  const footer = host.closest<HTMLElement>('.site-footer');
-  const spacer = host.closest<HTMLElement>('[data-footer-overscroll]');
-  if (!canvas || !footer || !spacer || typeof IntersectionObserver !== 'function' || typeof ResizeObserver !== 'function') return;
-
-  const root = document.documentElement;
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const spacer = host.closest<HTMLElement>('[data-footer-overscroll]')!;
+  const renderer = createRenderer(host.querySelector('canvas')!, host);
   const events = new AbortController();
-  const options = { passive: true, signal: events.signal };
-  const gestureOptions = { passive: false, signal: events.signal };
-  let renderer: ReturnType<typeof createRenderer> = null;
-  const pull = motionValue(0);
-  let visible = false;
-  let touchY: number | null = null;
   let opening = 0;
-  let expectedScrollY = window.scrollY;
-  let releaseTimer: ReturnType<typeof setTimeout> | undefined;
-  let painting = false;
+  let pull = 0;
+  let restingY = 0;
+  let returning: AnimationPlaybackControls | undefined;
 
-  const maxOpening = () => Math.min(320, window.innerHeight * 0.38);
-  const restingBottom = () => Math.max(0, root.scrollHeight - opening - window.innerHeight);
-  const updateEdge = () => {
-    // Set the boundary policy before a trackpad gesture starts, not midway through native bounce.
-    root.toggleAttribute('data-footer-edge', !reducedMotion.matches);
+  const paint = () => renderer?.draw(pull, performance.now() / 1000, opening);
+  const stopReturn = () => {
+    // Motion samples once on stop; release ownership before that final sample.
+    const animation = returning;
+    returning = undefined;
+    animation?.stop();
   };
-
-  const paint = ({ timestamp }: FrameData) => {
-    renderer?.draw(opening / maxOpening(), timestamp / 1000, opening);
-  };
-
-  const draw = (distance: number) => {
-    // Extend the document itself; the whole page travels into the revealed shader.
-    const previousOpening = opening;
-    opening = Math.tanh(Math.max(distance, 0) / maxOpening()) * maxOpening();
-    const progress = opening / maxOpening();
-    root.toggleAttribute('data-footer-pulling', opening > 0);
-    spacer.style.setProperty('--footer-overscroll-space', `${opening}px`);
+  const stopScroll = scroll((progress, info) => {
+    pull = progress;
+    restingY = info.y.offset[0]!;
+    opening = progress * (info.y.offset[1]! - restingY);
+    host.style.setProperty('--footer-overscroll-space', `${opening}px`);
     host.style.setProperty('--footer-glow-opacity', `${smoothstep(0, 0.18, progress)}`);
-    host.style.setProperty('--footer-glow-warmth', `${smoothstep(0.12, 0.8, progress) * 100}%`);
-    host.style.setProperty('--footer-glow-definition', `${smoothstep(0.18, 0.72, progress)}`);
-    const active = opening > 0 && visible && !document.hidden && !reducedMotion.matches;
-    host.toggleAttribute('data-moving', active);
-    if (active && renderer) {
-      // Keep the shader's time moving even while a gesture holds the page still.
-      if (!painting) frame.render(paint, true);
-      painting = true;
-    } else {
-      cancelFrame(paint);
-      painting = false;
-      renderer?.draw(progress, performance.now() / 1000, opening);
-    }
-    if (opening > 0 || previousOpening > 0) {
-      expectedScrollY = Math.max(0, root.scrollHeight - window.innerHeight);
-      if (Math.abs(window.scrollY - expectedScrollY) > 0.5) {
-        window.scrollTo({ top: expectedScrollY, behavior: 'instant' });
-      }
-    }
-    updateEdge();
-  };
-  const unsubscribe = pull.on('change', draw);
+    if (opening > 0) frame.render(paint, true);
+    else cancelFrame(paint);
+  }, { target: spacer, offset: ['start end', 'end end'] });
 
-  const pause = () => {
-    clearTimeout(releaseTimer);
-    pull.jump(0);
-  };
-
-  const release = () => {
-    clearTimeout(releaseTimer);
-    if (!visible || document.hidden || reducedMotion.matches || pull.get() === 0) return;
-    animate(pull, 0, {
-      type: 'spring',
-      visualDuration: 0.65,
-      bounce: 0,
-      velocity: 0,
-      restDelta: 0.05,
-      restSpeed: 0.5,
+  // Native scrollend waits for finger release and momentum, without a release timer.
+  document.addEventListener('scrollend', () => {
+    if (returning || window.scrollY <= Math.ceil(restingY)) return;
+    returning = animate(window.scrollY, restingY, {
+      type: 'spring', visualDuration: 0.55, bounce: 0, restDelta: 1,
+      onUpdate: (top) => {
+        if (returning) window.scrollTo({ top, behavior: 'instant' });
+      },
+      onComplete: () => { returning = undefined; },
     });
-  };
-
-  const setup = () => {
-    pause();
-    if (reducedMotion.matches) {
-      renderer?.destroy();
-      renderer = null;
-      host.removeAttribute('data-ready');
-      updateEdge();
-      return;
-    }
-    if (!visible) return;
-    renderer ??= createRenderer(canvas, host);
-    if (renderer) {
-      renderer.resize();
-      renderer.draw(0, performance.now() / 1000);
-      host.setAttribute('data-ready', '');
-    }
-    updateEdge();
-  };
-
-  const drag = (pixels: number, target: EventTarget | null) => {
-    if (!visible || reducedMotion.matches || document.hidden || pixels === 0
-      || restingBottom() - window.scrollY > 3 || canScrollInside(target, pixels)
-      || (pixels < 0 && pull.get() === 0)) return false;
-    clearTimeout(releaseTimer);
-    // A direct drag interrupts the return; Motion owns the spring and its frame loop.
-    pull.jump(clamp(pull.get() + pixels * 0.65, 0, maxOpening() * 2));
-    return pull.get() > 0;
-  };
-
-  const observer = new IntersectionObserver(([entry]) => {
-    visible = entry?.isIntersecting ?? false;
-    if (visible) {
-      setup();
-    } else {
-      pause();
-      updateEdge();
-    }
-  });
-  // The reveal has zero height at rest, so observe the stable footer instead.
-  observer.observe(footer);
-
-  window.addEventListener('wheel', (event) => {
-    if (event.defaultPrevented || event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
-    const units = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? window.innerHeight : 1;
-    if (drag(event.deltaY * units, event.target)) {
-      // Trackpads expose movement, not finger release; use one consistent quiet window.
-      releaseTimer = setTimeout(release, 140);
-      if (event.cancelable) event.preventDefault();
-    }
-  }, gestureOptions);
-
-  window.addEventListener('touchstart', (event) => {
-    touchY = event.touches.length === 1 ? event.touches[0]!.clientY : null;
-    if (touchY !== null && opening > 0) {
-      clearTimeout(releaseTimer);
-      pull.stop();
-    } else if (touchY === null) release();
-  }, options);
-
-  window.addEventListener('touchmove', (event) => {
-    if (event.defaultPrevented || event.touches.length !== 1 || touchY === null) {
-      touchY = null;
-      release();
-      return;
-    }
-    const nextY = event.touches[0]!.clientY;
-    const delta = touchY - nextY;
-    if (drag(delta, event.target) && event.cancelable) event.preventDefault();
-    touchY = nextY;
-  }, gestureOptions);
-
-  const resetTouch = () => {
-    touchY = null;
-    release();
-  };
-  window.addEventListener('touchend', resetTouch, options);
-  window.addEventListener('touchcancel', resetTouch, options);
-
-  window.addEventListener('keydown', (event) => {
-    const target = event.target instanceof Element ? event.target : null;
-    if (event.defaultPrevented || event.repeat || event.altKey || event.ctrlKey || event.metaKey
-      || event.shiftKey || target?.closest('input, textarea, select, [contenteditable]:not([contenteditable="false"])')) return;
-    if (event.key === ' ' && target?.closest('button, a, summary')) return;
-    if (['ArrowUp', 'PageUp', 'Home'].includes(event.key) && opening > 0) pause();
-    if (['ArrowDown', 'PageDown', 'End', ' '].includes(event.key)) {
-      if (drag(event.key === 'ArrowDown' ? 55 : 140, event.target)) {
-        release();
-        event.preventDefault();
-      }
-    }
   }, { signal: events.signal });
-
-  const resize = new ResizeObserver(() => {
-    if (visible) {
-      renderer?.resize();
-      draw(pull.get());
-    }
-  });
-  resize.observe(host);
-
-  window.addEventListener('scroll', () => {
-    if (visible && !document.hidden && !reducedMotion.matches) {
-      const nativeExcess = window.scrollY - Math.max(0, root.scrollHeight - window.innerHeight);
-      if (nativeExcess > 1) {
-        // Safari can report scrollY beyond the document during its rubber-band gesture.
-        // Normalize native/clamping scroll events without injecting another spring impulse.
-        expectedScrollY = Math.max(0, root.scrollHeight - window.innerHeight);
-        window.scrollTo({ top: expectedScrollY, behavior: 'instant' });
-      } else if (opening > 0 && window.scrollY < expectedScrollY - 4) {
-        // A scrollbar drag, link or new upward gesture must be free to leave the footer.
-        pause();
-      }
-    }
-    updateEdge();
-  }, options);
-
-  reducedMotion.addEventListener('change', setup, { signal: events.signal });
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) pause();
-  }, { signal: events.signal });
-  window.addEventListener('pagehide', pause, { signal: events.signal });
-  window.addEventListener('pageshow', setup, { signal: events.signal });
-
-  canvas.addEventListener('webglcontextlost', (event) => {
-    event.preventDefault();
-    pause();
-    renderer?.destroy();
-    renderer = null;
-    host.removeAttribute('data-ready');
-  }, { signal: events.signal });
-  canvas.addEventListener('webglcontextrestored', setup, { signal: events.signal });
-
+  for (const event of ['wheel', 'pointerdown', 'keydown']) {
+    window.addEventListener(event, stopReturn, { passive: true, signal: events.signal });
+  }
+  const stopResize = resize(host, () => renderer?.resize());
   const cleanup = () => {
-    pause();
-    cancelFrame(paint);
-    host.removeAttribute('data-moving');
-    unsubscribe();
-    pull.destroy();
     events.abort();
-    observer.disconnect();
-    resize.disconnect();
+    stopReturn();
+    stopScroll();
+    stopResize();
+    cancelFrame(paint);
     renderer?.destroy();
-    renderer = null;
-    host.removeAttribute('data-ready');
-    root.removeAttribute('data-footer-edge');
   };
   document.addEventListener('astro:before-swap', cleanup, { once: true, signal: events.signal });
   return cleanup;
