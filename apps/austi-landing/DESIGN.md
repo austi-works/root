@@ -61,36 +61,19 @@ animation.
 ## Motion and interaction
 
 Keep the core narrative readable without interaction. Use CSS for hover and focus states on real
-controls only, and reserve disclosure behavior for the native FAQ details. Do not add a
-smooth-scroll engine or scroll-bound interpolation. The decorative footer arc uses a scoped WebGL
-shader with a Motion spring driven by extra scroll input at the bottom of the page. The effect is
-a temporary section at the document's end: zero height at rest, expanding with the gesture to reveal a
-tall sun glow along a shallow curved horizon. The viewport follows the revealed space,
-then returns to the footer as it collapses. Suppress native bottom rubber-banding while handling
-that boundary before gestures start; keep the page background consistent with the footer.
-While a wheel or touch gesture is active, accumulate its movement directly into the reveal and
-hold the position between updates. After a single 140ms quiet window, use Motion's spring with
-visualDuration 0.65 and bounce 0 for an unhurried return without oscillation. Touchscreen release
-starts the same spring directly. Keep this interaction simple: no hand-written spring integration
-or momentum classifier. Trackpad finger release itself is unavailable to the page.
-Small pulls begin as diffuse blue light, with a minimum diffusion width and a haze that fades into
-black behind the footer content. Its initial exposure rises gradually from zero. As the pull grows,
-resolve that haze into a shallow curved horizon with a saturated coral/yellow interior and a violet
-halo. Give the blue outer contour its own slower, layered waves so the band widens and narrows
-independently of the coral's curvature. Retain the calmer mobile displacement.
-Blend coral directly into a full blue band, then fade its outside into black. Keep the band anchored
-to the coral edge instead of shifting a separate highlight away from it.
-Avoid a solid blue disc at the start and an undifferentiated gradient at full extension.
-The CSS fallback follows the same progression from haze to curved horizon.
-Reversing a gesture closes the space progressively before ordinary upward scrolling resumes.
-Keep ordinary scrolling native.
-Support the CSS glow when WebGL is unavailable and disable the effect for reduced motion.
-While the glow is visible, advance the shader clock independently of page movement: gently
-undulate the horizon and drift its violet fringe, including during held gestures. Only repaint the
-canvas on those frames; page height remains controlled by the gesture and spring. Stop painting
-at rest, offscreen, when hidden, or with reduced motion. The CSS fallback drifts subtly while active.
-On phone widths, reduce wave and fringe displacement to 35% of desktop strength, scaling
-smoothly back up between 640px and 1024px. Use CSS width so device pixel density cannot amplify it.
+controls and native details for FAQ disclosure.
+
+Keep native page scrolling. Motion scroll() tracks the 20rem reveal below the footer; the
+browser's scrollend event waits for gesture release and momentum before Motion returns to the
+footer with a non-bouncing spring. New input interrupts the return. Do not add scroll wrappers,
+release timers, device branches or custom gesture physics. This requires native scrollend support
+(Safari/iOS 26.2 or later). Reduced motion removes the reveal space.
+
+Preserve the WebGL shader: diffuse dark blue on small pulls, a shallow coral/yellow horizon on
+deeper pulls, and an independently moving blue fringe joined to the coral. Keep 35% wave strength
+on phones, scaling to full strength between 640px and 1024px. Motion's frame loop advances the
+shader while visible, including during a held gesture. The fixed shader blends behind the
+transparent footer and revealed space. Do not add a second CSS gradient renderer.
 
 ## Asset provenance
 
