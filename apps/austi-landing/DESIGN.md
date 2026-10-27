@@ -63,15 +63,15 @@ animation.
 Keep the core narrative readable without interaction. Use CSS for hover and focus states on real
 controls and native details for FAQ disclosure.
 
-Keep native page scrolling. Motion scroll() tracks the 20rem reveal below the footer; the
-browser's scrollend event waits for gesture release and momentum before Motion returns to the
-footer with a non-bouncing spring. New input interrupts the return. Do not add scroll wrappers,
-release timers, device branches or custom gesture physics. This requires native scrollend support
-(Safari/iOS 26.2 or later). Reduced motion removes the reveal space.
+Keep native page scrolling. GSAP ScrollTrigger tracks the 20rem footer reveal and owns its
+snap-back: wait while touch is held, allow 0.3 seconds after scroll changes, then return over
+0.65 seconds without overshooting. Keep the trigger end one pixel beyond the document boundary
+so snapping remains active during a maximum held pull. Use matchMedia for reduced motion and
+cleanup. Do not add release timers, input handlers, scroll wrappers or ScrollSmoother.
 
 Preserve the WebGL shader: diffuse dark blue on small pulls, a shallow coral/yellow horizon on
 deeper pulls, and an independently moving blue fringe joined to the coral. Keep 35% wave strength
-on phones, scaling to full strength between 640px and 1024px. Motion's frame loop advances the
+on phones, scaling to full strength between 640px and 1024px. GSAP's ticker advances the
 shader while visible, including during a held gesture. The fixed shader blends behind the
 transparent footer and revealed space. Do not add a second CSS gradient renderer.
 
