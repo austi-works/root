@@ -13,8 +13,8 @@ export const heroContent = {
   product: 'Austi',
   heading: 'Your marketing on autopilot.',
   paragraph:
-    'Paste your website. Austi plans, writes, and publishes your ads, socials, emails, and SEO every day.',
-  paragraphMuted: 'You just approve.',
+    'Give Austi your website once. It learns your brand, then keeps your ads, posts, emails and search content moving.',
+  paragraphMuted: 'Nothing goes live until you say so.',
   cta: 'Get early access',
   trust: [
     { icon: 'lock', title: 'Private and secure', detail: 'Your data stays yours' },
