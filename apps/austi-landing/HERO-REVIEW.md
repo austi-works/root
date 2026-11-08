@@ -1,68 +1,83 @@
-# Hero revision verification
+# Hero product scene: Round 3 verification
 
-Verified on 2026-11-08 against the production Astro build.
+Verified on 2026-11-09 against the production Astro build. Three commits on the existing `main`
+branch cover removal/spacing, the product scene, and verification. Unrelated page edits remain
+unstaged. No project dependencies were added.
 
-## Root cause
+## Removed
 
-The previous equal-column grid put a wide photograph inside a square stage, anchored to the
-bottom. The photograph itself has substantial black space above the desk, so the chair and desk
-occupied only the lower third of that stage. The image was not zero-height or behind another
-layer. The animation gate did start, but its chips were invisible for the first 27% of the loop,
-and there were no persistent workflow paths or nodes between animated phases.
+- `public/images/hero-empty-desk.png`
+- `public/images/hero-empty-desk-836.webp`
+- `public/images/hero-empty-desk-1672.webp`
+- `src/components/DeskScene.astro` and `DeskScene.css`
+- `src/components/HeroFlowSvg.tsx` and `HeroFlowSvg.css`
+- The obsolete desk-scene configuration in `src/lib/landing-content.ts`.
 
-The desktop grid now uses 42:58 proportions. A shared 1000 × 700 coordinate space aligns the
-inline SVG and the enlarged, bottom-anchored photograph. The actual desk spans approximately 98%
-of the scene width, with a small right bleed and masked top/left edges. Mobile scene height is
-approximately 64–67vw after page gutters.
+There are no remaining runtime references to those files. The CTA texture is still used by the
+CTA, and `og-austi.png` is independently used by page metadata, so both were retained.
 
-## Changed files
+## Changed and added
 
-- `src/components/Hero.css`: column proportions, heading clamp, and 100svh minimum height.
-- `src/components/DeskScene.astro`: replace placeholder layers with the inline SVG; coordinate
-  first-paint startup, CSS/SMIL pause, visibility, and reduced motion.
-- `src/components/DeskScene.css`: shared stage geometry, image scaling, masks, and caption/control.
-- `src/components/HeroFlowSvg.tsx` and `HeroFlowSvg.css`: nine-second workflow, six input paths,
-  four channel nodes, particles, approval ticks, ambient motion, and static reduced-motion frame.
-- `src/lib/landing-content.ts`: exact replacement paragraph, channel labels, and accessible label.
+- `src/components/Hero.astro`: use `HeroProductScene` in the existing hero grid.
+- `src/components/Hero.css`: clear the nav with sensible top padding, retain a 100svh minimum,
+  and reduce the trust-line gap. The desktop 42:58 grid and existing hero copy are retained.
+- `src/components/HeroProductScene.astro` and `HeroProductScene.css`: crisp HTML cards, URL field,
+  core, SVG connectors/particles, decorative cursor, caption, and pause/play control.
+- `src/scripts/hero-product-scene.ts`: one ten-second GSAP clock owns typing, caret, status fades,
+  particles, skeletons, card arrivals, ordered clicks, approval ticks, hold, reset, and ambient glow.
+- `src/lib/heroScene.config.ts`: **all illustration copy and fictional examples**.
+- `DESIGN.md`: update the hero asset guidance for the product illustration.
 
-The first sizing commit also records the previously uncommitted hero foundation, including
-`Hero.astro`, the proof/integration/counter components, and metric data layer. Their existing
-behavior was retained. Unrelated page and FAQ edits were left unstaged. No dependencies were added.
+The scene starts from a complete server-rendered frame, then starts its timeline after first
+paint. Connector and cursor anchors are measured on resize, so paths stay outside card text.
+The caret moves by transform to avoid layout shifts. The illustration adds no React hydration.
 
-## Functional and visual checks
+## Content and narrow-screen choice
 
-Headless Chrome checks and screenshots passed at **360, 768, 1280, 1440, and 1920px**:
+The clearly fictional Harbor & Pine brand uses the reserved `pine.example` URL. Ad, Social post,
+Email, and SEO snippet examples contain no invented results, ratings, or metrics. Their Approve
+buttons are decorative parts of the illustration; the separate pause/play control is interactive.
 
-- No horizontal page overflow or clipped channel nodes.
-- SVG dimensions match the stage; the desk fills the right column.
-- Particles have visible opacity and change position over time at every tested width.
-- All four approval ticks appear after particle arrival.
-- The existing control freezes/resumes both the SVG timeline and CSS animations and changes label.
-- Leaving the hero or hiding the document pauses both animation systems.
-- Reduced motion shows a composed static frame with paths, nodes, and checks. Changing the
-  preference during the session also stops/resumes motion correctly.
-- H1 and CTA destination are unchanged; paragraph matches the requested copy.
-- No browser exceptions. Rendered SVG is **11,493 bytes**, with **one** Gaussian-blur filter.
-- `bun run --filter austi-landing check` and `build` passed; focused Oxlint checks passed.
+At widths up to 640px, the same composition and timeline show **Ad and Social post plus “+2 more”**.
+This keeps text at least 11.5px at 360px. The URL remains top-left, the core center-left, and the
+ordered content cards on the right. Wider layouts show all four cards; there is no DOM reordering.
 
-## Lighthouse comparison
+## Verification
 
-Lighthouse **13.6.0**, Chrome **156**, default mobile profile (412 × 823, DPR 1.75), simulated
-network throttling, and 4× CPU slowdown. Each production build was served from a temporary local
-static-file server. One run per build; these are lab observations rather than field measurements.
+Headless Chrome screenshots and checks passed at **360×900, 768×1024, 1280×720, 1440×800, and
+1920×1080**:
 
-| Metric | Before | After | Change |
-| --- | ---: | ---: | ---: |
-| Performance | 92 | 90 | −2 points |
-| LCP | 3.386s | 3.494s | +0.108s / +3.2% |
-| CLS | 0 | 0 | None |
-| Total blocking time | 0ms | 0ms | None |
+- No horizontal scroll or clipped cards. Body content stays inside each card.
+- At 1280×720 and 1440×800, the headline, CTA/trust block, and entire scene fit above the fold.
+- SVG connectors meet card edges, with ordered source/destination anchors and no crossings.
+- URL typing, every status, moving particles, skeletons, cursor motion, and staggered approvals
+  were observed at every tested width. The ten-second loop resets correctly.
+- Manual pause freezes typing, caret, cursor, particles, cards, and ambient glow together.
+- Hiding the document or leaving the hero pauses the timeline. Resuming preserves its position.
+- Reduced motion shows the filled URL and approved final state, with no motion and no pause
+  control. Changing the preference during a session also works.
+- H1, paragraph, CTA destination, and surrounding page sections are retained. No browser errors.
+- Astro `check` and `build`, focused Oxlint checks, and `git diff --check` passed.
 
-The small measured LCP regression should be checked again on the deployed host with production
-compression. The SVG adds markup but no React hydration JavaScript. The photograph remains an
-eager, high-priority image; SMIL starts after first paint. Neither audit reported run warnings.
+## Lighthouse
 
-## Remaining work
+Lighthouse **13.6.0**, Chrome **156**, default mobile profile (412×823, DPR 1.75), simulated network
+throttling, and 4× CPU slowdown. Saved before/after production builds were served by temporary
+local static-file servers. These are individual lab runs, not field measurements.
 
-No new hero implementation TODOs. Existing proof, metric, and integration configuration remains
-unchanged and still requires verified product data. Recheck the measured LCP on the deployed host.
+| Metric | Before | After |
+| --- | ---: | ---: |
+| Performance | 91 | 100 |
+| LCP | 3.339s | 1.524s |
+| CLS | 0 | 0 |
+| Total blocking time | 0ms | 0ms |
+
+No measured regression in these metrics. The photograph is no longer an LCP candidate. An initial
+audit caught a tiny caret layout shift; positioning the caret with transforms removed it in the
+final build. Production hosting and compression can change these lab timings.
+
+## TODOs
+
+Replace the fictional examples with approved examples in `src/lib/heroScene.config.ts` when ready.
+Existing proof, live-counter, and integration configuration was left unchanged and remains outside
+this revision. Recheck performance on the deployed host.
