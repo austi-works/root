@@ -1,15 +1,69 @@
 ---
+import { heroSceneConfig as content } from '../lib/heroScene.config';
 import './HeroProductScene.css';
 ---
 
-<figure class="hero-product-scene">
-  <div class="product-viewport" role="img" aria-label="Illustration: you give Austi your website, it drafts an ad, a social post, an email and an SEO snippet, and you approve each one">
+<figure class="hero-product-scene" data-product-scene>
+  <div class="product-viewport" role="img" aria-label={content.ariaLabel}>
     <div class="product-canvas" aria-hidden="true">
-      <div class="scene-core"><img src="/austi-logo.svg" width="28" height="30" alt="" /></div>
+      <div class="scene-glow" data-scene-glow></div>
+      <svg class="scene-connectors" data-scene-connectors viewBox="0 0 800 640" preserveAspectRatio="none" aria-hidden="true">
+        <path data-scene-input-path d="M148 134C148 200 160 200 160 269" />
+        {content.cards.map((_, index) => <path data-scene-output-path class:list={{ 'scene-extra': index > 1 }} d={`M198 ${291 + index * 11}C300 ${291 + index * 11} 282 ${83 + index * 154} 384 ${83 + index * 154}`} />)}
+        {Array.from({ length: 5 }, (_, index) => (
+          <g data-scene-particle class:list={['scene-particle', { 'scene-extra': index > 2 }]} opacity="0">
+            <circle r="5" class="scene-particle-halo" />
+            <circle r="1.75" />
+          </g>
+        ))}
+      </svg>
+      <div class="scene-url" data-scene-url-card>
+        <div class="scene-browser-bar"><span></span><span></span><span></span><small>{content.brand}</small></div>
+        <div class="scene-url-field" role="textbox" aria-readonly="true">
+          <span data-scene-url>{content.url}</span><span class="scene-caret" data-scene-caret></span>
+          <svg viewBox="0 0 18 18"><path d="M3.5 9h11M10 4.5 14.5 9 10 13.5" /></svg>
+        </div>
+        <span class="scene-submit-flash" data-scene-flash></span>
+      </div>
+      <div class="scene-core" data-scene-core>
+        <span class="scene-core-halo" data-scene-core-halo></span>
+        <span class="scene-core-ring" data-scene-core-ring></span>
+        <img src="/austi-logo.svg" width="28" height="30" alt="" />
+      </div>
+      <div class="scene-status"><strong>{content.product}</strong><span data-scene-status>{content.status.scheduled}</span></div>
+      {content.cards.map((card, index) => (
+        <article class:list={['scene-content-card', { 'scene-extra': index > 1 }]} style={`--card-index: ${index}`} data-scene-card>
+          <header>
+            <svg class="scene-type-icon" viewBox="0 0 20 20"><path d={card.icon} /></svg>
+            <span class="scene-type">{card.type}</span>
+            <span class="scene-approval-target" data-scene-target>
+              <button class="scene-approve" data-scene-approve data-approved="true" type="button" tabindex="-1" disabled>
+                <span class="scene-approve-pending" data-scene-pending>{content.approve}</span>
+                <span class="scene-approve-done" data-scene-approved><svg viewBox="0 0 16 16" data-scene-check><path d="m4 8 2.5 2.5L12 5" /></svg>{content.approved}</span>
+              </button>
+            </span>
+          </header>
+          <div class="scene-card-body">
+            <div data-scene-content><p>{card.title}</p><small>{card.detail}</small></div>
+            <div class="scene-skeleton" data-scene-skeleton><span></span><span></span><i data-scene-shimmer></i></div>
+          </div>
+        </article>
+      ))}
+      <span class="scene-more">{content.more}</span>
+      <svg class="scene-cursor" data-scene-cursor viewBox="0 0 24 28" aria-hidden="true">
+        <circle class="scene-click" data-scene-click cx="7" cy="7" r="6" />
+        <path d="m3 2 2 20 5-6 5 9 4-2-5-9h8Z" />
+      </svg>
     </div>
   </div>
   <figcaption class="product-caption">
-    <span>Illustrative workflow</span>
-    <button class="product-motion-toggle" type="button" hidden>Pause animation</button>
+    <span>{content.caption}</span>
+    <button class="product-motion-toggle" type="button" data-scene-toggle aria-pressed="false" hidden>
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 4v8M10 4v8" /></svg><span>{content.pause}</span>
+    </button>
   </figcaption>
 </figure>
+
+<script>
+  import '../scripts/hero-product-scene';
+</script>
