@@ -1,0 +1,133 @@
+.hero-flow {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.hero-flow text {
+  fill: var(--color-text);
+  stroke: none;
+  font-family: var(--font-family);
+  font-size: 18px;
+}
+.hero-flow .flow-core-name {
+  font-size: 22px;
+}
+.flow-halo,
+.flow-ring,
+.flow-approve {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.flow-halo {
+  animation: flow-breathe 4.5s ease-in-out infinite;
+}
+.flow-ring {
+  animation: flow-pulse 9s ease-in-out infinite;
+}
+.flow-channel {
+  animation: flow-drift 9s ease-in-out infinite;
+  animation-delay: var(--channel-delay);
+}
+.flow-approve {
+  opacity: 0;
+  animation: flow-approve 9s ease-out infinite;
+  animation-delay: var(--channel-delay);
+}
+.flow-halo,
+.flow-ring,
+.flow-channel,
+.flow-approve {
+  animation-play-state: paused;
+}
+.desk-scene[data-playing='true'] :is(.flow-halo, .flow-ring, .flow-channel, .flow-approve) {
+  animation-play-state: running;
+}
+
+@keyframes flow-breathe {
+  0%,
+  100% {
+    opacity: 0.15;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(1.08);
+  }
+}
+@keyframes flow-pulse {
+  0%,
+  20%,
+  100% {
+    opacity: 0.15;
+    transform: scale(0.85);
+  }
+  36%,
+  52% {
+    opacity: 0.5;
+    transform: scale(1.14);
+  }
+  74% {
+    opacity: 0.18;
+    transform: scale(1.3);
+  }
+}
+@keyframes flow-drift {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+@keyframes flow-approve {
+  0%,
+  58%,
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  64%,
+  83% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  94% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+@media (max-width: 1023px) {
+  .flow-node-card {
+    transform: scale(1.8);
+    transform-origin: 0 24px;
+  }
+  .flow-core-mark {
+    transform: scale(1.4);
+  }
+  .hero-flow .flow-core-name {
+    font-size: 30px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-halo,
+  .flow-ring,
+  .flow-channel,
+  .flow-approve {
+    animation: none;
+  }
+  .flow-particle {
+    display: none;
+  }
+  .flow-approve {
+    opacity: 1;
+    transform: none;
+  }
+}

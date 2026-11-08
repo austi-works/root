@@ -1,5 +1,6 @@
 ---
 import { heroContent } from '../lib/landing-content';
+import { HeroFlowSvg } from './HeroFlowSvg';
 import './DeskScene.css';
 
 const { scene } = heroContent;
@@ -10,7 +11,7 @@ const { scene } = heroContent;
     <picture>
       <source
         srcset="/images/hero-empty-desk-836.webp 836w, /images/hero-empty-desk-1672.webp 1672w"
-        sizes="(min-width: 1024px) 68vw, 140vw"
+        sizes="(min-width: 1920px) 1760px, (min-width: 1024px) 100vw, 176vw"
         type="image/webp"
       />
       <img
@@ -21,22 +22,7 @@ const { scene } = heroContent;
         fetchpriority="high"
       />
     </picture>
-    <div class="desk-animation" aria-hidden="true">
-      {[0, 1].map((stack) => (
-        <div class="desk-papers" style={`--stack-index: ${stack}`}>
-          {[0, 1, 2].map((index) => <span class="desk-paper" style={`--paper-index: ${index}`}></span>)}
-        </div>
-      ))}
-      {scene.chips.map((chip, index) => (
-        <span class="desk-chip" style={`--chip-index: ${index}`}>
-          <svg class="desk-chip-document" viewBox="0 0 18 18">
-            <path d="M10 2H4v14h10V6Zm0 0v4h4M6.5 9h5M6.5 12h3" />
-          </svg>
-          {chip}
-          <span class="desk-chip-approved"><svg viewBox="0 0 16 16"><path d="m4 8 2.5 2.5L12 5" /></svg></span>
-        </span>
-      ))}
-    </div>
+    <HeroFlowSvg />
   </div>
   <figcaption class="desk-caption">
     <span>{scene.caption}</span>
@@ -51,15 +37,29 @@ const { scene } = heroContent;
   document.querySelectorAll<HTMLElement>('[data-desk-scene]').forEach((scene) => {
     const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const toggle = scene.querySelector<HTMLButtonElement>('[data-desk-toggle]');
+    const svg = scene.querySelector<SVGSVGElement>('[data-hero-flow]');
     let ready = false;
     let visible = false;
     let paused = false;
+    let started = false;
     let firstFrame = 0;
     let secondFrame = 0;
 
     const update = () => {
-      scene.dataset.ready = String(ready && !motion.matches);
-      scene.dataset.playing = String(ready && visible && !paused && !motion.matches && !document.hidden);
+      const playing = ready && visible && !paused && !motion.matches && !document.hidden;
+      scene.dataset.playing = String(playing);
+      if (svg) {
+        if (playing) {
+          if (!started) {
+            // SMIL remains dormant until after the first paint and until visible.
+            svg.querySelectorAll<SVGAnimationElement>('[data-flow-motion]').forEach((animation) => animation.beginElement());
+            started = true;
+          }
+          svg.unpauseAnimations();
+        } else {
+          svg.pauseAnimations();
+        }
+      }
       if (toggle) {
         toggle.hidden = !ready || motion.matches;
         toggle.setAttribute('aria-pressed', String(paused));
@@ -78,7 +78,8 @@ const { scene } = heroContent;
       visible = entry?.isIntersecting ?? false;
       update();
     }, { threshold: 0.1 });
-    observer.observe(scene);
+    observer.observe(scene.closest('.hero') ?? scene);
+    update();
 
     // Two frames leave the original photograph visible for the first paint.
     firstFrame = requestAnimationFrame(() => {
