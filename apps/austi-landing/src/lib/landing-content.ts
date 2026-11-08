@@ -31,15 +31,6 @@ export const heroContent = {
   // TODO: Add verified publishing integrations and their local logo assets once supported.
   integrations: [] as HeroIntegration[],
   integrationsLabel: 'Publishes to',
-  scene: {
-    alt: 'An empty office chair behind a work table covered in paperwork',
-    caption: 'Illustrative workflow',
-    channels: ['Ads', 'Socials', 'Emails', 'SEO'],
-    flowLabel:
-      'Illustration: your website feeds Austi, which produces ads, social posts, emails and SEO content for your approval',
-    pause: 'Pause animation',
-    play: 'Play animation',
-  },
 };
 
 export const outcomes = [

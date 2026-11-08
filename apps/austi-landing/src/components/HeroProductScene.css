@@ -1,0 +1,59 @@
+.hero-product-scene {
+  width: 92%;
+  min-width: 0;
+  margin: 0;
+  justify-self: center;
+}
+.product-viewport {
+  position: relative;
+  aspect-ratio: 5 / 4;
+  container-type: inline-size;
+}
+.product-canvas {
+  --u: calc(100cqw / 800);
+  position: absolute;
+  inset: 0;
+}
+.scene-core {
+  position: absolute;
+  left: 20%;
+  top: 48%;
+  display: grid;
+  width: max(3rem, calc(76 * var(--u)));
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid var(--line-dark);
+  border-radius: 50%;
+  background: var(--color-night);
+  transform: translate(-50%, -50%);
+}
+.scene-core img {
+  width: 38%;
+  height: auto;
+}
+.product-caption {
+  display: flex;
+  min-height: 3.25rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--size-sm);
+  color: var(--color-muted-dark);
+  font-size: var(--font-size-xs);
+}
+.product-motion-toggle {
+  min-height: 2.75rem;
+  padding: var(--size-xs) 0 var(--size-xs) var(--size-xs);
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-size: inherit;
+  cursor: pointer;
+}
+.product-motion-toggle[hidden] {
+  display: none;
+}
+@media (max-width: 1023px) {
+  .hero-product-scene {
+    width: 100%;
+  }
+}

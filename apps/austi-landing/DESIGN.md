@@ -27,10 +27,9 @@ autonomous for its own sake.
 
 ## Hero focal asset
 
-Use the existing empty operations-desk photograph as the first-viewport image. The paperwork makes
-coordination burden tangible, while the empty chair supports the promise that intake can begin
-before an operator is available. The message and research-stage CTA remain fully readable without
-animation.
+Use the HTML product scene to explain website → brand context → content drafts → approval.
+Keep the text crisp, the connectors behind the cards, and the scene readable in its static
+reduced-motion state. Hero content is illustrative and uses a clearly fictional brand.
 
 ## Typography and color
 
@@ -79,9 +78,9 @@ transparent footer and revealed space. Do not add a second CSS gradient renderer
 
 ## Asset provenance
 
-The hero photograph, responsive derivatives, CTA texture, and Clarity City font files are existing
-repository assets. `public/og-austi.png` is an AI-edited social card derived from that hero
-photograph and contains only the Austi name and category statement. Do not add customer logos,
+The logo, CTA texture, and Clarity City font files are existing repository assets. The hero uses
+HTML and SVG rather than a photograph. `public/og-austi.png` remains the existing social card,
+independently used by page metadata. Do not add customer logos,
 testimonials, avatars, or integration marks until there is honest source material for them.
 
 ## Avoid

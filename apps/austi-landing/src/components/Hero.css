@@ -10,7 +10,7 @@
   justify-content: center;
   width: 100%;
   min-height: 100svh;
-  padding: clamp(9rem, 17vh, 12rem) var(--page-gutter) var(--size-xl);
+  padding: max(7rem, calc(env(safe-area-inset-top) + 6.5rem)) var(--page-gutter) var(--size-xl);
   background: var(--color-black);
   overflow: hidden;
 }
@@ -65,7 +65,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--size-lg) var(--size-xl);
-  margin: calc(var(--size-xl) * 1.5) 0 0;
+  margin: var(--size-xl) 0 0;
   padding: 0;
   list-style: none;
   font-size: var(--font-size-xs);
@@ -179,7 +179,8 @@
 
 @media (max-width: 1023px) {
   .hero {
-    padding-top: 9rem;
+    justify-content: flex-start;
+    padding-top: 7rem;
   }
   .hero-main {
     grid-template-columns: minmax(0, 1fr);
