@@ -1,0 +1,50 @@
+---
+import type { HeroIntegration } from '../lib/landing-content';
+
+interface Props {
+  integrations: HeroIntegration[];
+  label: string;
+}
+
+const { integrations, label } = Astro.props;
+---
+
+{integrations.length > 0 && (
+  <div class="integration-marquee">
+    <span class="integration-label">{label}</span>
+    <div class="integration-window">
+      <ul class="integration-list sr-only">
+        {integrations.map((integration) => <li>{integration.name}</li>)}
+      </ul>
+      <div class="integration-track" aria-hidden="true">
+        {[0, 1].map(() => (
+          <div class="integration-group">
+            {integrations.map((integration) => (
+              <img src={integration.logo} alt="" width="112" height="28" loading="lazy" />
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+)}
+
+<style>
+  .integration-marquee { display: flex; min-width: 0; align-items: center; gap: var(--size-lg); }
+  .integration-label { flex-shrink: 0; color: var(--color-muted-dark); font-size: var(--font-size-xs); }
+  .integration-window { min-width: 0; overflow: hidden; }
+  .integration-track { display: flex; width: max-content; min-width: 200%; animation: integration-scroll 24s linear infinite; }
+  .integration-group { display: flex; flex: 1 0 auto; align-items: center; justify-content: space-around; gap: var(--size-xl); padding-right: var(--size-xl); }
+  .integration-group img { width: 7rem; height: 1.75rem; object-fit: contain; }
+  .integration-marquee:hover .integration-track { animation-play-state: paused; }
+  @keyframes integration-scroll { to { transform: translateX(-50%); } }
+  @media (max-width: 640px) {
+    .integration-marquee { flex-direction: column; align-items: flex-start; gap: var(--size-md); }
+    .integration-window { width: 100%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .integration-track { width: auto; min-width: 0; animation: none; }
+    .integration-group { flex-wrap: wrap; flex-shrink: 1; justify-content: flex-start; padding: 0; }
+    .integration-group + .integration-group { display: none; }
+  }
+</style>

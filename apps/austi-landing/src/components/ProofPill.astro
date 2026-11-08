@@ -1,0 +1,52 @@
+---
+import type { HeroProof } from '../lib/landing-content';
+
+interface Props extends Partial<HeroProof> {}
+
+const { label, avatars = [], rating } = Astro.props;
+const validRating = rating && Number.isFinite(rating.value) && rating.value >= 0
+  && Number.isFinite(rating.max) && rating.max > 0 && rating.value <= rating.max;
+---
+
+{label?.trim() && (
+  <div class="proof-pill">
+    {avatars.length > 0 && (
+      <span class="proof-avatars">
+        {avatars.map((avatar) => <img src={avatar.src} alt={avatar.alt} width="28" height="28" />)}
+      </span>
+    )}
+    <span>{label}</span>
+    {validRating && rating && (
+      <span class="proof-rating" aria-label={rating.label}>
+        <span aria-hidden="true">★</span> {rating.value}/{rating.max}
+      </span>
+    )}
+  </div>
+)}
+
+<style>
+  .proof-pill {
+    display: inline-flex;
+    width: fit-content;
+    max-width: 100%;
+    align-items: center;
+    gap: var(--size-xs);
+    margin-bottom: var(--size-lg);
+    padding: var(--size-xs) var(--size-sm);
+    border: 1px solid var(--line-dark);
+    border-radius: var(--size-xl);
+    color: var(--color-text);
+    font-size: var(--font-size-xs);
+  }
+  .proof-avatars { display: flex; flex-shrink: 0; padding-left: var(--size-xs); }
+  .proof-avatars img {
+    width: 1.75rem;
+    height: 1.75rem;
+    margin-left: calc(var(--size-xs) * -1);
+    border: 2px solid var(--color-black);
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .proof-rating { color: var(--color-muted-dark); white-space: nowrap; }
+  .proof-rating span { color: var(--color-signal); }
+</style>

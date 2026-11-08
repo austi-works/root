@@ -1,3 +1,45 @@
+export interface HeroProof {
+  label: string;
+  avatars?: { src: string; alt: string }[];
+  rating?: { value: number; max: number; label: string };
+}
+
+export interface HeroIntegration {
+  name: string;
+  logo: string;
+}
+
+export const heroContent = {
+  product: 'Austi',
+  heading: 'Your marketing on autopilot.',
+  paragraph:
+    'Paste your website. Austi plans, writes, and publishes your ads, socials, emails, and SEO every day.',
+  paragraphMuted: 'You just approve.',
+  cta: 'Get early access',
+  trust: [
+    { icon: 'lock', title: 'Private and secure', detail: 'Your data stays yours' },
+    { icon: 'check', title: 'You approve everything', detail: 'Nothing publishes without you' },
+  ],
+  // Set only after verifying the claim. No proof is rendered by default.
+  proof: import.meta.env.PUBLIC_HERO_PROOF_LABEL?.trim()
+    ? ({ label: import.meta.env.PUBLIC_HERO_PROOF_LABEL.trim() } as HeroProof)
+    : undefined,
+  metric: {
+    endpoint: import.meta.env.PUBLIC_HERO_METRIC_ENDPOINT?.trim(),
+    label: 'pieces of content created in beta',
+  },
+  // TODO: Add verified publishing integrations and their local logo assets once supported.
+  integrations: [] as HeroIntegration[],
+  integrationsLabel: 'Publishes to',
+  scene: {
+    alt: 'An empty office chair behind a work table covered in paperwork',
+    caption: 'Illustrative workflow',
+    chips: ['Ad', 'Post', 'Email', 'SEO'],
+    pause: 'Pause animation',
+    play: 'Play animation',
+  },
+};
+
 export const outcomes = [
   {
     id: 'coordination',

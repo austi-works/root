@@ -1,0 +1,27 @@
+.live-counter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: var(--size-xs) var(--size-sm);
+  text-align: right;
+}
+
+.live-counter-value {
+  color: var(--color-text);
+  font-size: var(--font-size-title-sm);
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.live-counter-label {
+  color: var(--color-muted-dark);
+  font-size: var(--font-size-xs);
+}
+
+@media (max-width: 1023px) {
+  .live-counter {
+    justify-content: flex-start;
+    text-align: left;
+  }
+}
