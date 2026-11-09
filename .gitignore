@@ -23,3 +23,4 @@ todos.json
 build
 
 .vercel
+.claude/worktrees
