@@ -68,21 +68,25 @@ export const learnSteps = [
 
 export const planSteps = [
   {
+    name: 'The idea',
     value: 'Slower mornings',
     title: 'One idea worth repeating.',
     copy: 'A campaign begins as a single thought you can say out loud. Everything after it has to earn its place against that thought.',
   },
   {
+    name: 'The offer',
     value: 'The new weekend collection',
     title: 'Be clear about what you are asking.',
     copy: 'Name what is being promoted and what a reader should do next, so five channels do not end up making five different requests.',
   },
   {
+    name: 'The angles',
     value: 'Ritual, material, gifting',
     title: 'Several ways into the same story.',
     copy: 'Explore different angles side by side, keep the ones that sound like you and throw the rest away without ceremony.',
   },
   {
+    name: 'The plan',
     value: 'Four channels, one week',
     title: 'Put it in order.',
     copy: 'See what goes where and when before anything is written in full. Move it around while moving it is still easy.',
@@ -92,24 +96,28 @@ export const planSteps = [
 export const channels = [
   {
     id: 'ads',
+    name: 'Ads',
     title: 'Headlines with a reason to exist.',
     copy: 'Ad copy and creative briefs built from the campaign idea, ready for a designer or your own hands.',
     backdrop: 'ripple-tide',
   },
   {
     id: 'social',
+    name: 'Social',
     title: 'Posts that belong to a plan.',
     copy: 'Captions and content plans shaped for the format, still telling the same story as the launch.',
     backdrop: 'forms-veil',
   },
   {
     id: 'email',
+    name: 'Email',
     title: 'Letters people already agreed to read.',
     copy: 'Launch emails and newsletters written around your offer, with the subject line treated as part of the job.',
     backdrop: 'dots-swell',
   },
   {
     id: 'search',
+    name: 'Search',
     title: 'Answers to what people are asking.',
     copy: 'Search-focused article outlines that connect the questions customers ask with the things you actually know.',
     backdrop: 'ripple-drift',
@@ -119,16 +127,19 @@ export const channels = [
 export const voiceSamples = [
   {
     id: 'post',
+    name: 'Social post',
     generic: 'Elevate your mornings with our premium new collection. Shop now and transform your weekend routine today!',
     voice: 'Nobody ever wished Saturday went faster. The weekend edit is here, and it is in no hurry either.',
   },
   {
     id: 'subject',
+    name: 'Email subject',
     generic: 'Do not miss out: our exciting new collection just dropped!',
     voice: 'Put the kettle on. We made you something.',
   },
   {
     id: 'ad',
+    name: 'Ad headline',
     generic: 'Premium home essentials for the modern lifestyle.',
     voice: 'Slower mornings start here.',
   },
@@ -187,14 +198,17 @@ export const boundaries = [
 
 export const audiences = [
   {
+    name: 'Founders',
     copy: 'You are the head of marketing, among other things, and the launch is on Thursday.',
     backdrop: 'ripple-hero',
   },
   {
+    name: 'Independent businesses',
     copy: 'You have a loyal following and a very long list of things that are not marketing.',
     backdrop: 'forms-veil',
   },
   {
+    name: 'Small marketing teams',
     copy: 'You have good ideas and four channels that all want something different by Friday.',
     backdrop: 'dots-swell',
   },
@@ -220,12 +234,15 @@ export const chapters = [
 export const faqGroups = [
   {
     id: 'product',
+    name: 'Product',
   },
   {
     id: 'operation',
+    name: 'How it works',
   },
   {
     id: 'stage',
+    name: 'Availability',
   },
 ] as const;
 
