@@ -24,3 +24,4 @@ build
 
 .vercel
 .claude/worktrees
+pitchfork.local.toml

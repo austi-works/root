@@ -39,6 +39,16 @@ bun run portfolio:build
 bun run austi-landing:build
 ```
 
+The `*:dev`, `*:preview`, and `*:convex` scripts start background processes through [pitchfork](https://pitchfork.jdx.dev). Install it with `brew install pitchfork`:
+
+```sh
+pitchfork list
+pitchfork logs austi --follow
+pitchfork stop austi
+```
+
+See `.docs/local-processes.md` for daemons, ports, and logs.
+
 Formatting is available as an explicit command and is not part of `check`:
 
 ```sh
@@ -53,4 +63,5 @@ bun run format
 - Import aliases and package import rules are documented in `.docs/code-conventions.md`.
 - Theming and UI rules live in `.docs/ui-theming.md`.
 - Analytics events and the funnel live in `.docs/austi/analytics.md`.
+- Local background processes are documented in `.docs/local-processes.md`.
 - Production branch naming and promotion rules live in `.docs/release-branches.md`.

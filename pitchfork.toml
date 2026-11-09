@@ -1,0 +1,65 @@
+#:schema https://pitchfork.jdx.dev/schema.json
+
+# Local long-running processes. See .docs/local-processes.md.
+
+[daemons.austi]
+dir = "apps/austi"
+run = "exec bun run dev"
+port = { expect = [3000], bump = 10 }
+ready_output = { pattern = "Local", timeout = "60s" }
+
+[daemons.austi-preview]
+dir = "apps/austi"
+run = "exec bun run preview"
+port = { expect = [3000], bump = 10 }
+ready_output = { pattern = "Local", timeout = "60s" }
+
+[daemons.austi-convex]
+run = "exec bunx convex dev"
+
+[daemons.austi-landing]
+dir = "apps/austi-landing"
+run = "exec bun run dev --port $PORT"
+port = { expect = [4329], bump = 10 }
+ready_output = { pattern = "Local", timeout = "60s" }
+
+[daemons.austi-landing-preview]
+dir = "apps/austi-landing"
+run = "exec bun run preview --port $PORT"
+port = { expect = [4329], bump = 10 }
+ready_output = { pattern = "Local", timeout = "60s" }
+
+[daemons.trading]
+dir = "apps/trading"
+run = "exec bun run dev"
+port = { expect = [3000], bump = 10 }
+ready_output = { pattern = "Local", timeout = "60s" }
+
+[daemons.trading-preview]
+dir = "apps/trading"
+run = "exec bun run preview --port $PORT"
+port = { expect = [4173], bump = 10 }
+ready_output = { pattern = "Local", timeout = "60s" }
+
+[daemons.trading-convex]
+dir = "apps/trading"
+run = "exec bun run convex"
+
+[daemons.portfolio]
+dir = "apps/portfolio"
+run = "exec bun run dev --port $PORT"
+port = { expect = [4321], bump = 10 }
+ready_output = { pattern = "Local", timeout = "60s" }
+
+[daemons.portfolio-preview]
+dir = "apps/portfolio"
+run = "exec bun run preview --port $PORT"
+port = { expect = [4321], bump = 10 }
+ready_output = { pattern = "Local", timeout = "60s" }
+
+# Tauri's devUrl is fixed, so the desktop port cannot bump.
+[daemons.austi-desktop]
+dir = "apps/austi-desktop"
+run = "exec bun run tauri dev"
+port = 1421
+ready_port = 1421

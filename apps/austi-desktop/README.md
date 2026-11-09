@@ -14,7 +14,7 @@
 
 ## Commands
 
-Run commands from the monorepo root:
+Run commands from the monorepo root. `austi-desktop:dev` runs in the background through pitchfork; see `.docs/local-processes.md`.
 
 ```sh
 bun run austi-desktop:dev

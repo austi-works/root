@@ -3,9 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "env NODE_OPTIONS=\"$NODE_OPTIONS --max-http-header-size=65536\" vite --port 3000",
+    "dev": "env NODE_OPTIONS=\"$NODE_OPTIONS --max-http-header-size=65536\" vite --port ${PORT:-3000}",
     "build": "vite build",
-    "preview": "vite preview --port 3000",
+    "preview": "vite preview --port ${PORT:-3000}",
     "lint": "oxlint src vite.config.ts vitest.config.ts",
     "test": "vitest run src --passWithNoTests",
     "typecheck": "bunx tsc --noEmit"
