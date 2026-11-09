@@ -6,5 +6,7 @@
 .plan-frame .frame-stage { height: 100%; }
 
 @media (max-width: 900px) {
-  .plan .split-float { position: static; height: 26rem; }
+  .plan .split-float { position: static; height: auto; }
+  .plan-brief-frame { height: auto; }
+  .plan-frame { aspect-ratio: auto; }
 }

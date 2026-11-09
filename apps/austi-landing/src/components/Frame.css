@@ -81,3 +81,9 @@
 @media (hover: none) {
   .frame::after { display: none; }
 }
+
+/* No parallax on phones, and no blend layer to repaint on every scroll frame. */
+@media (max-width: 899.98px) {
+  .frame::before { mix-blend-mode: normal; opacity: 0.2; }
+  .frame-media { will-change: auto; }
+}

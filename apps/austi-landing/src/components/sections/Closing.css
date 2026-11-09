@@ -37,10 +37,14 @@
 }
 
 .motion .closing { height: 260svh; }
-.motion .closing-stage { position: sticky; top: 0; height: 100svh; }
+.motion .closing-stage { position: sticky; top: 0; height: var(--stage-height); }
 
 .motion .closing-frame {
   clip-path: inset(var(--clip-y, 22svh) var(--clip-x, 26vw) round var(--clip-r, 0.5rem));
+}
+
+@media (max-width: 899.98px) {
+  .motion .closing { height: 180svh; }
 }
 
 @media (max-width: 640px) {

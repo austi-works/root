@@ -42,3 +42,20 @@
 }
 
 .frame-stage:has(> .spot) { padding: 0; }
+
+/* The first aim is a placement, not a move. */
+.spot:not([data-aimed]) .spot-canvas,
+.spot:not([data-aimed]) .spot-hole { transition: none; }
+.motion .spot:not([data-aimed]) .spot-canvas { visibility: hidden; }
+.motion .spot[data-aimed] .spot-canvas { animation: spot-in 900ms var(--ease-out) both; }
+
+@keyframes spot-in {
+  from { opacity: 0; translate: 0 0.75rem; }
+}
+
+@media (max-width: 899.98px) {
+  .spot-canvas { width: 320px; height: auto; }
+  .spot:not([data-aimed]) { min-height: 20rem; }
+  .spot-canvas,
+  .spot-hole { transition-duration: 650ms, 650ms, 650ms, 650ms, 300ms; }
+}

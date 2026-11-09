@@ -1,4 +1,4 @@
-/* The mock Austi interface. It is laid out at a fixed 1440 x 900 and scaled by Spotlight. */
+/* The mock Austi interface. Desktop is a fixed 1440 x 900 that Spotlight scales; phones reflow it. */
 .app {
   --a-bg: #0b0b0c;
   --a-side: #101011;
@@ -254,3 +254,100 @@
 .review-queue { padding: 5px 13px; }
 .review-queue div { display: flex; padding-block: 8px; justify-content: space-between; border-bottom: 1px solid var(--a-line); }
 .review-queue div:last-child { border-bottom: 0; }
+
+/* Phones: the same interface reflowed to a real phone width, shown at close to 1:1. */
+@media (max-width: 899.98px) {
+  .app { display: block; width: 100%; height: auto; }
+  .app-side,
+  .app-top { display: none; }
+  .app-content { padding: 10px; }
+  .app small { font-size: 12px; }
+
+  .ws,
+  .brand,
+  .plan-app,
+  .drafts,
+  .review-app { height: auto; grid-template-columns: minmax(0, 1fr); grid-template-rows: none; gap: 10px; }
+
+  .ws-columns { flex: none; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .ws-column { padding: 6px; }
+  .ws-column:nth-child(n + 3) { display: none; }
+  .ws-card { padding: 7px; gap: 7px; }
+  .ws-card img { height: 92px; }
+  .ws-card strong { font-size: 13px; }
+  .ws-card footer { flex-wrap: wrap; }
+
+  .brand-browser { margin: 10px 10px 0; flex: none; }
+  .brand-page { flex: none; }
+  /* Headlines sit above their photos here: there is no clear area to overlay them on. */
+  .brand-page-hero { display: flex; flex: none; flex-direction: column; }
+  .brand-page-hero p { position: static; padding: 4px 12px 10px; font-size: 21px; order: -1; }
+  .brand-page-hero img { position: static; height: 88px; }
+  .brand-read { padding: 9px 11px; grid-template-columns: minmax(0, 1fr); }
+  .brand-read ul { display: none; }
+  .brand-read dl div { grid-template-columns: 84px minmax(0, 1fr); }
+  .brand-product { grid-template-columns: 50px minmax(0, 1fr) auto; gap: 10px; }
+  .brand-product img { width: 50px; height: 50px; }
+  .brand-product .app-state { display: none; }
+  .brand-voice { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .brand-tones { gap: 10px; }
+
+  .plan-brief-card { grid-row: auto; }
+  .plan-brief-card li { padding-block: 11px; }
+  /* The brief sits above its steps here, so every value is shown from the start. */
+  .plan-brief-card [data-state='next'] strong { opacity: 1; translate: none; }
+  .plan-big { padding: 22px 14px 10px; font-size: 38px; }
+  .plan-idea-card .app-muted { padding-inline: 14px; }
+  .plan-rejected { margin-top: 12px; padding-inline: 14px; }
+  .plan-offer { height: 226px; flex: none; }
+  .plan-offer div { padding: 16px 14px; }
+  .plan-offer strong { font-size: 21px; }
+  .plan-angles-row { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .plan-angles-row article { grid-template-columns: 72px minmax(0, 1fr); align-items: center; column-gap: 11px; }
+  .plan-angles-row img { height: 72px; grid-row: span 2; }
+  .plan-angles-row strong { align-self: end; margin-top: 0; }
+  .plan-angles-row small { align-self: start; }
+  .plan-tick { top: 4px; right: auto; left: 48px; }
+  /* Seven day columns cannot fit, so the week reads as one row of drafts per channel. */
+  .plan-calendar { display: flex; padding: 12px; flex-wrap: wrap; gap: 6px; }
+  .plan-calendar > span,
+  .plan-calendar > small { display: none; }
+  .plan-calendar b { flex: 0 0 100%; margin-top: 6px; }
+  .plan-calendar b:first-of-type { margin-top: 0; }
+  .plan-calendar em { padding-block: 6px; font-size: 12.5px; white-space: normal; }
+
+  .ads-row { grid-template-columns: repeat(2, minmax(0, 1fr)); flex: none; }
+  .ad:not(.ad--note) { display: flex; height: 244px; flex-direction: column; background: #e9e6df; }
+  .ad:not(.ad--note) p { position: static; padding: 11px 11px 9px; font-size: 18px; order: -1; }
+  .ad:not(.ad--note) img { position: static; min-height: 0; flex: 1; }
+  .ad:not(.ad--note) span { position: static; margin: 9px 10px 10px; padding-inline: 9px; align-self: flex-start; font-size: 11px; white-space: nowrap; }
+  .ad--story:not(.ad--note) p { font-size: 15.5px; }
+  .ad--note { grid-column: 1 / -1; }
+  .ad--note strong { margin-bottom: 6px; }
+  .social-row { grid-template-columns: minmax(0, 1fr); flex: none; }
+  .post img { height: 210px; flex: none; }
+  .social-queue { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .social-queue > small { grid-column: 1 / -1; }
+  .social-queue div { align-items: flex-start; flex-direction: column; gap: 6px; }
+  .social-queue img { width: 100%; height: 72px; }
+  .social-queue span { font-size: 12.5px; line-height: 1.25; }
+  .email { flex: none; }
+  .email-meta small { word-break: break-word; }
+  .email-body { width: auto; margin: 10px; padding: 14px 14px 18px; flex: none; border-radius: 8px; }
+  .email-body > img { height: 130px; }
+  .email-body p { font-size: 13px; }
+  .search-pane { grid-template-columns: minmax(0, 1fr); flex: none; }
+  .search-doc { border-right: 0; }
+  .search-doc h6 { font-size: 23px; }
+  .serp { margin-top: 4px; }
+  .search-pane aside { padding-top: 0; }
+
+  .review-paper { width: auto; margin: 10px; padding: 16px; flex: none; border-radius: 8px; }
+  .review-paper h6 { font-size: 24px; }
+  .review-paper img { height: 130px; }
+  .review-paper p { font-size: 14px; }
+  .review-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .review-actions button { height: 48px; justify-content: center; }
+  .review-actions .review-approve,
+  .review-actions .review-reset { grid-column: 1 / -1; }
+}

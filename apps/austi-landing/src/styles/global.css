@@ -121,7 +121,9 @@ button:focus-visible {
 .paper-field .lede { color: var(--color-muted-paper); }
 
 /* The paper sections hold still while the planet section rises over them. */
-.motion .paper-run { position: sticky; z-index: 0; }
+@media (min-width: 900px) {
+  .motion .paper-run { position: sticky; z-index: 0; }
+}
 
 /* Motion is opt-in: `.motion` is only set when JavaScript runs and motion is allowed. */
 .motion [data-reveal] {
@@ -134,6 +136,21 @@ button:focus-visible {
 
 .motion [data-reveal].is-in { opacity: 1; transform: none; }
 
+/* Images get the same entrance as text, but only once they have actually loaded. */
+.motion :is(.frame-media, .app) img {
+  transition:
+    opacity 900ms var(--ease-out),
+    translate 1100ms var(--ease-out),
+    transform 1100ms var(--ease-out);
+}
+
+.motion :is(.frame-media, .app) img:not(.is-loaded) { opacity: 0; translate: 0 0.75rem; }
+
+
+/* The large viewport stays constant while a phone browser bar slides, so stages never resize. */
+@media (max-width: 899.98px) {
+  :root { --stage-height: 100lvh; }
+}
 
 @media (max-width: 640px) {
   :root {

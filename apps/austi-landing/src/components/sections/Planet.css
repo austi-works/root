@@ -50,8 +50,17 @@
 .planet-line { align-self: start; padding-top: 12svh; }
 .planet-line--second { align-self: end; padding-top: 0; padding-bottom: 12svh; }
 
-.motion .planet { height: 420svh; border-radius: 2.5rem 2.5rem 0 0; }
-.motion .planet-stage { position: sticky; top: 0; height: 100svh; border-radius: inherit; }
+.motion .planet { height: 420svh; }
+.motion .planet-stage { position: sticky; top: 0; height: var(--stage-height); border-radius: inherit; }
+
+@media (min-width: 900px) {
+  .motion .planet { border-radius: 2.5rem 2.5rem 0 0; }
+}
+
+@media (max-width: 899.98px) {
+  .motion .planet { height: 300svh; }
+}
+
 .motion .planet-line,
 .motion .planet-line--second { align-self: center; padding: 0; }
 

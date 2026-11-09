@@ -15,18 +15,21 @@ const all = <T extends HTMLElement = HTMLElement>(selector: string, scope: Paren
 ];
 
 /** A timeline scrubbed across a tall section whose stage is sticky. */
-const scene = (trigger: Element, vars: ScrollTrigger.Vars = {}) =>
-  gsap.timeline({
+const scene = (trigger: Element, vars: ScrollTrigger.Vars = {}) => {
+  const stage = trigger.querySelector<HTMLElement>('[data-stage]');
+  return gsap.timeline({
     defaults: { ease: 'none' },
     scrollTrigger: {
       trigger,
       start: 'top top',
-      end: 'bottom bottom',
+      // Ends exactly as the sticky stage releases, even if a phone's browser bar has moved.
+      end: () => (stage ? `bottom top+=${stage.offsetHeight}` : 'bottom bottom'),
       scrub: 0.4,
       invalidateOnRefresh: true,
       ...vars,
     },
   });
+};
 
 /* Scenes */
 
@@ -171,7 +174,10 @@ const curtainScene = () => {
       scrollTrigger: { trigger: curtain, start: 'top bottom', end: 'top top', scrub: true },
     },
   );
-  return () => ScrollTrigger.removeEventListener('refreshInit', stick);
+  return () => {
+    ScrollTrigger.removeEventListener('refreshInit', stick);
+    run.style.removeProperty('top');
+  };
 };
 
 const planetScene = () => {
@@ -294,9 +300,10 @@ const floatingDepth = () => {
   });
 };
 
-const marqueeVelocity = () => {
+const marquee = (reactToScroll: boolean) => {
   all('[data-marquee]').forEach((track) => {
     const drift = gsap.to(track, { xPercent: -50, duration: 46, ease: 'none', repeat: -1 });
+    if (!reactToScroll) return;
     ScrollTrigger.create({
       trigger: track,
       start: 'top bottom',
@@ -338,24 +345,33 @@ const compareSweep = () => {
 
 const media = gsap.matchMedia();
 
+// Sticky stages hold still while a phone scrolls, so these stay smooth on touch.
 media.add(ALLOW_MOTION, () => {
-  heroScene();
-  heroSpotlight();
   statementScene();
   irisScene();
-  const releaseCurtain = curtainScene();
   planetScene();
   weekScene();
-  stackScene();
   closingScene();
-  frameDepth();
-  floatingDepth();
-  marqueeVelocity();
-  compareSweep();
-  return releaseCurtain;
 });
 
-media.add(`${ALLOW_MOTION} and (min-width: 900px)`, horizontalScene);
+// These move elements that are scrolling natively, which trails a finger by a frame on phones.
+media.add(`${ALLOW_MOTION} and (min-width: 900px)`, () => {
+  heroScene();
+  heroSpotlight();
+  const releaseCurtain = curtainScene();
+  stackScene();
+  frameDepth();
+  floatingDepth();
+  marquee(true);
+  compareSweep();
+  const releaseHorizontal = horizontalScene();
+  return () => {
+    releaseCurtain?.();
+    releaseHorizontal?.();
+  };
+});
+
+media.add(`${ALLOW_MOTION} and (max-width: 899.98px)`, () => marquee(false));
 
 /* Reveal once, as content arrives. */
 
@@ -373,10 +389,22 @@ const revealOnce = new IntersectionObserver(
 all('[data-reveal]').forEach((element) => revealOnce.observe(element));
 all('[data-frame]').forEach((frame) => revealOnce.observe(frame));
 
+/* Images are shown only once decoded, so they fade in whole instead of popping in. */
+
+all<HTMLImageElement>('.frame-media img, .app img').forEach((image) => {
+  const show = () => image.classList.add('is-loaded');
+  if (image.complete) {
+    show();
+    return;
+  }
+  image.addEventListener('load', () => void image.decode().catch(() => undefined).finally(show), { once: true });
+  image.addEventListener('error', show, { once: true });
+});
+
 /* Spotlight: frame one region of the full interface and let the rest fall into shadow. */
 
-const DESIGN_WIDTH = 1440;
-const DESIGN_HEIGHT = 900;
+const MAX_ZOOM = 1.2;
+const phoneLayout = window.matchMedia('(max-width: 899.98px)');
 
 const positionIn = (element: HTMLElement, canvas: HTMLElement) => {
   let x = 0;
@@ -396,37 +424,49 @@ const aimSpot = (spot: HTMLElement) => {
   if (!canvas || !hole) return;
 
   const hostWidth = spot.clientWidth;
-  const hostHeight = spot.clientHeight;
-  if (!hostWidth || !hostHeight) return;
+  if (!hostWidth) return;
 
-  const narrow = hostWidth < 560;
+  const narrow = phoneLayout.matches;
   const name = (narrow && spot.dataset.spotMobile) || spot.dataset.spotRegion;
   const region = name ? one(`[data-region="${name}"]`, canvas) : null;
   const box = region ? positionIn(region, canvas) : null;
   const still = spot.hasAttribute('data-spot-still') && !(narrow && spot.dataset.spotMobile);
+  const designWidth = canvas.offsetWidth;
+  const designHeight = canvas.offsetHeight;
   // A zoomed view is a slice of the app: lit region, a band of shadowed context, then the backdrop.
   const zoomed = box && !still;
-  const band = zoomed ? (narrow ? 26 : 64) : 0;
-  const gap = zoomed ? (narrow ? 12 : 30) : 0;
-  const view = zoomed ? box : { x: 0, y: 0, width: DESIGN_WIDTH, height: DESIGN_HEIGHT };
+  const band = zoomed ? (narrow ? 6 : 64) : 0;
+  const gap = zoomed ? (narrow ? 14 : 30) : 0;
+  const view = zoomed ? box : { x: 0, y: 0, width: designWidth, height: designHeight };
+
+  // On phones a frame grows to fit its slice, unless it is the sticky one whose slice keeps changing.
+  if (narrow && zoomed && !spot.hasAttribute('data-spot-follow')) {
+    const fit = Math.min((hostWidth - gap * 2) / (view.width + band * 2), MAX_ZOOM);
+    spot.style.height = `${Math.ceil((view.height + band * 2) * fit + gap * 2)}px`;
+  } else {
+    spot.style.removeProperty('height');
+  }
+
+  const hostHeight = spot.clientHeight;
+  if (!hostHeight) return;
   const scale = Math.min(
     (hostWidth - gap * 2) / (view.width + band * 2),
     (hostHeight - gap * 2) / (view.height + band * 2),
-    1.2,
+    MAX_ZOOM,
   );
   const left = (hostWidth - view.width * scale) / 2 - view.x * scale;
   const top = (hostHeight - view.height * scale) / 2 - view.y * scale;
   canvas.style.transform = `translate(${left}px, ${top}px) scale(${scale})`;
   const cropTop = Math.max(view.y - band, 0);
   const cropLeft = Math.max(view.x - band, 0);
-  const cropBottom = Math.max(DESIGN_HEIGHT - (view.y + view.height + band), 0);
-  const cropRight = Math.max(DESIGN_WIDTH - (view.x + view.width + band), 0);
+  const cropBottom = Math.max(designHeight - (view.y + view.height + band), 0);
+  const cropRight = Math.max(designWidth - (view.x + view.width + band), 0);
   canvas.style.clipPath = zoomed
     ? `inset(${cropTop}px ${cropRight}px ${cropBottom}px ${cropLeft}px round 16px)`
     : 'inset(0px 0px 0px 0px round 16px)';
 
-  const lit = box && !(narrow && still);
-  hole.style.opacity = lit ? '1' : '0';
+  // A phone slice is already just the region, so there is nothing left to put in shadow.
+  hole.style.opacity = box && !narrow ? '1' : '0';
   if (box) {
     const bleed = 6;
     hole.style.left = `${box.x - bleed}px`;
@@ -434,15 +474,27 @@ const aimSpot = (spot: HTMLElement) => {
     hole.style.width = `${box.width + bleed * 2}px`;
     hole.style.height = `${box.height + bleed * 2}px`;
   }
+
+  if (!spot.hasAttribute('data-aimed')) {
+    // Commit the first placement before transitions switch on.
+    void canvas.offsetWidth;
+    spot.setAttribute('data-aimed', '');
+  }
 };
 
 const spots = all('[data-spot]');
 const measureSpots = new ResizeObserver((entries) => {
-  entries.forEach((entry) => aimSpot(entry.target as HTMLElement));
+  entries.forEach((entry) => {
+    const spot = entry.target.closest<HTMLElement>('[data-spot]');
+    if (spot) aimSpot(spot);
+  });
 });
 spots.forEach((spot) => {
   aimSpot(spot);
   measureSpots.observe(spot);
+  // Phone layouts grow with their content, such as a Review decision message appearing.
+  const canvas = one('[data-spot-canvas]', spot);
+  if (canvas) measureSpots.observe(canvas);
 });
 
 /* Normal-flow steps drive whatever is floating beside them. */
@@ -603,6 +655,9 @@ window.addEventListener('load', () => {
   ScrollTrigger.refresh();
   spots.forEach(aimSpot);
 });
-void document.fonts?.ready.then(() => ScrollTrigger.refresh());
+void document.fonts?.ready.then(() => {
+  spots.forEach(aimSpot);
+  ScrollTrigger.refresh();
+});
 
 root.dataset.motionReady = 'true';
