@@ -111,3 +111,22 @@
   touch-action: pan-y;
   opacity: 0;
 }
+
+/* Two half-width columns are too narrow to read on a phone, so the drafts stack instead. */
+@media (max-width: 640px) {
+  .compare-sample { grid-template-columns: minmax(0, 1fr); }
+
+  .compare-side {
+    min-height: 0;
+    padding: 1.25rem;
+    grid-area: auto;
+    gap: var(--size-md);
+  }
+
+  .compare-side p { font-size: 1.3rem; line-height: 1.2; }
+  .compare-side--voice { padding-left: 1.25rem; }
+  .compare-side--generic { order: -1; padding-right: 1.25rem; clip-path: none; }
+  .compare-handle,
+  .compare input { display: none; }
+  .voice-frame { min-height: 0; }
+}

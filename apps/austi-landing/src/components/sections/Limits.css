@@ -28,3 +28,11 @@
 }
 
 .limits-copy p { max-width: 34rem; margin: 0; font-size: var(--font-size-body-lg); line-height: 1.5; }
+
+/* Copy leads each shorter card, so it stays readable while the next one slides over. */
+@media (max-width: 899.98px) {
+  .limits-stack { gap: 10svh; }
+  .limits-card { top: calc(5rem + var(--i) * 0.6rem); }
+  .limits-frame { height: min(62svh, 30rem); }
+  .limits-frame .frame-stage { place-items: start; }
+}

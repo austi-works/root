@@ -19,8 +19,12 @@
 }
 
 .motion .statement { height: 300svh; }
-.motion .statement-stage { position: sticky; top: 0; height: 100svh; padding-block: 0; }
+.motion .statement-stage { position: sticky; top: 0; height: var(--stage-height); padding-block: 0; }
 .motion [data-word] { opacity: 0.14; }
+
+@media (max-width: 899.98px) {
+  .motion .statement { height: 200svh; }
+}
 
 .formats {
   overflow: hidden;

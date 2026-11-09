@@ -23,7 +23,7 @@
 .iris-layer--paper { display: none; }
 
 .motion .iris { height: 300svh; }
-.motion .iris-stage { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+.motion .iris-stage { position: sticky; top: 0; height: var(--stage-height); overflow: hidden; }
 .motion .iris-layer { position: absolute; min-height: 0; inset: 0; }
 
 .motion .iris-layer--paper {
@@ -35,6 +35,11 @@
 
 .iris-layer--paper .iris-title span { color: var(--color-muted-paper); }
 
+@media (max-width: 899.98px) {
+  .motion .iris { height: 200svh; }
+}
+
 @media (max-width: 640px) {
-  .iris-title { font-size: var(--font-size-closing-mobile); }
+  /* Sized so the longest word fits a phone, including at the scene's largest scale. */
+  .iris-title { font-size: clamp(2.75rem, 13vw, 4.5rem); }
 }

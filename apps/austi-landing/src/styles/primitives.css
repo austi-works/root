@@ -72,6 +72,7 @@
   --page-width: 110rem;
   --page-gutter: clamp(1.15rem, 3vw, 3.4rem);
   --section-block-size: clamp(7rem, 12vw, 13rem);
+  --stage-height: 100svh;
   --padding-section: var(--section-block-size) var(--page-gutter);
   --padding-feature: clamp(1.5rem, 3vw, 3rem);
   --padding-panel: clamp(2rem, 4vw, 4rem);

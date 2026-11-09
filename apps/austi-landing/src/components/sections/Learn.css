@@ -9,15 +9,24 @@
 .learn-frame .frame-stage { height: 100%; }
 
 @media (max-width: 900px) {
-  .learn .split { --float-height: 46svh; }
+  /* A flex parent keeps the frame sticky for the whole section in every browser. */
+  .learn .split { --float-height: min(50svh, 27rem); display: flex; align-items: stretch; flex-direction: column; gap: var(--size-lg); }
+  .learn .section-intro { padding-bottom: 6rem; }
   .learn .split-float {
     z-index: 2;
     top: 5.25rem;
-    grid-row: 1;
+    order: -1;
     background: var(--color-black);
   }
-  .learn .split-flow { grid-row: 2; }
-  .learn-step { min-height: 64svh; }
-  /* Finished steps would otherwise show above the frame, behind the header. */
-  .learn-step[data-state='done'] { opacity: 0; }
+  /* Finished steps slide under a solid band instead of showing behind the header. */
+  .learn .split-float::before {
+    position: absolute;
+    right: 0;
+    bottom: 100%;
+    left: 0;
+    height: 5.25rem;
+    background: var(--color-black);
+    content: '';
+  }
+  .learn-step { min-height: 56svh; justify-content: flex-start; padding-top: var(--size-xl); }
 }

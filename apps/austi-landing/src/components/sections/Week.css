@@ -80,6 +80,6 @@
 @media (max-width: 760px) {
   .week-rule { left: var(--page-gutter); }
   .week-dot { left: 0; transform: translateX(-50%); }
-  .week-item { min-height: 48svh; padding-left: var(--size-xl); grid-template-columns: minmax(0, 1fr); row-gap: var(--size-sm); }
+  .week-item { min-height: 38svh; padding-left: var(--size-xl); grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; row-gap: var(--size-sm); }
   .week-day { justify-content: flex-start; }
 }

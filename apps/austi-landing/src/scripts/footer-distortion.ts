@@ -135,7 +135,9 @@ export const initFooterDistortion = (host: HTMLElement) => {
   gsap.registerPlugin(ScrollTrigger);
   const media = gsap.matchMedia();
   media.add('(prefers-reduced-motion: no-preference)', () => {
-    ScrollTrigger.normalizeScroll({ allowNestedScroll: true });
+    // Phones keep native scrolling: no touch takeover and no snap fighting the thumb.
+    const compact = window.matchMedia('(max-width: 899.98px), (pointer: coarse)').matches;
+    if (!compact) ScrollTrigger.normalizeScroll({ allowNestedScroll: true });
     const spacer = host.closest<HTMLElement>('[data-footer-overscroll]')!;
     const renderer = createRenderer(host.querySelector('canvas')!, host);
     let pull = 0;
@@ -146,7 +148,7 @@ export const initFooterDistortion = (host: HTMLElement) => {
       start: 'top bottom',
       // Keep snapping active at the bottom boundary, including during a held touch.
       end: 'bottom bottom-=1',
-      snap: { snapTo: [0], delay: 0.15, duration: 0.65, ease: 'power3.inOut', inertia: false },
+      ...(compact ? {} : { snap: { snapTo: [0], delay: 0.15, duration: 0.65, ease: 'power3.inOut', inertia: false } }),
       onUpdate: (self) => {
         pull = self.progress;
         opening = pull * (self.end - self.start);

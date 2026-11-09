@@ -84,7 +84,7 @@ html { overscroll-behavior-y: none; }
   bottom: 0;
   left: 0;
   width: 100%;
-  height: clamp(24rem, 70dvh, 48rem);
+  height: clamp(24rem, 70lvh, 48rem);
   overflow: hidden;
   contain: strict;
   opacity: var(--footer-glow-opacity, 0);
@@ -103,6 +103,10 @@ html { overscroll-behavior-y: none; }
 @media (prefers-reduced-motion: reduce) {
   .footer-overscroll { height: 0; }
   .footer-distortion { display: none; }
+}
+
+@media (max-width: 760px) and (prefers-reduced-motion: no-preference) {
+  .footer-overscroll { height: 12rem; }
 }
 
 @media (max-width: 760px) {

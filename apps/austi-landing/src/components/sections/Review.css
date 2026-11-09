@@ -2,6 +2,6 @@
 .review-frame .frame-stage { height: 100%; }
 .review-end { height: var(--section-block-size); }
 
-@media (max-width: 640px) {
-  .review-frame { height: 25rem; }
+@media (max-width: 899.98px) {
+  .review-frame { height: auto; }
 }

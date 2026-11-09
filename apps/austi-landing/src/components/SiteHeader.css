@@ -108,6 +108,10 @@
 }
 
 @media (max-width: 760px) {
+  .site-header-shell[data-scrolled] .site-header {
+    background: color-mix(in srgb, var(--color-window) 97%, transparent);
+    backdrop-filter: none;
+  }
   .site-header { grid-template-columns: 1fr auto; }
   .site-header nav { display: none; }
 }

@@ -59,63 +59,67 @@
 .hero-strip:has(.integration-marquee, .live-counter) { display: grid; }
 .hero-counter { min-width: 0; grid-column: 2; }
 
-.motion .hero-track { height: 340svh; }
-.motion [data-hero-tag] { opacity: 0; }
+@media (min-width: 900px) {
+  .motion .hero-track { height: 340svh; }
+  .motion [data-hero-tag] { opacity: 0; }
 
-.motion .hero-stage {
-  position: sticky;
-  top: 0;
-  height: 100svh;
-  overflow: hidden;
-}
+  .motion .hero-stage {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    overflow: hidden;
+  }
 
-.motion .hero-intro {
-  position: absolute;
-  z-index: 2;
-  top: 0;
-  right: var(--hero-edge);
-  left: var(--hero-edge);
-  padding-inline: 0;
-}
+  .motion .hero-intro {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    right: var(--hero-edge);
+    left: var(--hero-edge);
+    padding-inline: 0;
+  }
 
-.motion .hero-frame {
-  position: absolute;
-  z-index: 1;
-  margin: 0;
-  animation: hero-frame-in 1500ms var(--ease-out) 120ms both;
-  aspect-ratio: auto;
-  border: 0;
-  border-radius: 0;
-  clip-path: inset(
-    var(--clip-top, 56svh) var(--clip-x, var(--hero-edge)) 0 var(--clip-x, var(--hero-edge))
-    round var(--clip-r, 0.5rem)
-  );
-  inset: 0;
-}
+  .motion .hero-frame {
+    position: absolute;
+    z-index: 1;
+    margin: 0;
+    animation: hero-frame-in 1500ms var(--ease-out) 120ms both;
+    aspect-ratio: auto;
+    border: 0;
+    border-radius: 0;
+    clip-path: inset(
+      var(--clip-top, 56svh) var(--clip-x, var(--hero-edge)) 0 var(--clip-x, var(--hero-edge))
+      round var(--clip-r, 0.5rem)
+    );
+    inset: 0;
+  }
 
-.motion .hero-frame .frame-stage { height: 100%; }
+  .motion .hero-frame .frame-stage { height: 100%; }
 
-@keyframes hero-frame-in {
-  from { opacity: 0; translate: 0 14svh; }
-}
+  @keyframes hero-frame-in {
+    from { opacity: 0; translate: 0 14svh; }
+  }
 
-.motion .hero-dim {
-  position: absolute;
-  z-index: 3;
-  display: block;
-  background: var(--color-black);
-  inset: 0;
-  opacity: 0;
-  pointer-events: none;
+  .motion .hero-dim {
+    position: absolute;
+    z-index: 3;
+    display: block;
+    background: var(--color-black);
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
 }
 
 @media (max-width: 900px) {
   .hero-intro { grid-template-columns: minmax(0, 1fr); gap: var(--size-lg); }
-  .hero-frame { aspect-ratio: 4 / 5; }
-  .hero-mock { aspect-ratio: 4 / 5; }
+  .hero-frame { aspect-ratio: auto; }
+  .hero-mock { width: 100%; height: auto; aspect-ratio: auto; }
+  /* Leaves a band of backdrop for the tag instead of covering the interface. */
+  .hero-frame .frame-stage:has(> .hero-mock) { padding: 0 0 4rem; }
   .hero-strip { grid-template-columns: minmax(0, 1fr); }
   .hero-counter { grid-column: 1; grid-row: 1; }
-  .hero-tag--c { right: auto; bottom: 8%; left: 50%; translate: -50% 0; }
+  .hero-tag--c { right: auto; bottom: 1rem; left: 50%; translate: -50% 0; white-space: nowrap; }
 }
 
 @media (max-width: 640px) {

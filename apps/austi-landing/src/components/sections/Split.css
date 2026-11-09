@@ -19,14 +19,15 @@
   height: var(--float-height);
 }
 
-.split-step {
-  transition: opacity 500ms ease-out;
+/* Phones read one step at a time, so text is never dimmed under the thumb. */
+@media (min-width: 900px) {
+  .split-step { transition: opacity 500ms ease-out; }
+
+  .split-step[data-state='done'],
+  .split-step[data-state='next'] { opacity: 0.32; }
 }
 
-.split-step[data-state='done'],
-.split-step[data-state='next'] { opacity: 0.32; }
-
-.split-step h3 {
+.split-step > h3 {
   margin: 0 0 var(--size-md);
   font-size: var(--font-size-heading-sm);
   font-weight: var(--font-weight-medium);
@@ -35,7 +36,7 @@
   text-wrap: balance;
 }
 
-.split-step p { margin: 0; color: var(--color-muted-dark); font-size: var(--font-size-body-lg); line-height: 1.55; text-wrap: pretty; }
+.split-step > p { margin: 0; color: var(--color-muted-dark); font-size: var(--font-size-body-lg); line-height: 1.55; text-wrap: pretty; }
 
 @media (max-width: 900px) {
   .split,

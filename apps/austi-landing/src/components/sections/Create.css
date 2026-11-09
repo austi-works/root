@@ -50,8 +50,16 @@
 
 .create-meter { display: none; }
 
-@media (max-width: 900px) {
-  .create-frame { aspect-ratio: 4 / 5; }
+/* Phones read the channels as a plain vertical list: nothing to discover sideways. */
+@media (max-width: 899.98px) {
+  .create-hint { display: none; }
+}
+
+@media (max-width: 899.98px) {
+  .create-track { flex-direction: column; overflow: visible; gap: clamp(3.5rem, 12vw, 6rem); scroll-snap-type: none; }
+  .create-intro,
+  .create-panel { flex: none; }
+  .create-frame { aspect-ratio: auto; }
   .create-caption { grid-template-columns: minmax(0, 1fr); gap: var(--size-xs); }
 }
 
