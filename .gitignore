@@ -21,3 +21,6 @@ playwright-report/
 __unconfig*
 todos.json
 build
+
+.vercel
+.claude/worktrees

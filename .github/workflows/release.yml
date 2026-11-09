@@ -10,6 +10,7 @@ on:
         type: choice
         options:
           - austi-desktop
+          - austi-app
           - austi-landing
           - portfolio
       version_update:
@@ -42,7 +43,7 @@ jobs:
   release-web-product:
     name: Promote web product
     if: inputs.product != 'austi-desktop'
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     steps:
       - name: Check out repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -55,6 +56,7 @@ jobs:
           PRODUCT: ${{ inputs.product }}
         run: |
           case "$PRODUCT" in
+            austi-app) branch="release-austi-app" ;;
             austi-landing) branch="release-austi-landing" ;;
             portfolio) branch="release-portfolio" ;;
             *) echo "Unsupported web product: $PRODUCT" >&2; exit 1 ;;

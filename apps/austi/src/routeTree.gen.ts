@@ -9,177 +9,275 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SettingsRouteImport } from './routes/settings'
-import { Route as MaintenanceRouteImport } from './routes/maintenance'
-import { Route as ContractorsRouteImport } from './routes/contractors'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as MaintenanceIndexRouteImport } from './routes/maintenance.index'
-import { Route as MaintenanceCaseIdRouteImport } from './routes/maintenance.$caseId'
-import { Route as ApiAuthSignInRouteImport } from './routes/api/auth/sign-in'
+import { Route as AppRouteImport } from './routes/_app'
+import { Route as WelcomeRouteImport } from './routes/welcome'
+import { Route as AppIndexRouteImport } from './routes/_app.index'
+import { Route as AppBrandRouteImport } from './routes/_app.brand'
+import { Route as AppCampaignsRouteImport } from './routes/_app.campaigns'
+import { Route as AppReviewRouteImport } from './routes/_app.review'
+import { Route as AppSettingsRouteImport } from './routes/_app.settings'
+import { Route as AppCampaignsIndexRouteImport } from './routes/_app.campaigns.index'
+import { Route as AppCampaignsCampaignIdRouteImport } from './routes/_app.campaigns.$campaignId'
+import { Route as AppCampaignsNewRouteImport } from './routes/_app.campaigns.new'
+import { Route as AppReviewIndexRouteImport } from './routes/_app.review.index'
+import { Route as AppReviewDraftIdRouteImport } from './routes/_app.review.$draftId'
 import { Route as ApiAuthCallbackRouteImport } from './routes/api/auth/callback'
+import { Route as ApiAuthSignInRouteImport } from './routes/api/auth/sign-in'
 
-const SettingsRoute = SettingsRouteImport.update({
+const AppRoute = AppRouteImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WelcomeRoute = WelcomeRouteImport.update({
+  id: '/welcome',
+  path: '/welcome',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppBrandRoute = AppBrandRouteImport.update({
+  id: '/brand',
+  path: '/brand',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCampaignsRoute = AppCampaignsRouteImport.update({
+  id: '/campaigns',
+  path: '/campaigns',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppReviewRoute = AppReviewRouteImport.update({
+  id: '/review',
+  path: '/review',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AppRoute,
 } as any)
-const MaintenanceRoute = MaintenanceRouteImport.update({
-  id: '/maintenance',
-  path: '/maintenance',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContractorsRoute = ContractorsRouteImport.update({
-  id: '/contractors',
-  path: '/contractors',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
+const AppCampaignsIndexRoute = AppCampaignsIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AppCampaignsRoute,
 } as any)
-const MaintenanceIndexRoute = MaintenanceIndexRouteImport.update({
+const AppCampaignsCampaignIdRoute = AppCampaignsCampaignIdRouteImport.update({
+  id: '/$campaignId',
+  path: '/$campaignId',
+  getParentRoute: () => AppCampaignsRoute,
+} as any)
+const AppCampaignsNewRoute = AppCampaignsNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => AppCampaignsRoute,
+} as any)
+const AppReviewIndexRoute = AppReviewIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => MaintenanceRoute,
+  getParentRoute: () => AppReviewRoute,
 } as any)
-const MaintenanceCaseIdRoute = MaintenanceCaseIdRouteImport.update({
-  id: '/$caseId',
-  path: '/$caseId',
-  getParentRoute: () => MaintenanceRoute,
-} as any)
-const ApiAuthSignInRoute = ApiAuthSignInRouteImport.update({
-  id: '/api/auth/sign-in',
-  path: '/api/auth/sign-in',
-  getParentRoute: () => rootRouteImport,
+const AppReviewDraftIdRoute = AppReviewDraftIdRouteImport.update({
+  id: '/$draftId',
+  path: '/$draftId',
+  getParentRoute: () => AppReviewRoute,
 } as any)
 const ApiAuthCallbackRoute = ApiAuthCallbackRouteImport.update({
   id: '/api/auth/callback',
   path: '/api/auth/callback',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAuthSignInRoute = ApiAuthSignInRouteImport.update({
+  id: '/api/auth/sign-in',
+  path: '/api/auth/sign-in',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/contractors': typeof ContractorsRoute
-  '/maintenance': typeof MaintenanceRouteWithChildren
-  '/settings': typeof SettingsRoute
-  '/maintenance/$caseId': typeof MaintenanceCaseIdRoute
-  '/maintenance/': typeof MaintenanceIndexRoute
+  '/': typeof AppIndexRoute
+  '/welcome': typeof WelcomeRoute
+  '/brand': typeof AppBrandRoute
+  '/campaigns': typeof AppCampaignsRouteWithChildren
+  '/review': typeof AppReviewRouteWithChildren
+  '/settings': typeof AppSettingsRoute
+  '/campaigns/$campaignId': typeof AppCampaignsCampaignIdRoute
+  '/campaigns/new': typeof AppCampaignsNewRoute
+  '/review/$draftId': typeof AppReviewDraftIdRoute
   '/api/auth/callback': typeof ApiAuthCallbackRoute
   '/api/auth/sign-in': typeof ApiAuthSignInRoute
+  '/campaigns/': typeof AppCampaignsIndexRoute
+  '/review/': typeof AppReviewIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/contractors': typeof ContractorsRoute
-  '/settings': typeof SettingsRoute
-  '/maintenance/$caseId': typeof MaintenanceCaseIdRoute
-  '/maintenance': typeof MaintenanceIndexRoute
+  '/welcome': typeof WelcomeRoute
+  '/brand': typeof AppBrandRoute
+  '/settings': typeof AppSettingsRoute
+  '/': typeof AppIndexRoute
+  '/campaigns/$campaignId': typeof AppCampaignsCampaignIdRoute
+  '/campaigns/new': typeof AppCampaignsNewRoute
+  '/review/$draftId': typeof AppReviewDraftIdRoute
   '/api/auth/callback': typeof ApiAuthCallbackRoute
   '/api/auth/sign-in': typeof ApiAuthSignInRoute
+  '/campaigns': typeof AppCampaignsIndexRoute
+  '/review': typeof AppReviewIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/contractors': typeof ContractorsRoute
-  '/maintenance': typeof MaintenanceRouteWithChildren
-  '/settings': typeof SettingsRoute
-  '/maintenance/$caseId': typeof MaintenanceCaseIdRoute
-  '/maintenance/': typeof MaintenanceIndexRoute
+  '/_app': typeof AppRouteWithChildren
+  '/welcome': typeof WelcomeRoute
+  '/_app/brand': typeof AppBrandRoute
+  '/_app/campaigns': typeof AppCampaignsRouteWithChildren
+  '/_app/review': typeof AppReviewRouteWithChildren
+  '/_app/settings': typeof AppSettingsRoute
+  '/_app/': typeof AppIndexRoute
+  '/_app/campaigns/$campaignId': typeof AppCampaignsCampaignIdRoute
+  '/_app/campaigns/new': typeof AppCampaignsNewRoute
+  '/_app/review/$draftId': typeof AppReviewDraftIdRoute
   '/api/auth/callback': typeof ApiAuthCallbackRoute
   '/api/auth/sign-in': typeof ApiAuthSignInRoute
+  '/_app/campaigns/': typeof AppCampaignsIndexRoute
+  '/_app/review/': typeof AppReviewIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/contractors'
-    | '/maintenance'
+    | '/welcome'
+    | '/brand'
+    | '/campaigns'
+    | '/review'
     | '/settings'
-    | '/maintenance/$caseId'
-    | '/maintenance/'
+    | '/campaigns/$campaignId'
+    | '/campaigns/new'
+    | '/review/$draftId'
     | '/api/auth/callback'
     | '/api/auth/sign-in'
+    | '/campaigns/'
+    | '/review/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
-    | '/contractors'
+    | '/welcome'
+    | '/brand'
     | '/settings'
-    | '/maintenance/$caseId'
-    | '/maintenance'
+    | '/'
+    | '/campaigns/$campaignId'
+    | '/campaigns/new'
+    | '/review/$draftId'
     | '/api/auth/callback'
     | '/api/auth/sign-in'
+    | '/campaigns'
+    | '/review'
   id:
     | '__root__'
-    | '/'
-    | '/contractors'
-    | '/maintenance'
-    | '/settings'
-    | '/maintenance/$caseId'
-    | '/maintenance/'
+    | '/_app'
+    | '/welcome'
+    | '/_app/brand'
+    | '/_app/campaigns'
+    | '/_app/review'
+    | '/_app/settings'
+    | '/_app/'
+    | '/_app/campaigns/$campaignId'
+    | '/_app/campaigns/new'
+    | '/_app/review/$draftId'
     | '/api/auth/callback'
     | '/api/auth/sign-in'
+    | '/_app/campaigns/'
+    | '/_app/review/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  ContractorsRoute: typeof ContractorsRoute
-  MaintenanceRoute: typeof MaintenanceRouteWithChildren
-  SettingsRoute: typeof SettingsRoute
+  AppRoute: typeof AppRouteWithChildren
+  WelcomeRoute: typeof WelcomeRoute
   ApiAuthCallbackRoute: typeof ApiAuthCallbackRoute
   ApiAuthSignInRoute: typeof ApiAuthSignInRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/settings': {
-      id: '/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof SettingsRouteImport
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/maintenance': {
-      id: '/maintenance'
-      path: '/maintenance'
-      fullPath: '/maintenance'
-      preLoaderRoute: typeof MaintenanceRouteImport
+    '/welcome': {
+      id: '/welcome'
+      path: '/welcome'
+      fullPath: '/welcome'
+      preLoaderRoute: typeof WelcomeRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/contractors': {
-      id: '/contractors'
-      path: '/contractors'
-      fullPath: '/contractors'
-      preLoaderRoute: typeof ContractorsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
+    '/_app/': {
+      id: '/_app/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
     }
-    '/maintenance/': {
-      id: '/maintenance/'
+    '/_app/brand': {
+      id: '/_app/brand'
+      path: '/brand'
+      fullPath: '/brand'
+      preLoaderRoute: typeof AppBrandRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/campaigns': {
+      id: '/_app/campaigns'
+      path: '/campaigns'
+      fullPath: '/campaigns'
+      preLoaderRoute: typeof AppCampaignsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/review': {
+      id: '/_app/review'
+      path: '/review'
+      fullPath: '/review'
+      preLoaderRoute: typeof AppReviewRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/settings': {
+      id: '/_app/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/campaigns/': {
+      id: '/_app/campaigns/'
       path: '/'
-      fullPath: '/maintenance/'
-      preLoaderRoute: typeof MaintenanceIndexRouteImport
-      parentRoute: typeof MaintenanceRoute
+      fullPath: '/campaigns/'
+      preLoaderRoute: typeof AppCampaignsIndexRouteImport
+      parentRoute: typeof AppCampaignsRoute
     }
-    '/maintenance/$caseId': {
-      id: '/maintenance/$caseId'
-      path: '/$caseId'
-      fullPath: '/maintenance/$caseId'
-      preLoaderRoute: typeof MaintenanceCaseIdRouteImport
-      parentRoute: typeof MaintenanceRoute
+    '/_app/campaigns/$campaignId': {
+      id: '/_app/campaigns/$campaignId'
+      path: '/$campaignId'
+      fullPath: '/campaigns/$campaignId'
+      preLoaderRoute: typeof AppCampaignsCampaignIdRouteImport
+      parentRoute: typeof AppCampaignsRoute
     }
-    '/api/auth/sign-in': {
-      id: '/api/auth/sign-in'
-      path: '/api/auth/sign-in'
-      fullPath: '/api/auth/sign-in'
-      preLoaderRoute: typeof ApiAuthSignInRouteImport
-      parentRoute: typeof rootRouteImport
+    '/_app/campaigns/new': {
+      id: '/_app/campaigns/new'
+      path: '/new'
+      fullPath: '/campaigns/new'
+      preLoaderRoute: typeof AppCampaignsNewRouteImport
+      parentRoute: typeof AppCampaignsRoute
+    }
+    '/_app/review/': {
+      id: '/_app/review/'
+      path: '/'
+      fullPath: '/review/'
+      preLoaderRoute: typeof AppReviewIndexRouteImport
+      parentRoute: typeof AppReviewRoute
+    }
+    '/_app/review/$draftId': {
+      id: '/_app/review/$draftId'
+      path: '/$draftId'
+      fullPath: '/review/$draftId'
+      preLoaderRoute: typeof AppReviewDraftIdRouteImport
+      parentRoute: typeof AppReviewRoute
     }
     '/api/auth/callback': {
       id: '/api/auth/callback'
@@ -188,28 +286,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthCallbackRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/auth/sign-in': {
+      id: '/api/auth/sign-in'
+      path: '/api/auth/sign-in'
+      fullPath: '/api/auth/sign-in'
+      preLoaderRoute: typeof ApiAuthSignInRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
-interface MaintenanceRouteChildren {
-  MaintenanceCaseIdRoute: typeof MaintenanceCaseIdRoute
-  MaintenanceIndexRoute: typeof MaintenanceIndexRoute
+interface AppCampaignsRouteChildren {
+  AppCampaignsCampaignIdRoute: typeof AppCampaignsCampaignIdRoute
+  AppCampaignsNewRoute: typeof AppCampaignsNewRoute
+  AppCampaignsIndexRoute: typeof AppCampaignsIndexRoute
 }
 
-const MaintenanceRouteChildren: MaintenanceRouteChildren = {
-  MaintenanceCaseIdRoute: MaintenanceCaseIdRoute,
-  MaintenanceIndexRoute: MaintenanceIndexRoute,
+const AppCampaignsRouteChildren: AppCampaignsRouteChildren = {
+  AppCampaignsCampaignIdRoute: AppCampaignsCampaignIdRoute,
+  AppCampaignsNewRoute: AppCampaignsNewRoute,
+  AppCampaignsIndexRoute: AppCampaignsIndexRoute,
 }
 
-const MaintenanceRouteWithChildren = MaintenanceRoute._addFileChildren(
-  MaintenanceRouteChildren,
+const AppCampaignsRouteWithChildren = AppCampaignsRoute._addFileChildren(
+  AppCampaignsRouteChildren,
 )
 
+interface AppReviewRouteChildren {
+  AppReviewDraftIdRoute: typeof AppReviewDraftIdRoute
+  AppReviewIndexRoute: typeof AppReviewIndexRoute
+}
+
+const AppReviewRouteChildren: AppReviewRouteChildren = {
+  AppReviewDraftIdRoute: AppReviewDraftIdRoute,
+  AppReviewIndexRoute: AppReviewIndexRoute,
+}
+
+const AppReviewRouteWithChildren = AppReviewRoute._addFileChildren(
+  AppReviewRouteChildren,
+)
+
+interface AppRouteChildren {
+  AppBrandRoute: typeof AppBrandRoute
+  AppCampaignsRoute: typeof AppCampaignsRouteWithChildren
+  AppReviewRoute: typeof AppReviewRouteWithChildren
+  AppSettingsRoute: typeof AppSettingsRoute
+  AppIndexRoute: typeof AppIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppBrandRoute: AppBrandRoute,
+  AppCampaignsRoute: AppCampaignsRouteWithChildren,
+  AppReviewRoute: AppReviewRouteWithChildren,
+  AppSettingsRoute: AppSettingsRoute,
+  AppIndexRoute: AppIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  ContractorsRoute: ContractorsRoute,
-  MaintenanceRoute: MaintenanceRouteWithChildren,
-  SettingsRoute: SettingsRoute,
+  AppRoute: AppRouteWithChildren,
+  WelcomeRoute: WelcomeRoute,
   ApiAuthCallbackRoute: ApiAuthCallbackRoute,
   ApiAuthSignInRoute: ApiAuthSignInRoute,
 }

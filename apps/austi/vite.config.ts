@@ -1,9 +1,10 @@
 import { resolve } from 'node:path';
 
 import { defineWebFoundationViteConfig } from '@workspace/web-foundation/vite';
+import { nitro } from 'nitro/vite';
 import { defineConfig, loadEnv, mergeConfig } from 'vite';
 
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ command, mode }) => {
   const envDir = resolve(import.meta.dirname, '../..');
 
   // AuthKit reads process.env; Vite's envDir alone only loads import.meta.env.
@@ -18,6 +19,8 @@ export default defineConfig(({ mode }) => {
       port: 3000,
       convexAlias: { name: '#convex', path: '../../convex' },
       spa: false,
+      // Produces the server output Vercel runs. Local development does not need it.
+      extraPlugins: command === 'build' ? [nitro()] : [],
     }),
     { envDir, server: { strictPort: true } },
   );

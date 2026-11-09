@@ -1,4 +1,5 @@
 ---
+import PostHog from '../components/PostHog.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -70,6 +71,7 @@ const socialImageAlt = 'Austi — your AI marketing workspace for ads, social, e
     <meta name="twitter:image" content={socialImage} />
     <meta name="twitter:image:alt" content={socialImageAlt} />
     {structuredData && <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
+    <PostHog />
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>

@@ -7,29 +7,19 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@workspace/ui/components/ui/sidebar';
-import { Inbox, LayoutDashboard, Wrench } from 'lucide-react';
+import { ClipboardCheck, LayoutDashboard, Megaphone, Sparkles } from 'lucide-react';
 
 import type { NavItem } from '#/components/navigation/nav-types';
-import { Route as ContractorsRoute } from '#/routes/contractors';
-import { Route as IndexRoute } from '#/routes/index';
-import { Route as MaintenanceRoute } from '#/routes/maintenance';
+import { Route as BrandRoute } from '#/routes/_app.brand';
+import { Route as CampaignsRoute } from '#/routes/_app.campaigns';
+import { Route as IndexRoute } from '#/routes/_app.index';
+import { Route as ReviewRoute } from '#/routes/_app.review';
 
 const items: NavItem[] = [
-  {
-    title: 'Dashboard',
-    route: IndexRoute,
-    icon: LayoutDashboard,
-  },
-  {
-    title: 'Maintenance',
-    route: MaintenanceRoute,
-    icon: Inbox,
-  },
-  {
-    title: 'Contractors',
-    route: ContractorsRoute,
-    icon: Wrench,
-  },
+  { title: 'Workspace', route: IndexRoute, icon: LayoutDashboard },
+  { title: 'Brand', route: BrandRoute, icon: Sparkles },
+  { title: 'Campaigns', route: CampaignsRoute, icon: Megaphone },
+  { title: 'Review', route: ReviewRoute, icon: ClipboardCheck },
 ];
 
 export function NavMain() {
