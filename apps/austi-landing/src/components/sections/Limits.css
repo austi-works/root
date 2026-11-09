@@ -1,0 +1,31 @@
+.limits-stack { display: grid; padding-bottom: var(--section-block-size); gap: 18svh; }
+
+.limits-card {
+  position: sticky;
+  top: calc(5.5rem + var(--i) * 0.9rem);
+}
+
+.limits-frame {
+  height: min(76svh, 48rem);
+  transform-origin: 50% 0;
+}
+
+.limits-frame .frame-stage {
+  height: 100%;
+  padding: clamp(1.5rem, 5vw, 5rem);
+  place-items: end start;
+}
+
+.limits-copy { max-width: 46rem; color: var(--color-white); }
+.limits-copy .split-number { color: var(--color-white); }
+
+.limits-copy h3 {
+  margin: var(--size-sm) 0 var(--size-md);
+  font-size: var(--font-size-heading-lg);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: -0.04em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.limits-copy p { max-width: 34rem; margin: 0; font-size: var(--font-size-body-lg); line-height: 1.5; }

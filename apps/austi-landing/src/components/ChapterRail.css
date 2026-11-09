@@ -1,0 +1,48 @@
+.chapter-rail {
+  position: fixed;
+  z-index: 45;
+  top: 50%;
+  right: 0.5rem;
+  display: none;
+  color: var(--color-white);
+  mix-blend-mode: difference;
+  transform: translateY(-50%);
+}
+
+.chapter-rail a {
+  display: flex;
+  height: 1.4rem;
+  padding-inline: 0.5rem;
+  align-items: center;
+  justify-content: flex-end;
+  /* Leaves room for the active tick, which grows 0.9rem towards the label. */
+  gap: 1.5rem;
+}
+
+.chapter-rail i {
+  width: 0.75rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.45;
+  transform-origin: right;
+  transition: opacity 240ms ease-out, transform 420ms var(--ease-out);
+}
+
+.chapter-rail span {
+  font-size: 0.75rem;
+  opacity: 0;
+  transform: translateX(0.4rem);
+  transition: opacity 200ms ease-out, transform 360ms var(--ease-out);
+}
+
+.chapter-rail:hover span,
+.chapter-rail a:focus-visible span { opacity: 0.75; transform: none; }
+.chapter-rail a:hover span,
+.chapter-rail a.is-active span { opacity: 1; }
+.chapter-rail a:hover i { opacity: 1; transform: scaleX(1.5); }
+.chapter-rail a.is-active i { opacity: 1; transform: scaleX(2.2); }
+.chapter-rail a:focus-visible { outline-color: currentColor; outline-offset: 0; }
+
+@media (min-width: 1180px) {
+  .chapter-rail { display: block; }
+}

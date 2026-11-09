@@ -1,0 +1,40 @@
+.iris { background: var(--color-black); }
+.iris-stage { position: relative; }
+
+.iris-layer {
+  display: grid;
+  min-height: 80svh;
+  padding: var(--page-gutter);
+  place-items: center;
+}
+
+.iris-title {
+  max-width: 12em;
+  margin: 0;
+  font-size: var(--font-size-closing);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.iris-title span { display: block; color: var(--color-muted-dark); }
+.iris-layer--paper { display: none; }
+
+.motion .iris { height: 300svh; }
+.motion .iris-stage { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+.motion .iris-layer { position: absolute; min-height: 0; inset: 0; }
+
+.motion .iris-layer--paper {
+  display: grid;
+  background: var(--color-paper);
+  clip-path: circle(calc(var(--iris, 0) * 1vmax) at 50% 50%);
+  color: var(--color-ink);
+}
+
+.iris-layer--paper .iris-title span { color: var(--color-muted-paper); }
+
+@media (max-width: 640px) {
+  .iris-title { font-size: var(--font-size-closing-mobile); }
+}

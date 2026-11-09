@@ -1,0 +1,48 @@
+---
+import { accessChannels } from '../../lib/landing-content';
+import Frame from '../Frame.astro';
+import ShaderButton from '../ShaderButton.astro';
+import './Access.css';
+
+interface Props {
+  pilotUrl: string;
+}
+
+const { pilotUrl } = Astro.props;
+const email = 'hello@austi.works';
+---
+
+<section class="access dark-field" id="access" aria-labelledby="access-title">
+  <div class="access-grid page-wrap">
+    <header class="access-intro">
+      <p class="eyebrow" data-reveal>09. Early access</p>
+      <h2 class="heading" id="access-title" data-reveal>Tell us what takes the longest.<span>That is where we start.</span></h2>
+      <p class="lede" data-reveal>Austi is not open for self-service signup. Early access starts with a conversation about your marketing and whether early testing is a fit.</p>
+      <button class="access-copy" type="button" data-copy={email} data-reveal>
+        <span>{email}</span>
+        <span class="access-copy-state" data-copy-label>Copy</span>
+      </button>
+    </header>
+
+    <Frame class="access-frame" backdrop="forms-veil">
+      <div class="mock access-mock">
+        <div class="mock-bar"><span class="mock-brand">Your note to us</span><span>Opens in your email app</span></div>
+        <div class="mock-body access-body">
+          <fieldset>
+            <legend class="mock-title">Which channels do you use?</legend>
+            <div class="access-chips">
+              {accessChannels.map((channel) => (
+                <button type="button" data-access-channel={channel} aria-pressed="false">
+                  <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5 8 14.5 16 6"></path></svg>
+                  {channel}
+                </button>
+              ))}
+            </div>
+          </fieldset>
+          <p>We will add your choices to the email. You can add your website and anything else before sending.</p>
+          <ShaderButton class="access-button" href={pilotUrl} label="Write to us" data-access-link />
+        </div>
+      </div>
+    </Frame>
+  </div>
+</section>

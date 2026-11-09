@@ -1,0 +1,57 @@
+.statement { background: var(--color-black); }
+
+.statement-stage {
+  display: grid;
+  width: min(100%, var(--page-width));
+  min-height: 100svh;
+  margin-inline: auto;
+  padding: var(--padding-section);
+  place-items: center;
+}
+
+.statement-text {
+  max-width: 21em;
+  margin: 0;
+  font-size: clamp(2rem, 5.2vw, 5.5rem);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: -0.035em;
+  line-height: 1.12;
+}
+
+.motion .statement { height: 300svh; }
+.motion .statement-stage { position: sticky; top: 0; height: 100svh; padding-block: 0; }
+.motion [data-word] { opacity: 0.14; }
+
+.formats {
+  overflow: hidden;
+  padding-block: var(--size-xl);
+  border-block: 1px solid var(--line-dark);
+  background: var(--color-black);
+}
+
+.formats-track { display: flex; width: max-content; }
+
+.formats ul {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  color: var(--color-muted-dark);
+  font-size: var(--font-size-kicker-lg);
+  letter-spacing: -0.02em;
+  list-style: none;
+}
+
+.formats li {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.formats li::after {
+  width: 0.3rem;
+  height: 0.3rem;
+  margin-inline: clamp(1.5rem, 3vw, 3rem);
+  border-radius: 50%;
+  background: var(--color-muted-paper);
+  content: '';
+}

@@ -1,6 +1,6 @@
 ---
 name: Austi
-description: 'Maintenance coordination for residential property managers.'
+description: 'A brand-aware AI marketing workspace.'
 colors:
   night-office: '#0a0a0a'
   white: '#ffffff'
@@ -9,9 +9,7 @@ colors:
   ink: '#11110f'
   muted-dark: '#aaa8a1'
   muted-paper: '#66645f'
-  accent: '#ff4f42'
-  signal: '#dfff57'
-  success: '#278a51'
+  primary: '#ffffff'
 typography:
   fontFamily: 'Clarity City, system-ui, sans-serif'
 ---
@@ -20,47 +18,52 @@ typography:
 
 ## Visual thesis
 
-**The maintenance desk after hours.** Austi lives between operational urgency and documented
-control. Matte black suggests the work that keeps moving beyond office hours; warm paper and ruled
-rows make every decision legible. The design should feel calm under pressure, not futuristic or
-autonomous for its own sake.
+**One interface, under a spotlight.** The page is black and strictly monochrome, with white as the
+only primary. Every illustration sits in a thin-bordered frame on an original grainy, grey backdrop.
+Inside it is one full mock of the Austi app (`components/app`), and `Spotlight.astro` moves a camera
+to a region of it while the rest falls into shadow.
 
-## Hero focal asset
+## Frames and backdrops
 
-Use one WebGL halftone, with no windows, cards or boxes: a tilted planet with continents, ice caps
-and drifting clouds, turning slowly under a fixed sun. Keep the shader inside its own square beside
-the copy, and show a single still frame in the static reduced-motion state.
+Use `Frame.astro` for every illustration. Backdrops in `public/images/backdrops` are original,
+procedurally generated folds, ripples and halftones. Grain is one shared tile applied in CSS so
+each backdrop stays small. Do not use another site's imagery.
+
+The WebGL halftone planet appears once, in the mid-page zoom-through, and the hero CTA keeps its
+HDR super-white image through `ShaderButton.astro`. Product shots in `public/images/products` are
+original renders for the fictional brand.
 
 ## Typography and color
 
 - Use Clarity City throughout. Scale and spacing create hierarchy; avoid extra typefaces.
 - Keep functional labels at 11px or larger; small status text must remain readable on dense operational views.
 - Use warm white text on the night field and dark ink on paper.
-- Use red for decisive human action and escalation.
-- Use acid yellow only for the active or exceptional workflow state.
-- Use green only for a completed operational state.
+- Use white as the primary for buttons, active states and completed marks. Do not add a hue.
+- Express state through fill, outline and opacity.
+- Only the fictional brand's content inside the app mock may use a serif or warm paper tones.
 
 ## Page sequence
 
-1. Hero: one slogan and the workflow-conversation CTA.
-2. Workflow: explain the first three moves from message to resolution lifecycle.
-3. Controls: show the coordinate, pause, and handover boundary beside one static approval example.
-4. FAQ: group operational, safety, data, integration, and research-stage questions for quick scanning.
-5. Final CTA: invite operators into a focused research conversation.
+Hero zoom, word-by-word statement, Learn (text scrolls, frame floats), Plan (brief floats, frames
+scroll), Create (horizontal gallery), iris wipe to paper, Voice, Review, planet curtain and
+zoom-through, A week, Limits (stacked frames), Who for, Early access, FAQ, closing zoom.
 
 ## Layout rules
 
-- Alternate full night and paper fields.
-- Keep marketing copy direct and let operational evidence carry the detail.
-- Use ruled editorial compositions instead of simulated application workbenches.
-- Avoid repeated feature-card grids; give each section a distinct composition and job.
-- Give product evidence substantially more room than its supporting copy.
-- Stack two-column compositions below 900px and preserve readable workflow states on phones.
+- Black is the default field; the paper run is the one sustained inversion.
+- Give each section a distinct composition and job. Avoid repeated feature-card grids.
+- Keep illustrative content labelled, and keep development status clear.
+- Stack two-column compositions below 900px and preserve readable states on phones.
 
 ## Motion and interaction
 
 Keep the core narrative readable without interaction. Use CSS for hover and focus states on real
 controls and native details for FAQ disclosure.
+
+An inline script sets `.motion` on the root only when motion is allowed, and every scrubbed layout
+is scoped to it, so no-JS and reduced-motion visitors get a normal document. Scenes use tall
+sections with `position: sticky` stages scrubbed by ScrollTrigger in `landing-motion.ts`; do not use
+ScrollTrigger pinning.
 
 Keep scrolling direct, without ScrollSmoother. Use GSAP normalizeScroll with nested scrolling
 enabled to align touch momentum, viewport measurements and snapping on mobile browsers.
@@ -86,6 +89,6 @@ testimonials, avatars, or integration marks until there is honest source materia
 ## Avoid
 
 - Generic AI gradients, glowing agents, glassmorphism, and bento feature grids.
-- Fake dashboards with unsupported metrics.
+- Illustrations with unsupported metrics.
 - Quantitative performance claims before real pilots produce evidence.
 - Pricing, trials, or product-download language while the work is still in operator research.

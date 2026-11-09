@@ -1,0 +1,49 @@
+.closing { position: relative; background: var(--color-black); }
+
+.closing-stage {
+  position: relative;
+  display: grid;
+  min-height: 100svh;
+  place-items: center;
+  overflow: hidden;
+}
+
+.closing-frame {
+  position: absolute;
+  border: 0;
+  border-radius: 0;
+  inset: 0;
+}
+
+.closing-copy {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  padding: var(--page-gutter);
+  justify-items: center;
+  gap: clamp(2rem, 4vw, 3.5rem);
+  text-align: center;
+}
+
+.closing-copy h2 {
+  max-width: 12ch;
+  margin: 0;
+  color: var(--color-white);
+  font-size: var(--font-size-closing);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: -0.045em;
+  line-height: 0.96;
+  text-wrap: balance;
+}
+
+.motion .closing { height: 260svh; }
+.motion .closing-stage { position: sticky; top: 0; height: 100svh; }
+
+.motion .closing-frame {
+  clip-path: inset(var(--clip-y, 22svh) var(--clip-x, 26vw) round var(--clip-r, 0.5rem));
+}
+
+@media (max-width: 640px) {
+  .closing-copy h2 { font-size: var(--font-size-closing-mobile); }
+  .closing .shader-button { --shader-button-width: min(17rem, 100%); }
+}

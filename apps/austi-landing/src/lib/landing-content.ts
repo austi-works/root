@@ -33,106 +33,211 @@ export const heroContent = {
   integrationsLabel: 'Publishes to',
 };
 
-export const outcomes = [
+export const statement =
+  'You know your product better than anyone. You know who it is for. What you do not have is the time to say it everywhere, every week, in a voice that still sounds like you.';
+
+export const formats = [
+  'Ad copy',
+  'Creative briefs',
+  'Social captions',
+  'Content plans',
+  'Launch emails',
+  'Newsletters',
+  'Search outlines',
+  'Campaign ideas',
+] as const;
+
+export const learnSteps = [
   {
-    id: 'coordination',
-    name: 'Less coordination work',
-    copy: 'Fewer repetitive calls, emails, scheduling conversations and follow-ups spread across the team.',
-    detail: 'Routine handoffs stay attached to one case.',
+    name: 'Your website',
+    title: 'Start with the address you already have.',
+    copy: 'Share your website once. Austi reads it the way a new hire would, looking for what you sell, how you describe it and what you keep coming back to.',
   },
   {
-    id: 'response',
-    name: 'Faster first response',
-    copy: 'Intake and basic diagnosis can begin when the report arrives, even before a coordinator is available.',
-    detail: 'Urgent and uncertain cases surface sooner.',
+    name: 'Your products',
+    title: 'Know what is actually on the shelf.',
+    copy: 'Product details stay attached to the campaign, so a draft can talk about the real thing rather than a category of things.',
   },
   {
-    id: 'pms',
-    name: 'Keep your existing PMS',
-    copy: 'Add a coordination layer without migrating the system your team already uses as its source of truth.',
-    detail: 'The complete case returns to the existing record.',
+    name: 'Your audience',
+    title: 'Write for someone in particular.',
+    copy: 'Tell Austi who you serve and what matters to them. Every brief starts from those people, not from a demographic guess.',
+  },
+  {
+    name: 'Your voice',
+    title: 'Keep the way you talk.',
+    copy: 'Add examples of your writing and correct what feels off. The feedback becomes part of the context for the next draft.',
   },
 ] as const;
 
-export const workflowPhases = [
+export const planSteps = [
   {
-    name: 'Understand',
-    range: 'Report → Triage',
-    title: 'Turn a fragmented report into a workable brief.',
+    name: 'The idea',
+    value: 'Slower mornings',
+    title: 'One idea worth repeating.',
+    copy: 'A campaign begins as a single thought you can say out loud. Everything after it has to earn its place against that thought.',
   },
   {
-    name: 'Decide',
-    range: 'Approval',
-    title: 'Apply the operator’s policy before anything moves.',
+    name: 'The offer',
+    value: 'The new weekend collection',
+    title: 'Be clear about what you are asking.',
+    copy: 'Name what is being promoted and what a reader should do next, so five channels do not end up making five different requests.',
   },
   {
-    name: 'Coordinate',
-    range: 'Select → Follow up',
-    title: 'Bring the resident and contractor to one confirmed plan.',
+    name: 'The angles',
+    value: 'Ritual, material, gifting',
+    title: 'Several ways into the same story.',
+    copy: 'Explore different angles side by side, keep the ones that sound like you and throw the rest away without ceremony.',
   },
   {
-    name: 'Close',
-    range: 'Resolve → Record',
-    title: 'Verify the outcome and return a complete case to the PMS.',
-  },
-] as const;
-
-export const stages = [
-  {
-    name: 'Report',
-    copy: 'Pick up the report across phone, email and WhatsApp, then connect it to the right resident and property.',
-  },
-  {
-    name: 'Diagnose',
-    copy: 'Ask structured follow-up questions, collect photos, video, error codes and approved low-risk checks.',
-  },
-  {
-    name: 'Triage',
-    copy: 'Classify urgency, likely responsibility and trade, while making uncertainty visible.',
-  },
-  {
-    name: 'Approve',
-    copy: 'Apply responsibility and spend rules, pausing for a person whenever policy or judgment requires it.',
-  },
-  {
-    name: 'Select',
-    copy: 'Start with approved contractors for that property and trade, with a complete job brief ready.',
-  },
-  {
-    name: 'Schedule',
-    copy: 'Line up resident access and contractor availability, chase silence and confirm the appointment.',
-  },
-  {
-    name: 'Follow up',
-    copy: 'Chase missing replies, keep every party updated and surface a stalled case before it disappears.',
-  },
-  {
-    name: 'Resolve',
-    copy: 'Confirm attendance and the outcome with the resident and contractor, then collect evidence and invoice details.',
-  },
-  {
-    name: 'Record',
-    copy: 'Prepare the full case history for the PMS so the existing system remains the source of truth.',
+    name: 'The plan',
+    value: 'Four channels, one week',
+    title: 'Put it in order.',
+    copy: 'See what goes where and when before anything is written in full. Move it around while moving it is still easy.',
   },
 ] as const;
 
-export const controls = [
+export const channels = [
   {
-    name: 'Portfolio policy',
-    copy: 'Approval limits and responsibilities can differ by owner, property and repair type.',
+    id: 'ads',
+    name: 'Ads',
+    title: 'Headlines with a reason to exist.',
+    copy: 'Ad copy and creative briefs built from the campaign idea, ready for a designer or your own hands.',
+    backdrop: 'ripple-tide',
   },
   {
-    name: 'Contractor order',
-    copy: 'Choose preferred, backup and emergency contractors for every property and trade.',
+    id: 'social',
+    name: 'Social',
+    title: 'Posts that belong to a plan.',
+    copy: 'Captions and content plans shaped for the format, still telling the same story as the launch.',
+    backdrop: 'forms-veil',
   },
   {
-    name: 'Escalation moments',
-    copy: 'Danger, liability, uncertainty, sensitive residents and human requests go straight to a person.',
+    id: 'email',
+    name: 'Email',
+    title: 'Letters people already agreed to read.',
+    copy: 'Launch emails and newsletters written around your offer, with the subject line treated as part of the job.',
+    backdrop: 'dots-swell',
   },
   {
-    name: 'Communication rules',
-    copy: 'Set the tone, working hours, update cadence and information each party should receive.',
+    id: 'search',
+    name: 'Search',
+    title: 'Answers to what people are asking.',
+    copy: 'Search-focused article outlines that connect the questions customers ask with the things you actually know.',
+    backdrop: 'ripple-drift',
   },
+] as const;
+
+export const voiceSamples = [
+  {
+    id: 'post',
+    name: 'Social post',
+    generic: 'Elevate your mornings with our premium new collection. Shop now and transform your weekend routine today!',
+    voice: 'Nobody ever wished Saturday went faster. The weekend edit is here, and it is in no hurry either.',
+  },
+  {
+    id: 'subject',
+    name: 'Email subject',
+    generic: 'Do not miss out: our exciting new collection just dropped!',
+    voice: 'Put the kettle on. We made you something.',
+  },
+  {
+    id: 'ad',
+    name: 'Ad headline',
+    generic: 'Premium home essentials for the modern lifestyle.',
+    voice: 'Slower mornings start here.',
+  },
+] as const;
+
+export const week = [
+  {
+    day: 'Monday',
+    title: 'You mention the launch.',
+    copy: 'A new collection, a date and a rough sense of who it is for. That is enough to begin.',
+    tag: 'Brief',
+  },
+  {
+    day: 'Tuesday',
+    title: 'The idea comes back to you.',
+    copy: 'A campaign direction and a channel plan, written against what Austi already knows about the brand.',
+    tag: 'Plan',
+  },
+  {
+    day: 'Wednesday',
+    title: 'Drafts arrive together.',
+    copy: 'Ads, posts, an email and a search outline, all on the same page and all making the same promise.',
+    tag: 'Drafts',
+  },
+  {
+    day: 'Thursday',
+    title: 'You change your mind about the opening line.',
+    copy: 'Rewrite it, say why, and ask for another pass. Your note carries across the rest of the campaign.',
+    tag: 'Refine',
+  },
+  {
+    day: 'Friday',
+    title: 'You decide what is ready.',
+    copy: 'Approve what fits, hold what does not, and take the finished work to your channels.',
+    tag: 'Approve',
+  },
+] as const;
+
+export const boundaries = [
+  {
+    title: 'It will not publish without you.',
+    copy: 'A draft is a draft until you say otherwise. There is no setting on this page that changes that.',
+    backdrop: 'ripple-fold',
+  },
+  {
+    title: 'It will not spend your money.',
+    copy: 'Budgets, bids and paid spend stay with you. Austi writes the ad. You decide whether it runs.',
+    backdrop: 'forms-arc',
+  },
+  {
+    title: 'It will not make things up about your product.',
+    copy: 'Claims should come from your own material, and you check them before anything is used.',
+    backdrop: 'dots-field',
+  },
+  {
+    title: 'It will not pretend to be finished.',
+    copy: 'Austi is in development. Pricing has not been set, integrations are still being chosen, and early conversations shape both.',
+    backdrop: 'forms-dune',
+  },
+] as const;
+
+export const audiences = [
+  {
+    name: 'Founders',
+    copy: 'You are the head of marketing, among other things, and the launch is on Thursday.',
+    backdrop: 'ripple-hero',
+  },
+  {
+    name: 'Independent businesses',
+    copy: 'You have a loyal following and a very long list of things that are not marketing.',
+    backdrop: 'forms-veil',
+  },
+  {
+    name: 'Small marketing teams',
+    copy: 'You have good ideas and four channels that all want something different by Friday.',
+    backdrop: 'dots-swell',
+  },
+] as const;
+
+export const accessChannels = ['Ads', 'Social', 'Email', 'Search'] as const;
+
+export const chapters = [
+  { id: 'top', name: 'Intro' },
+  { id: 'learn', name: 'Learn' },
+  { id: 'plan', name: 'Plan' },
+  { id: 'create', name: 'Create' },
+  { id: 'voice', name: 'Voice' },
+  { id: 'review', name: 'Review' },
+  { id: 'everywhere', name: 'Everywhere' },
+  { id: 'week', name: 'A week' },
+  { id: 'limits', name: 'Limits' },
+  { id: 'audience', name: 'Who for' },
+  { id: 'access', name: 'Access' },
+  { id: 'faq', name: 'FAQ' },
 ] as const;
 
 export const faqGroups = [

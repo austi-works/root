@@ -1,0 +1,26 @@
+---
+import { audiences } from '../../lib/landing-content';
+import SectionIntro from '../SectionIntro.astro';
+import './Audience.css';
+---
+
+<section class="audience dark-field" id="audience" aria-labelledby="audience-title">
+  <SectionIntro id="audience-title" eyebrow="08. Who it is for" title="Small teams with" muted="big to-do lists." />
+
+  <ul class="audience-list page-wrap" data-follow-list>
+    {audiences.map((audience) => (
+      <li class="audience-row" data-follow-row data-reveal>
+        <h3>{audience.name}</h3>
+        <p>{audience.copy}</p>
+      </li>
+    ))}
+  </ul>
+
+  <div class="audience-follow" data-follow aria-hidden="true">
+    <div class="audience-follow-inner">
+      {audiences.map((audience) => (
+        <img src={`/images/backdrops/${audience.backdrop}.avif`} alt="" loading="lazy" data-follow-image />
+      ))}
+    </div>
+  </div>
+</section>

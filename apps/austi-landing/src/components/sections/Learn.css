@@ -1,0 +1,23 @@
+.learn-step {
+  display: flex;
+  min-height: 92svh;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.learn-frame { height: 100%; }
+.learn-frame .frame-stage { height: 100%; }
+
+@media (max-width: 900px) {
+  .learn .split { --float-height: 46svh; }
+  .learn .split-float {
+    z-index: 2;
+    top: 5.25rem;
+    grid-row: 1;
+    background: var(--color-black);
+  }
+  .learn .split-flow { grid-row: 2; }
+  .learn-step { min-height: 64svh; }
+  /* Finished steps would otherwise show above the frame, behind the header. */
+  .learn-step[data-state='done'] { opacity: 0; }
+}

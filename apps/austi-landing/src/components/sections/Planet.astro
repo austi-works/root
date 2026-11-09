@@ -1,0 +1,32 @@
+---
+import './Planet.css';
+
+const labels = [
+  { name: 'Ads', angle: 20 },
+  { name: 'Social', angle: 110 },
+  { name: 'Email', angle: 200 },
+  { name: 'Search', angle: 290 },
+];
+---
+
+<section class="planet" id="everywhere" data-planet data-curtain aria-labelledby="planet-title">
+  <h2 class="sr-only" id="planet-title">One idea. Every channel.</h2>
+  <div class="planet-stage">
+    <p class="planet-line" data-planet-first aria-hidden="true">One idea.</p>
+    <div class="planet-body" data-planet-body>
+      <canvas class="planet-canvas" data-hero-halftone aria-hidden="true"></canvas>
+    </div>
+    <div class="planet-ring" data-planet-ring aria-hidden="true">
+      {labels.map((label) => (
+        <span class="planet-spoke" style={`--angle: ${label.angle}deg`}>
+          <b class="float-tag" data-planet-label>{label.name}</b>
+        </span>
+      ))}
+    </div>
+    <p class="planet-line planet-line--second" data-planet-second aria-hidden="true">Every channel.</p>
+  </div>
+</section>
+
+<script>
+  import '../../scripts/hero-halftone';
+</script>

@@ -1,0 +1,39 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import './ShaderButton.css';
+
+interface Props extends HTMLAttributes<'a'> {
+  href: string;
+  label: string;
+  priority?: boolean;
+}
+
+const { href, label, priority = false, class: className, ...rest } = Astro.props;
+---
+
+<a class:list={['shader-button', className]} href={href} data-magnetic {...rest}>
+  <img
+    class="shader-button-hdr"
+    data-shader-button-hdr
+    src="/images/hero-cta-superwhite.avif"
+    alt=""
+    width="64"
+    height="64"
+    fetchpriority={priority ? 'high' : 'auto'}
+    decoding={priority ? 'sync' : 'async'}
+    aria-hidden="true"
+  />
+  <span>{label}</span>
+  <svg viewBox="0 0 18 18" aria-hidden="true">
+    <path d="M3.5 9h11M10 4.5 14.5 9 10 13.5"></path>
+  </svg>
+</a>
+
+<script>
+  document.querySelectorAll<HTMLImageElement>('[data-shader-button-hdr]').forEach((image) => {
+    const reveal = () => image.classList.add('is-loaded');
+
+    if (!image.complete) image.addEventListener('load', reveal, { once: true });
+    else if (image.naturalWidth > 0) reveal();
+  });
+</script>

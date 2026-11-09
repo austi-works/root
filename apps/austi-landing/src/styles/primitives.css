@@ -32,6 +32,7 @@
   --font-size-closing: clamp(4.4rem, 8.5vw, 9rem);
   --font-size-closing-mobile: clamp(3.8rem, 17vw, 5.2rem);
   --font-weight-normal: 400;
+  --font-weight-medium: 500;
   --font-weight-bold: 700;
 
   /* A compact palette shared by every section. */
@@ -44,16 +45,29 @@
   --color-text: #f6f3eb;
   --color-muted-dark: #aaa8a1;
   --color-muted-paper: #66645f;
-  --color-accent: #ff4f42;
-  --color-signal: #dfff57;
-  --color-glow-dusk: #0b1739;
-  --color-success: #278a51;
+  --color-primary: #ffffff;
+  --color-shader-mid: #bdbdc2;
+  --color-shader-core: #ffffff;
+  --color-glow-dusk: #1c1c1f;
+
+  /* Illustration frames and the product windows that float inside them. */
+  --color-window: #0c0c0d;
+  --color-window-raised: #18181a;
+  --color-window-muted: #8f8f93;
+  --line-window: color-mix(in srgb, var(--color-white) 10%, transparent);
+  --color-frame-fallback: #2a2a2b;
+  --radius-frame: 0.5rem;
+  --radius-window: 0.875rem;
+  --shadow-window: 0 2.5rem 5rem color-mix(in srgb, var(--color-black) 42%, transparent);
+
+  /* Motion. */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 
   --line-dark: color-mix(in srgb, var(--color-text) 15%, transparent);
   --line-paper: color-mix(in srgb, var(--color-ink) 18%, transparent);
   --color-recessed: color-mix(in srgb, var(--color-paper) 82%, var(--color-ink));
   --color-chip: color-mix(in srgb, var(--color-paper) 88%, var(--color-ink));
-  --color-accent-ink: color-mix(in srgb, var(--color-accent) 70%, var(--color-ink));
 
   --page-width: 110rem;
   --page-gutter: clamp(1.15rem, 3vw, 3.4rem);

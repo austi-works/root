@@ -1,0 +1,49 @@
+---
+import AppWindow from './AppWindow.astro';
+import Icon from './Icon.astro';
+
+const queue = ['Ad set', 'Monday post', 'Search article'];
+const checks = ['Matches brand voice', 'Product details from your catalogue', 'One clear call to action'];
+---
+
+<AppWindow active="Review" crumb="Launch email" action="Ask for a draft">
+  <div class="review-app" data-region="main" data-review data-review-state="pending">
+    <section class="app-card review-doc" data-region="draft">
+      <header><Icon name="mail" size={15} /><h5>Launch email</h5><small>Version 3</small><span class="review-status"><i></i><span data-review-status>Needs your review</span></span></header>
+      <div class="review-paper">
+        <small>Subject</small>
+        <h6 class="brand-serif">Put the kettle on. We made you something.</h6>
+        <img src="/images/products/scene.avif" alt="" loading="lazy" />
+        <p>The weekend edit is a small collection for the slow hours: a linen throw, a good mug and <mark>a candle that smells like nothing urgent</mark>.</p>
+        <p>It is here now, and it is in no hurry either.</p>
+      </div>
+    </section>
+
+    <aside class="review-rail">
+      <section class="app-card" data-region="thread">
+        <header><Icon name="comment" size={15} /><h5>Comments</h5></header>
+        <div class="review-thread">
+          <article><span class="app-avatar">MO</span><div><strong>Maya</strong><p>Love this line. Can we keep it in the ad too?</p></div></article>
+          <article><span class="app-avatar app-avatar--austi"><Icon name="sparkle" size={12} /></span><div><strong>Austi</strong><p>Added it as a headline option in the ad set.</p></div></article>
+        </div>
+      </section>
+
+      <section class="app-card review-decide" data-region="decision">
+        <header><Icon name="review" size={15} /><h5>Your decision</h5></header>
+        <ul>{checks.map((check) => <li><Icon name="check" size={13} />{check}</li>)}</ul>
+        <p class="review-result" data-review-result aria-live="polite">Waiting for your decision.</p>
+        <div class="review-actions">
+          <button type="button" class="review-approve" data-review-action="approve"><Icon name="check" size={15} />Approve</button>
+          <button type="button" data-review-action="edit"><Icon name="edit" size={14} />Ask for edits</button>
+          <button type="button" data-review-action="hold"><Icon name="hold" size={14} />Hold</button>
+          <button type="button" class="review-reset" data-review-reset hidden>Start over</button>
+        </div>
+      </section>
+
+      <section class="app-card">
+        <header><Icon name="clock" size={15} /><h5>Also waiting</h5></header>
+        <div class="review-queue">{queue.map((item) => <div><span>{item}</span><span class="app-state" data-state="Draft">Waiting</span></div>)}</div>
+      </section>
+    </aside>
+  </div>
+</AppWindow>

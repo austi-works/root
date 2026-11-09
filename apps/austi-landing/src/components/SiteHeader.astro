@@ -7,51 +7,31 @@ interface Props {
 
 const { pilotUrl } = Astro.props;
 const onHomePage = Astro.url.pathname === '/';
+const links = [
+  { id: 'learn', name: 'Learn' },
+  { id: 'plan', name: 'Plan' },
+  { id: 'create', name: 'Create' },
+  { id: 'review', name: 'Review' },
+  { id: 'faq', name: 'FAQ' },
+];
 ---
 
 <div class="site-header-shell" data-site-header>
   <header class="site-header">
     <a class="header-brand" href={onHomePage ? '#top' : '/'} aria-label="Austi home">
-      <img src="/austi-logo.svg" alt="" width="22" height="24" />
+      <img src="/austi-logo.svg" alt="" width="18" height="20" />
+      <span>Austi</span>
     </a>
     <nav aria-label="Main navigation">
-      <a href={onHomePage ? '#workflow' : '/#workflow'}>Workflow</a>
-      <a href={onHomePage ? '#controls' : '/#controls'}>Controls</a>
-      <a href={onHomePage ? '#faq' : '/#faq'}>FAQ</a>
+      <i class="nav-pill" data-nav-pill aria-hidden="true"></i>
+      {links.map((link) => (
+        <a href={onHomePage ? `#${link.id}` : `/#${link.id}`} data-nav-link={link.id}>{link.name}</a>
+      ))}
     </nav>
+    <a class="header-cta" href={pilotUrl} data-magnetic>
+      <span>Get early access</span>
+      <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3.5 9h11M10 4.5 14.5 9 10 13.5"></path></svg>
+    </a>
+    <div class="header-progress" data-scroll-progress aria-hidden="true"></div>
   </header>
-  <span class="header-cta-slot">
-    <span class="header-cta-reveal">
-      <a class="header-cta" href={pilotUrl}>
-        <span>Early access</span>
-        <svg viewBox="0 0 18 18" aria-hidden="true">
-          <path d="M3.5 9h11M10 4.5 14.5 9 10 13.5"></path>
-        </svg>
-      </a>
-    </span>
-  </span>
 </div>
-
-<script>
-  const header = document.querySelector<HTMLElement>('[data-site-header]');
-  const hero = document.querySelector<HTMLElement>('#top');
-
-  if (header && hero) {
-    const updateHeader = () => {
-      header.toggleAttribute('data-hero-past', hero.getBoundingClientRect().bottom <= 0);
-    };
-
-    updateHeader();
-
-    if (typeof IntersectionObserver === 'function') {
-      const observer = new IntersectionObserver(([entry]) => {
-        if (!entry) return;
-        header.toggleAttribute('data-hero-past', entry.boundingClientRect.bottom <= 0);
-      });
-
-      observer.observe(hero);
-    } else {
-      window.addEventListener('scroll', updateHeader, { passive: true });
-    }
-  }
-</script>

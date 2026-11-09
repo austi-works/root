@@ -1,11 +1,59 @@
 ---
 import './SiteFooter.css';
+
+const email = 'hello@austi.works';
+const year = new Date().getFullYear();
+const columns = [
+  {
+    name: 'Product',
+    links: [
+      { name: 'Learn your brand', href: '#learn' },
+      { name: 'Plan a campaign', href: '#plan' },
+      { name: 'Create the drafts', href: '#create' },
+      { name: 'Review and approve', href: '#review' },
+    ],
+  },
+  {
+    name: 'About',
+    links: [
+      { name: 'Who it is for', href: '#audience' },
+      { name: 'What it will not do', href: '#limits' },
+      { name: 'Questions', href: '#faq' },
+    ],
+  },
+  {
+    name: 'Talk to us',
+    links: [
+      { name: 'Early access', href: '#access' },
+      { name: email, href: `mailto:${email}?subject=Austi%20marketing%20early%20access` },
+    ],
+  },
+];
 ---
 
 <footer class="site-footer dark-field">
-  <div class="footer-content">
-    <a class="footer-brand" href="#top" aria-label="Austi, back to top"><strong>Austi</strong></a>
-    <div><a href="mailto:hello@austi.works?subject=Austi%20marketing%20early%20access">Contact</a><a href="#top">Back to top ↑</a></div>
+  <div class="footer-top page-wrap">
+    <div class="footer-intro">
+      <a class="footer-brand" href="#top" aria-label="Austi, back to top">
+        <img src="/austi-logo.svg" alt="" width="18" height="20" />Austi
+      </a>
+      <p>Your marketing, taken care of.<span>In development.</span></p>
+    </div>
+    <nav class="footer-columns" aria-label="Footer">
+      {columns.map((column) => (
+        <div>
+          <h2>{column.name}</h2>
+          <ul>{column.links.map((link) => <li><a href={link.href}>{link.name}</a></li>)}</ul>
+        </div>
+      ))}
+    </nav>
+  </div>
+
+  <div class="footer-mark" aria-hidden="true"><span>Austi</span></div>
+
+  <div class="footer-legal page-wrap">
+    <p>© {year} Austi. Sunday Supply is a fictional brand. Screens on this page illustrate the product direction and are not output from a live product.</p>
+    <a href="#top">Back to top <span aria-hidden="true">↑</span></a>
   </div>
 </footer>
 

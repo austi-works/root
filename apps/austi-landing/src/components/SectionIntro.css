@@ -1,0 +1,13 @@
+.section-intro {
+  display: grid;
+  padding-block: var(--section-block-size) clamp(3rem, 6vw, 6rem);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 28rem);
+  align-items: end;
+  gap: var(--size-md) clamp(2rem, 6vw, 7rem);
+}
+
+.section-intro .eyebrow { grid-column: 1 / -1; }
+
+@media (max-width: 900px) {
+  .section-intro { grid-template-columns: minmax(0, 1fr); }
+}

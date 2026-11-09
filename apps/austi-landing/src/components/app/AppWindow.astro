@@ -1,0 +1,71 @@
+---
+import Icon from './Icon.astro';
+import './app.css';
+
+interface Props {
+  active: 'Home' | 'Brand' | 'Campaigns' | 'Drafts' | 'Review';
+  crumb: string;
+  action: string;
+}
+
+const { active, crumb, action } = Astro.props;
+const navigation = [
+  { name: 'Home', icon: 'home' },
+  { name: 'Brand', icon: 'brand' },
+  { name: 'Campaigns', icon: 'campaign' },
+  { name: 'Drafts', icon: 'drafts' },
+  { name: 'Review', icon: 'review', badge: '3' },
+  { name: 'Calendar', icon: 'calendar' },
+  { name: 'Library', icon: 'library' },
+] as const;
+const campaigns = ['The weekend edit', 'Autumn restock', 'Journal series', 'Gift guide'];
+const people = ['MO', 'JL', 'SK'];
+---
+
+<div class="app">
+  <aside class="app-side">
+    <div class="app-workspace">
+      <span class="app-logo"><img src="/austi-logo.svg" alt="" width="13" height="14" /></span>
+      <strong>Sunday Supply</strong>
+      <Icon name="chevron" size={14} />
+    </div>
+    <div class="app-search"><Icon name="search" size={14} /><span>Search or ask</span><kbd>⌘K</kbd></div>
+    <nav>
+      {navigation.map((item) => (
+        <span class:list={['app-nav', { 'is-on': item.name === active }]}>
+          <Icon name={item.icon} />
+          {item.name}
+          {'badge' in item && <b>{item.badge}</b>}
+        </span>
+      ))}
+    </nav>
+    <p class="app-side-label">Campaigns</p>
+    <nav>
+      {campaigns.map((campaign, index) => (
+        <span class:list={['app-nav app-nav--sub', { 'is-sub-on': index === 0 }]}><i></i>{campaign}</span>
+      ))}
+    </nav>
+    <div class="app-user">
+      <span class="app-avatar">MO</span>
+      <span><strong>Maya Ortiz</strong><small>Founder</small></span>
+      <Icon name="settings" size={15} />
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="app-top">
+      <div class="app-crumbs">
+        <span>The weekend edit</span>
+        <Icon name="right" size={12} />
+        <strong>{crumb}</strong>
+      </div>
+      <div class="app-top-tools">
+        <span class="app-tag">Illustrative example</span>
+        <span class="app-people">{people.map((person) => <span class="app-avatar">{person}</span>)}</span>
+        <span class="app-button"><Icon name="link" size={14} />Share</span>
+        <span class="app-button app-button--primary"><Icon name="sparkle" size={14} />{action}</span>
+      </div>
+    </header>
+    <div class="app-content"><slot /></div>
+  </div>
+</div>
