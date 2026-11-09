@@ -82,7 +82,7 @@ transparent footer and revealed space. Do not add a second CSS gradient renderer
 ## Asset provenance
 
 The logo, CTA texture, and Clarity City font files are existing repository assets. The hero uses
-a WebGL shader rather than a photograph. `public/og-austi.png` remains the existing social card,
+a WebGL shader rather than a photograph. `public/og-austi-marketing.png` remains the existing social card,
 independently used by page metadata. Do not add customer logos,
 testimonials, avatars, or integration marks until there is honest source material for them.
 
