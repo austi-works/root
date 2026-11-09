@@ -64,7 +64,6 @@
   line-height: 1.1;
 }
 
-.week-tag { color: var(--color-muted-dark); font-size: var(--font-size-xs); }
 
 .week-copy { max-width: 30rem; padding-top: 0.5rem; }
 

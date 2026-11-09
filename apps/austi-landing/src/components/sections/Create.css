@@ -38,8 +38,6 @@
   gap: 0.2rem var(--size-xl);
 }
 
-.create-caption .split-number { grid-column: 1 / -1; }
-
 .create-caption h3 {
   margin: 0;
   font-size: var(--font-size-title-md);
@@ -96,8 +94,6 @@
     font-size: var(--font-size-xs);
     gap: var(--size-md);
   }
-
-  .create-meter b { color: var(--color-text); font-weight: var(--font-weight-normal); }
 
   .create-progress {
     display: block;

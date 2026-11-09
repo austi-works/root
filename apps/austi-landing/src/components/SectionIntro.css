@@ -6,8 +6,6 @@
   gap: var(--size-md) clamp(2rem, 6vw, 7rem);
 }
 
-.section-intro .eyebrow { grid-column: 1 / -1; }
-
 @media (max-width: 900px) {
   .section-intro { grid-template-columns: minmax(0, 1fr); }
 }

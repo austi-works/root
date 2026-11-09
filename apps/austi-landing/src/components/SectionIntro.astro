@@ -3,17 +3,15 @@ import './SectionIntro.css';
 
 interface Props {
   id: string;
-  eyebrow: string;
   title: string;
   muted?: string;
   lede?: string;
 }
 
-const { id, eyebrow, title, muted, lede } = Astro.props;
+const { id, title, muted, lede } = Astro.props;
 ---
 
 <header class="section-intro page-wrap">
-  <p class="eyebrow" data-reveal>{eyebrow}</p>
   <h2 class="heading" id={id} data-reveal>
     {title}
     {muted && <span>{muted}</span>}

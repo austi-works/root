@@ -49,22 +49,18 @@ export const formats = [
 
 export const learnSteps = [
   {
-    name: 'Your website',
     title: 'Start with the address you already have.',
     copy: 'Share your website once. Austi reads it the way a new hire would, looking for what you sell, how you describe it and what you keep coming back to.',
   },
   {
-    name: 'Your products',
     title: 'Know what is actually on the shelf.',
     copy: 'Product details stay attached to the campaign, so a draft can talk about the real thing rather than a category of things.',
   },
   {
-    name: 'Your audience',
     title: 'Write for someone in particular.',
     copy: 'Tell Austi who you serve and what matters to them. Every brief starts from those people, not from a demographic guess.',
   },
   {
-    name: 'Your voice',
     title: 'Keep the way you talk.',
     copy: 'Add examples of your writing and correct what feels off. The feedback becomes part of the context for the next draft.',
   },
@@ -72,25 +68,21 @@ export const learnSteps = [
 
 export const planSteps = [
   {
-    name: 'The idea',
     value: 'Slower mornings',
     title: 'One idea worth repeating.',
     copy: 'A campaign begins as a single thought you can say out loud. Everything after it has to earn its place against that thought.',
   },
   {
-    name: 'The offer',
     value: 'The new weekend collection',
     title: 'Be clear about what you are asking.',
     copy: 'Name what is being promoted and what a reader should do next, so five channels do not end up making five different requests.',
   },
   {
-    name: 'The angles',
     value: 'Ritual, material, gifting',
     title: 'Several ways into the same story.',
     copy: 'Explore different angles side by side, keep the ones that sound like you and throw the rest away without ceremony.',
   },
   {
-    name: 'The plan',
     value: 'Four channels, one week',
     title: 'Put it in order.',
     copy: 'See what goes where and when before anything is written in full. Move it around while moving it is still easy.',
@@ -100,28 +92,24 @@ export const planSteps = [
 export const channels = [
   {
     id: 'ads',
-    name: 'Ads',
     title: 'Headlines with a reason to exist.',
     copy: 'Ad copy and creative briefs built from the campaign idea, ready for a designer or your own hands.',
     backdrop: 'ripple-tide',
   },
   {
     id: 'social',
-    name: 'Social',
     title: 'Posts that belong to a plan.',
     copy: 'Captions and content plans shaped for the format, still telling the same story as the launch.',
     backdrop: 'forms-veil',
   },
   {
     id: 'email',
-    name: 'Email',
     title: 'Letters people already agreed to read.',
     copy: 'Launch emails and newsletters written around your offer, with the subject line treated as part of the job.',
     backdrop: 'dots-swell',
   },
   {
     id: 'search',
-    name: 'Search',
     title: 'Answers to what people are asking.',
     copy: 'Search-focused article outlines that connect the questions customers ask with the things you actually know.',
     backdrop: 'ripple-drift',
@@ -131,19 +119,16 @@ export const channels = [
 export const voiceSamples = [
   {
     id: 'post',
-    name: 'Social post',
     generic: 'Elevate your mornings with our premium new collection. Shop now and transform your weekend routine today!',
     voice: 'Nobody ever wished Saturday went faster. The weekend edit is here, and it is in no hurry either.',
   },
   {
     id: 'subject',
-    name: 'Email subject',
     generic: 'Do not miss out: our exciting new collection just dropped!',
     voice: 'Put the kettle on. We made you something.',
   },
   {
     id: 'ad',
-    name: 'Ad headline',
     generic: 'Premium home essentials for the modern lifestyle.',
     voice: 'Slower mornings start here.',
   },
@@ -154,31 +139,26 @@ export const week = [
     day: 'Monday',
     title: 'You mention the launch.',
     copy: 'A new collection, a date and a rough sense of who it is for. That is enough to begin.',
-    tag: 'Brief',
   },
   {
     day: 'Tuesday',
     title: 'The idea comes back to you.',
     copy: 'A campaign direction and a channel plan, written against what Austi already knows about the brand.',
-    tag: 'Plan',
   },
   {
     day: 'Wednesday',
     title: 'Drafts arrive together.',
     copy: 'Ads, posts, an email and a search outline, all on the same page and all making the same promise.',
-    tag: 'Drafts',
   },
   {
     day: 'Thursday',
     title: 'You change your mind about the opening line.',
     copy: 'Rewrite it, say why, and ask for another pass. Your note carries across the rest of the campaign.',
-    tag: 'Refine',
   },
   {
     day: 'Friday',
     title: 'You decide what is ready.',
     copy: 'Approve what fits, hold what does not, and take the finished work to your channels.',
-    tag: 'Approve',
   },
 ] as const;
 
@@ -207,17 +187,14 @@ export const boundaries = [
 
 export const audiences = [
   {
-    name: 'Founders',
     copy: 'You are the head of marketing, among other things, and the launch is on Thursday.',
     backdrop: 'ripple-hero',
   },
   {
-    name: 'Independent businesses',
     copy: 'You have a loyal following and a very long list of things that are not marketing.',
     backdrop: 'forms-veil',
   },
   {
-    name: 'Small marketing teams',
     copy: 'You have good ideas and four channels that all want something different by Friday.',
     backdrop: 'dots-swell',
   },
@@ -243,15 +220,12 @@ export const chapters = [
 export const faqGroups = [
   {
     id: 'product',
-    name: 'Product',
   },
   {
     id: 'operation',
-    name: 'How it works',
   },
   {
     id: 'stage',
-    name: 'Availability',
   },
 ] as const;
 
@@ -272,7 +246,7 @@ export const faqItems = [
     group: 'product',
     question: 'What can I create with Austi?',
     answer:
-      'The planned workspace brings together ad copy and creative briefs, social captions and content plans, launch emails and newsletters, and search-focused article outlines. The examples on this page illustrate that direction; they are not output from a live product.',
+      'The planned workspace brings together ad copy and creative briefs, social captions and content plans, launch emails and newsletters, and search-focused article outlines.',
   },
   {
     group: 'operation',

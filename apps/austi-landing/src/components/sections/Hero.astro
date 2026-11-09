@@ -22,7 +22,6 @@ const { pilotUrl } = Astro.props;
     <div class="hero-intro" data-hero-intro>
       <div class="hero-lead">
         <ProofPill {...heroContent.proof} />
-        <p class="eyebrow" data-reveal>In development. Early access is open.</p>
         <h1 class="hero-heading" data-reveal style="--reveal-delay: 80ms">{heroContent.heading}</h1>
       </div>
       <div class="hero-side">
@@ -40,7 +39,7 @@ const { pilotUrl } = Astro.props;
       backdrop="ripple-hero"
       eager
       data-hero-frame
-      alt="Illustration of the Austi workspace showing a campaign for a fictional brand, with ads, social posts, an email and a search article in progress."
+      alt="The Austi workspace showing a campaign with ads, social posts, an email and a search article in progress."
     >
       <Spotlight class="hero-mock" still mobileRegion="board" data-hero-mock data-hero-spot>
         <WorkspaceScreen />
