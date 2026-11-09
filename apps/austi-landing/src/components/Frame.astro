@@ -6,12 +6,11 @@ interface Props extends HTMLAttributes<'figure'> {
   backdrop: string;
   /** Describes the illustration as one image. Omit when the frame holds real controls. */
   alt?: string;
-  caption?: string;
   dim?: boolean;
   eager?: boolean;
 }
 
-const { backdrop, alt, caption, dim = false, eager = false, class: className, ...rest } = Astro.props;
+const { backdrop, alt, dim = false, eager = false, class: className, ...rest } = Astro.props;
 const illustrated = Boolean(alt);
 ---
 
@@ -33,5 +32,4 @@ const illustrated = Boolean(alt);
     />
   </div>
   <div class="frame-stage"><slot /></div>
-  {caption && <figcaption class="frame-caption">{caption}</figcaption>}
 </figure>

@@ -7,10 +7,9 @@ import './Week.css';
 <section class="week dark-field" id="week" aria-labelledby="week-title">
   <SectionIntro
     id="week-title"
-    eyebrow="06. A week, sketched"
     title="What a launch could feel like."
     muted="Without the Sunday-night panic."
-    lede="An illustration of the workflow we are building towards, not a promise about how long your campaign will take."
+    lede="The workflow we are building towards, not a promise about how long your campaign will take."
   />
 
   <div class="week-list page-wrap" data-week>
@@ -21,7 +20,6 @@ import './Week.css';
         <span class="week-dot" aria-hidden="true"></span>
         <div class="week-day" data-reveal>
           <strong>{entry.day}</strong>
-          <span class="week-tag">{entry.tag}</span>
         </div>
         <div class="week-copy" data-reveal style="--reveal-delay: 100ms">
           <h3>{entry.title}</h3>

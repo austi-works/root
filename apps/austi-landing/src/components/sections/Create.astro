@@ -4,15 +4,12 @@ import DraftsScreen from '../app/DraftsScreen.astro';
 import Frame from '../Frame.astro';
 import Spotlight from '../Spotlight.astro';
 import './Create.css';
-
-const pad = (value: number) => String(value).padStart(2, '0');
 ---
 
 <section class="create dark-field" id="create" data-horizontal aria-labelledby="create-title">
   <div class="create-stage">
     <div class="create-track" data-horizontal-track>
       <header class="create-intro">
-        <p class="eyebrow">03. Create</p>
         <h2 class="heading" id="create-title">Every channel, the same conversation.<span>Keep scrolling.</span></h2>
       </header>
 
@@ -21,15 +18,13 @@ const pad = (value: number) => String(value).padStart(2, '0');
           <Frame
             class="create-frame"
             backdrop={channel.backdrop}
-            alt={`Illustrative ${channel.name.toLowerCase()} draft for a fictional brand called Sunday Supply.`}
-            caption="Illustrative"
+            alt={`${channel.name} draft in the Austi workspace.`}
           >
             <Spotlight region={channel.id}>
               <DraftsScreen />
             </Spotlight>
           </Frame>
           <div class="create-caption">
-            <span class="split-number">{channel.name}</span>
             <h3>{channel.title}</h3>
             <p>{channel.copy}</p>
           </div>
@@ -38,7 +33,6 @@ const pad = (value: number) => String(value).padStart(2, '0');
     </div>
 
     <div class="create-meter page-wrap" aria-hidden="true">
-      <span><b data-horizontal-count>{pad(1)}</b> / {pad(channels.length)}</span>
       <span class="create-progress"><i data-horizontal-bar></i></span>
     </div>
   </div>

@@ -97,16 +97,6 @@ button:focus-visible {
   padding-inline: var(--page-gutter);
 }
 
-.eyebrow {
-  margin: 0;
-  color: var(--color-muted-dark);
-  font-size: var(--font-size-xs);
-}
-
-.paper-field .eyebrow { color: var(--color-muted-paper); }
-
-.split-number { color: var(--color-muted-dark); font-size: var(--font-size-xs); }
-
 .heading {
   margin: 0;
   font-size: clamp(2.25rem, 4.3vw, 4.5rem);

@@ -78,18 +78,6 @@
   transition: transform 900ms var(--ease-out);
 }
 
-.frame-caption {
-  position: absolute;
-  z-index: 3;
-  bottom: var(--size-sm);
-  left: var(--size-sm);
-  padding: 0.2rem 0.55rem;
-  border-radius: 0.3rem;
-  background: color-mix(in srgb, var(--color-black) 62%, transparent);
-  color: var(--color-white);
-  font-size: 0.75rem;
-}
-
 @media (hover: none) {
   .frame::after { display: none; }
 }

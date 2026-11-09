@@ -17,10 +17,9 @@
 }
 
 .limits-copy { max-width: 46rem; color: var(--color-white); }
-.limits-copy .split-number { color: var(--color-white); }
 
 .limits-copy h3 {
-  margin: var(--size-sm) 0 var(--size-md);
+  margin: 0 0 var(--size-md);
   font-size: var(--font-size-heading-lg);
   font-weight: var(--font-weight-medium);
   letter-spacing: -0.04em;

@@ -97,7 +97,6 @@ const horizontalScene = () => {
   const section = one('[data-horizontal]');
   const track = one('[data-horizontal-track]');
   const bar = one('[data-horizontal-bar]');
-  const count = one('[data-horizontal-count]');
   if (!section || !track) return;
 
   const distance = () => Math.max(track.scrollWidth - window.innerWidth, 0);
@@ -119,10 +118,6 @@ const horizontalScene = () => {
       invalidateOnRefresh: true,
       onUpdate: (self) => {
         if (bar) bar.style.transform = `scaleX(${self.progress})`;
-        if (count) {
-          const current = Math.min(Math.floor(self.progress * panels.length) + 1, panels.length);
-          count.textContent = String(current).padStart(2, '0');
-        }
       },
     },
   });

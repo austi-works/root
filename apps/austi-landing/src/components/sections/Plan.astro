@@ -14,7 +14,6 @@ const regions = ['idea', 'offer', 'angles', 'calendar'];
 <section class="plan dark-field" id="plan" data-steps aria-labelledby="plan-title">
   <SectionIntro
     id="plan-title"
-    eyebrow="02. Plan"
     title="One idea, thought all the way through."
     muted="Before anyone writes a headline."
     lede="Scattered posts are what happens when nothing was decided first. The plan is where a campaign becomes one thing."
@@ -25,8 +24,7 @@ const regions = ['idea', 'offer', 'angles', 'calendar'];
       <Frame
         class="plan-brief-frame"
         backdrop="ripple-fold"
-        alt="Illustration of a campaign brief that fills in as the idea, offer, angles and plan are decided."
-        caption="Illustrative"
+        alt="A campaign brief that fills in as the idea, offer, angles and plan are decided."
       >
         <Spotlight region="brief">
           <PlanScreen progress />
@@ -40,13 +38,12 @@ const regions = ['idea', 'offer', 'angles', 'calendar'];
           <Frame
             class="plan-frame"
             backdrop={backdrops[index]!}
-            alt={`Illustration of ${step.name.toLowerCase()} for a fictional campaign.`}
+            alt={`${step.name} in the Austi workspace.`}
           >
             <Spotlight region={regions[index]}>
               <PlanScreen />
             </Spotlight>
           </Frame>
-          <span class="split-number">{String(index + 1).padStart(2, '0')}. {step.name}</span>
           <h3>{step.title}</h3>
           <p>{step.copy}</p>
         </article>

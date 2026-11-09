@@ -8,7 +8,6 @@ import './Limits.css';
 <section class="limits dark-field" id="limits" aria-labelledby="limits-title">
   <SectionIntro
     id="limits-title"
-    eyebrow="07. Limits"
     title="Four things Austi is built not to do."
     muted="Autopilot still has a pilot."
   />
@@ -18,7 +17,6 @@ import './Limits.css';
       <article class="limits-card" data-stack-card style={`--i: ${index}`}>
         <Frame class="limits-frame" backdrop={boundary.backdrop} dim>
           <div class="limits-copy">
-            <span class="split-number">{String(index + 1).padStart(2, '0')}</span>
             <h3>{boundary.title}</h3>
             <p>{boundary.copy}</p>
           </div>

@@ -27,7 +27,7 @@
 .split-step[data-state='next'] { opacity: 0.32; }
 
 .split-step h3 {
-  margin: var(--size-sm) 0 var(--size-md);
+  margin: 0 0 var(--size-md);
   font-size: var(--font-size-heading-sm);
   font-weight: var(--font-weight-medium);
   letter-spacing: -0.035em;
