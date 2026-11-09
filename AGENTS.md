@@ -2,7 +2,13 @@
 
 Always try to keep changes minimal and focused.
 
-Never run application unless user explicitly asks for it.
+## Local Processes
+
+Long-running local processes run under pitchfork so they are not tied to a terminal or chat. See [.docs/local-processes.md](.docs/local-processes.md).
+
+Agents may start apps and check their status whenever it helps the task. Start them through the root `*:dev`, `*:preview`, and `*:convex` scripts, not in a background shell tied to the chat.
+
+Before starting anything, or to find a port, run `pitchfork list --json`. Read logs with `pitchfork logs <daemon>`. Reuse a daemon that is already running, and stop only the ones you started.
 
 If you need additional information about library use context7.
 
