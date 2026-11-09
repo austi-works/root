@@ -9,10 +9,10 @@ import Trust from '../components/Trust.astro';
 import Layout from '../layouts/Layout.astro';
 import { faqItems } from '../lib/landing-content';
 
-const title = 'Austi | AI Maintenance Coordination for Property Managers';
+const title = 'Austi | AI Marketing for Ads, Social, Email & Search';
 const description =
-  'Austi explores AI-assisted maintenance coordination for residential property managers, connecting tenant reports, approvals, contractors and PMS updates.';
-const pilotUrl = 'mailto:hello@austi.works?subject=Maintenance%20workflow%20conversation';
+  'Meet Austi, an AI marketing workspace in development for founders and small teams. Plan ads, social posts, emails and search content around your brand.';
+const pilotUrl = 'mailto:hello@austi.works?subject=Austi%20marketing%20early%20access';
 const siteUrl = 'https://austi.works/';
 const socialImageUrl = `${siteUrl}og-austi.png`;
 const logoUrl = `${siteUrl}austi-logo.svg`;
@@ -48,10 +48,6 @@ const structuredData = {
       description,
       logo: logoUrl,
       image: { '@id': `${siteUrl}#primaryimage` },
-      areaServed: [
-        { '@type': 'Country', name: 'Lithuania' },
-        { '@type': 'Country', name: 'Poland' },
-      ],
     },
     {
       '@type': 'ImageObject',
@@ -60,7 +56,7 @@ const structuredData = {
       contentUrl: socialImageUrl,
       width: 1731,
       height: 909,
-      caption: 'Austi — AI-assisted maintenance coordination for residential property managers.',
+      caption: 'Austi — your AI marketing workspace for ads, social, email and search.',
     },
     {
       '@type': 'FAQPage',

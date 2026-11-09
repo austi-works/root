@@ -2,51 +2,47 @@
 
 ## Platform
 
-Web landing page for a pre-product B2B concept.
+Web landing page for an AI marketing workspace in development.
 
 ## Product
 
-Austi is exploring an AI-assisted maintenance coordination layer for residential property
-managers. It is intended to connect the operational work between a tenant report and a closed
-case: intake, diagnostic questions, triage, approval, contractor selection, scheduling, follow-up,
-and the final PMS record.
+Austi is exploring a brand-aware marketing workspace that turns a business's website, product
+information and voice into a coordinated campaign. The proposed scope covers ad copy and creative
+briefs, social posts, emails, and search content.
 
-The landing-page concept condenses that work into four stages: capture requests from phone, email,
-and WhatsApp; assess urgency and responsibility; coordinate the people involved; and close the case.
+The landing-page workflow has three stages: share brand context, build the campaign, and review
+and refine the drafts. Publishing connections are being explored during early access.
 
 ## Audience
 
-The primary audience is residential property-management operators, especially heads of operations,
-maintenance coordinators, and portfolio managers in Lithuania and Poland. The landing page is a
-credibility surface for targeted research outreach, not an acquisition funnel for a finished
-product.
+Founders, independent businesses and small marketing teams who need help planning and creating
+consistent marketing across channels.
 
 ## Positioning
 
-Austi coordinates maintenance within the property manager's operating policy. It does not
-invent that policy and does not require the team to replace its existing PMS.
+Your marketing, taken care of. A single brand context and campaign idea can guide content across
+ads, social, email and search. The user keeps the final say over content and spend.
 
 ## Current Stage
 
-- Operator research and workflow discovery.
-- No self-service product, pricing, customer proof, or measured performance claims yet.
-- The primary CTA is a conversation about the operator's current workflow.
-- Case examples on the site are explicitly labeled as illustrative concept workflows.
+- Product development and marketing-workflow discovery.
+- No public self-service product, published pricing or measured performance claims.
+- Early-access CTAs open an email to hello@austi.works for a conversation.
+- Sunday Supply is a fictional lifestyle brand used for illustrative campaign examples.
 
 ## Product Principles
 
-1. Start from real maintenance cases, not hypothetical feature demand.
-2. Keep intake, decisions, handoffs, appointments, and outcomes connected.
-3. Let the property manager define approval limits, escalation rules, and preferred contractors.
-4. Escalate emergencies, uncertainty, and exceptions to a person with full context.
-5. Add a coordination layer around the existing PMS rather than forcing a migration.
+1. Start with the business's own brand, audience and product information.
+2. Keep campaign planning and drafts connected across channels.
+3. Adapt the format while preserving a consistent message and voice.
+4. Let the user review, edit and approve content before using it.
+5. Prioritize publishing connections through early-access research.
 
 ## Claims Policy
 
-Do not publish efficiency percentages, response-time improvements, customer logos, testimonials,
-integration claims, pricing, or autonomous-action claims without evidence. Use research-stage
-language such as "exploring," "being designed," and "proposed workflow" until the product and
-results exist.
+Do not publish performance statistics, customer logos, testimonials, live integration claims,
+pricing, or autonomous publishing and spending claims without evidence. Keep development status
+clear and distinguish illustrative campaign content from actual product output.
 
 ## Accessibility
 

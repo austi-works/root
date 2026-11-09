@@ -15,6 +15,12 @@
   overflow: hidden;
 }
 
+.hero-halftone {
+  width: min(100%, 72svh);
+  aspect-ratio: 1;
+  justify-self: center;
+}
+
 .hero.dark-field {
   background: var(--color-black);
 }
@@ -188,6 +194,9 @@
   }
   .hero-intro {
     max-width: 40rem;
+  }
+  .hero-halftone {
+    width: min(100%, 26rem);
   }
   .hero-strip {
     grid-template-columns: minmax(0, 1fr);

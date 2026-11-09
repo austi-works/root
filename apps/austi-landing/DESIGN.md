@@ -27,9 +27,9 @@ autonomous for its own sake.
 
 ## Hero focal asset
 
-Use the HTML product scene to explain website → brand context → content drafts → approval.
-Keep the text crisp, the connectors behind the cards, and the scene readable in its static
-reduced-motion state. Hero content is illustrative and uses a clearly fictional brand.
+Use one WebGL halftone, with no windows, cards or boxes: a tilted planet with continents, ice caps
+and drifting clouds, turning slowly under a fixed sun. Keep the shader inside its own square beside
+the copy, and show a single still frame in the static reduced-motion state.
 
 ## Typography and color
 
@@ -79,7 +79,7 @@ transparent footer and revealed space. Do not add a second CSS gradient renderer
 ## Asset provenance
 
 The logo, CTA texture, and Clarity City font files are existing repository assets. The hero uses
-HTML and SVG rather than a photograph. `public/og-austi.png` remains the existing social card,
+a WebGL shader rather than a photograph. `public/og-austi.png` remains the existing social card,
 independently used by page metadata. Do not add customer logos,
 testimonials, avatars, or integration marks until there is honest source material for them.
 

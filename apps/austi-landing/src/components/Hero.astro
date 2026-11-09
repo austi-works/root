@@ -1,5 +1,4 @@
 ---
-import HeroProductScene from './HeroProductScene.astro';
 import IntegrationMarquee from './IntegrationMarquee.astro';
 import { LiveCounter } from './LiveCounter';
 import ProofPill from './ProofPill.astro';
@@ -49,7 +48,7 @@ const { pilotUrl } = Astro.props;
         ))}
       </ul>
     </div>
-    <HeroProductScene />
+    <canvas class="hero-halftone" data-hero-halftone aria-hidden="true"></canvas>
   </div>
   <div class="hero-strip">
     <IntegrationMarquee integrations={heroContent.integrations} label={heroContent.integrationsLabel} />
@@ -60,6 +59,8 @@ const { pilotUrl } = Astro.props;
 </section>
 
 <script>
+  import '../scripts/hero-halftone';
+
   const hdrImage = document.querySelector<HTMLImageElement>('[data-hero-download-hdr]');
 
   if (hdrImage) {

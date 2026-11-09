@@ -155,84 +155,60 @@ export const faqItems = [
     group: 'product',
     question: 'What is Austi?',
     answer:
-      'Austi is an AI maintenance coordinator for property managers and multi-property landlords. It receives repair reports, gathers the details, follows the owner’s operating policies, coordinates an approved contractor and keeps the case moving until the work is recorded as complete.',
+      'Austi is an AI marketing workspace in development for founders and small teams. The focus is turning your brand context into coordinated campaign drafts across ads, social posts, emails and search content.',
   },
   {
     group: 'product',
-    question: 'What maintenance work does Austi handle?',
+    question: 'Who is it for?',
     answer:
-      'The closed alpha covers the work around a repair: receiving the report, asking follow-up questions, assessing urgency, checking policy, requesting approval when needed, contacting contractors, scheduling access, sending updates, following up and recording the outcome.',
+      'Founders, independent businesses and small marketing teams who know their product but need more time to plan and create their marketing. Early-access conversations help us decide which workflows to build first.',
   },
   {
     group: 'product',
-    question: 'Does Austi handle leasing, rent collection or inspections?',
+    question: 'What can I create with Austi?',
     answer:
-      'Not in the current alpha. Austi is focused on maintenance first. Leasing, rent collection, inspections and broader tenant support are planned for later.',
-  },
-  {
-    group: 'product',
-    question: 'How can tenants report a problem?',
-    answer:
-      'Reports can arrive by phone, email, WhatsApp, SMS or web chat. Messages from each channel stay attached to the same maintenance case.',
+      'The planned workspace brings together ad copy and creative briefs, social captions and content plans, launch emails and newsletters, and search-focused article outlines. The examples on this page illustrate that direction; they are not output from a live product.',
   },
   {
     group: 'operation',
-    question: 'How much can Austi do without approval?',
+    question: 'How does Austi learn my brand?',
     answer:
-      'Within the maintenance workflow, Austi can carry out any action covered by policies set by the property owner. Those policies define urgency, responsibility, approval limits, contractor choices and the points where a manager must decide.',
+      'The proposed starting point is your website, product information, audience and examples of your writing. You provide the source material and feedback so campaign drafts can reflect your business and voice.',
   },
   {
     group: 'operation',
-    question: 'Can we keep our existing contractors?',
+    question: 'Will content go live without my approval?',
     answer:
-      'Yes. Austi works only with your existing contractor network. You choose the approved contractors for each property and trade.',
+      'The workflow is being designed around your review. You check the content, verify product claims and approve what you want to use. Automatic publishing and ad spending are not available on this landing page.',
   },
   {
     group: 'operation',
-    question: 'What happens when a case falls outside our policy?',
+    question: 'Can Austi publish to my existing channels?',
     answer:
-      'The agent automatically notifies the manager, shares the information collected so far and waits for a decision. Work resumes once the manager gives direction.',
+      'Publishing connections are being explored during early access. We do not claim live integrations with specific ad, social or email platforms yet. Tell us which tools you use so we can prioritize the connections that matter.',
   },
   {
     group: 'operation',
-    question: 'How does Austi handle emergencies?',
+    question: 'Can I use it for more than social posts?',
     answer:
-      'Emergency reports follow the escalation policy set by the property owner. When the situation requires a decision outside Austi’s approved actions, the manager is notified automatically and the agent waits for direction.',
-  },
-  {
-    group: 'operation',
-    question: 'Does Austi replace our PMS?',
-    answer:
-      'No. Your PMS remains the source of truth. During the alpha, we are working with operators to decide which integrations and write-back workflows matter first, so we do not claim compatibility with named platforms yet.',
-  },
-  {
-    group: 'operation',
-    question: 'What does Austi record?',
-    answer:
-      'Reports, messages, policy checks, approvals, contractor responses, appointments and outcomes stay attached to the maintenance case. The final record is prepared for your PMS; how it is written back depends on your setup and the integrations chosen during the alpha.',
-  },
-  {
-    group: 'stage',
-    question: 'Who is Austi for?',
-    answer:
-      'The current alpha is designed for property managers and multi-property landlords in Lithuania and Poland.',
+      'Yes, the product direction covers a whole campaign: ads, social posts, emails and search content built around the same offer. You can discuss a single channel or a broader campaign with us during early access.',
   },
   {
     group: 'stage',
     question: 'Is Austi available today?',
     answer:
-      'The product is in closed alpha while we continue product and workflow discovery. There is no public self-service product or published pricing yet. Contact us to discuss your maintenance process and whether alpha testing is a fit.',
+      'Austi is in development and is not open for public self-service signup. The early-access links open an email to our team so we can discuss your marketing workflow and whether early testing is a fit.',
   },
   {
     group: 'stage',
-    question: 'How is tenant and property data handled?',
+    question: 'How much does it cost?',
     answer:
-      'Because the product is still in closed alpha, we do not make production security or compliance claims. Contact us to discuss how data would be handled for a specific alpha test.',
+      'Pricing has not been announced. We are learning which marketing workflows are most useful before defining plans. There is no purchase or paid trial on this page.',
   },
   {
     group: 'stage',
-    question: 'What happens in the first conversation?',
+    question: 'What should I share when I get in touch?',
     answer:
-      'We review real maintenance cases from your portfolio and learn how your team handles reports, approvals, contractors, exceptions and PMS records. Contact us to arrange a conversation.',
+      'Send us your website, the channels you use and the marketing task that takes the most time each week. We will use that conversation to explore how Austi could fit your work.',
   },
 ] as const;
