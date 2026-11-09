@@ -12,7 +12,7 @@ import type { ComponentProps } from 'react';
 
 import { NavMain } from '#/components/navigation/nav-main';
 import { NavSettings } from '#/components/navigation/nav-settings';
-import { Route as IndexRoute } from '#/routes/index';
+import { Route as IndexRoute } from '#/routes/_app.index';
 
 export function AppSidebar(props: ComponentProps<typeof Sidebar>) {
   const { setOpenMobile } = useSidebar();
@@ -37,7 +37,7 @@ export function AppSidebar(props: ComponentProps<typeof Sidebar>) {
                 alt=''
                 className='size-5 object-contain invert dark:invert-0'
               />
-              <span className='text-base font-semibold'>austi</span>
+              <span className='text-base font-medium'>austi</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

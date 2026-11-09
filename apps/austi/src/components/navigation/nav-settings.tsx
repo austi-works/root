@@ -11,7 +11,7 @@ import { Settings } from 'lucide-react';
 import type { ComponentPropsWithoutRef } from 'react';
 
 import type { NavItem } from '#/components/navigation/nav-types';
-import { Route as SettingsRoute } from '#/routes/settings';
+import { Route as SettingsRoute } from '#/routes/_app.settings';
 
 const items: NavItem[] = [{ title: 'Settings', route: SettingsRoute, icon: Settings }];
 

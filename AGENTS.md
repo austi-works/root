@@ -42,7 +42,7 @@ Use `@tanstack/ai` for the AI library.
 
 ## Convex
 
-Assume Convex codegen stays in sync while `bun run code:convex` or `bun run trading:convex` runs from the monorepo root (each resolves the matching app’s `convex/` folder).
+Assume Convex codegen stays in sync while `bun run austi:convex` or `bun run trading:convex` runs from the monorepo root (each resolves the matching app’s `convex/` folder).
 
 ## UI / Theming
 
@@ -50,12 +50,8 @@ Do not introduce raw Tailwind color classes (e.g. `emerald-500`, `red-500`, `gre
 
 See [.docs/ui-theming.md](.docs/ui-theming.md) for the full token reference, signal-to-token mapping (bullish→success, bearish→danger), radius scale, and the recipe for adding new tokens.
 
-Code desktop runtime storage, cleanup, verifier image, and distribution rules are documented in
-[.docs/code-desktop-runtime.md](.docs/code-desktop-runtime.md).
-
-For the Code desktop app and shared workbench surfaces, follow
-[.docs/code-ui-style.md](.docs/code-ui-style.md). The default visual direction is minimal and
-flat: do not use cards for page layout.
+For the Austi app, the default visual direction is minimal, flat and monochrome: do not use cards
+for page layout.
 
 <!-- convex-ai-start -->
 

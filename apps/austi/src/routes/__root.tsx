@@ -7,7 +7,6 @@ import {
   createRootRouteWithContext,
   redirect,
 } from '@tanstack/react-router';
-import { getAuth, getSignInUrl, getSignUpUrl } from '@workos/authkit-tanstack-react-start';
 import {
   WorkosConvexProvider,
   fetchWorkosAuth,
@@ -16,8 +15,8 @@ import {
 import type { ConvexReactClient } from 'convex/react';
 import type { ReactNode } from 'react';
 
+import { AnalyticsProvider } from '#/providers/analytics-provider';
 import { ThemeProvider } from '#/providers/theme-provider';
-import { AppShell } from '#/shell/app-shell';
 
 import themeUrl from '#/theme-overrides.css?url';
 
@@ -32,10 +31,10 @@ export const Route = createRootRouteWithContext<Context>()({
     meta: [
       { charSet: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { name: 'theme-color', content: '#0a0a0a' },
+      { name: 'theme-color', content: '#000000' },
       {
         name: 'description',
-        content: 'Maintenance coordination for property managers.',
+        content: 'Plan and review your marketing across ads, social, email and search.',
       },
       { title: 'Austi' },
     ],
@@ -51,16 +50,17 @@ export const Route = createRootRouteWithContext<Context>()({
       { rel: 'stylesheet', href: themeUrl },
     ],
   }),
-  beforeLoad: async ({ context }) => {
+  beforeLoad: async ({ context, location }) => {
     const { initialAuth, token } = await fetchWorkosAuth();
+    if (!initialAuth.user) {
+      const returnPathname = encodeURIComponent(location.href);
+      throw redirect({
+        href: `/api/auth/sign-in?returnPathname=${returnPathname}`,
+        reloadDocument: true,
+      });
+    }
     setConvexQueryClientAuthForSsr(context.convexQueryClient, token);
     return { initialAuth };
-  },
-  loader: async () => {
-    const { user } = await getAuth();
-    if (!user) throw redirect({ to: '/api/auth/sign-in' });
-    const [signInUrl, signUpUrl] = await Promise.all([getSignInUrl(), getSignUpUrl()]);
-    return { signInUrl, signUpUrl };
   },
   shellComponent: RootDocument,
   component: RootRoute,
@@ -82,13 +82,12 @@ export function RootDocument({ children }: { children: ReactNode }) {
 
 export function RootRoute() {
   const { convexQueryClient, initialAuth } = Route.useRouteContext();
-  const { signInUrl, signUpUrl } = Route.useLoaderData();
 
   return (
     <WorkosConvexProvider convexQueryClient={convexQueryClient} initialAuth={initialAuth}>
-      <AppShell signInUrl={signInUrl} signUpUrl={signUpUrl}>
+      <AnalyticsProvider>
         <Outlet />
-      </AppShell>
+      </AnalyticsProvider>
     </WorkosConvexProvider>
   );
 }
