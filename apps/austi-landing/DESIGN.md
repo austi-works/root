@@ -27,10 +27,9 @@ autonomous for its own sake.
 
 ## Hero focal asset
 
-Use the existing empty operations-desk photograph as the first-viewport image. The paperwork makes
-coordination burden tangible, while the empty chair supports the promise that intake can begin
-before an operator is available. The message and research-stage CTA remain fully readable without
-animation.
+Use one WebGL halftone, with no windows, cards or boxes: a tilted planet with continents, ice caps
+and drifting clouds, turning slowly under a fixed sun. Keep the shader inside its own square beside
+the copy, and show a single still frame in the static reduced-motion state.
 
 ## Typography and color
 
@@ -79,9 +78,9 @@ transparent footer and revealed space. Do not add a second CSS gradient renderer
 
 ## Asset provenance
 
-The hero photograph, responsive derivatives, CTA texture, and Clarity City font files are existing
-repository assets. `public/og-austi.png` is an AI-edited social card derived from that hero
-photograph and contains only the Austi name and category statement. Do not add customer logos,
+The logo, CTA texture, and Clarity City font files are existing repository assets. The hero uses
+a WebGL shader rather than a photograph. `public/og-austi.png` remains the existing social card,
+independently used by page metadata. Do not add customer logos,
 testimonials, avatars, or integration marks until there is honest source material for them.
 
 ## Avoid
