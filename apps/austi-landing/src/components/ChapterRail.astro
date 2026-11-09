@@ -1,0 +1,13 @@
+---
+import { chapters } from '../lib/landing-content';
+import './ChapterRail.css';
+---
+
+<nav class="chapter-rail" aria-label="Page chapters">
+  {chapters.map((chapter) => (
+    <a href={`#${chapter.id}`} data-chapter-link={chapter.id}>
+      <span>{chapter.name}</span>
+      <i aria-hidden="true"></i>
+    </a>
+  ))}
+</nav>

@@ -1,0 +1,81 @@
+---
+import AppWindow from './AppWindow.astro';
+import Icon from './Icon.astro';
+
+const columns = [
+  {
+    name: 'Ads', icon: 'campaign', cards: [
+      { image: 'scene', title: 'Slower mornings start here.', note: 'Square, 1080', state: 'Ready' },
+      { title: 'Nobody ever wished Saturday went faster.', note: 'Headline option', state: 'Draft' },
+    ],
+  },
+  {
+    name: 'Social', icon: 'heart', cards: [
+      { image: 'candle', title: 'A candle that smells like nothing urgent.', note: 'Post, Monday', state: 'Ready' },
+      { image: 'throw', title: 'What we keep on the sofa.', note: 'Carousel, 5 slides', state: 'Draft' },
+    ],
+  },
+  {
+    name: 'Email', icon: 'mail', cards: [
+      { image: 'scene-tall', title: 'Put the kettle on. We made you something.', note: 'Launch email', state: 'In review' },
+    ],
+  },
+  {
+    name: 'Search', icon: 'search', cards: [
+      { title: 'How to have a slower morning', note: 'Outline, 6 sections', state: 'Draft' },
+      { image: 'mug', title: 'The case for a heavier mug', note: 'Journal article', state: 'Idea' },
+    ],
+  },
+] as const;
+const approvals = [
+  { name: 'Launch email', state: 'Waiting for you' },
+  { name: 'Ad set', state: 'Waiting for you' },
+  { name: 'Monday post', state: 'Waiting for you' },
+];
+---
+
+<AppWindow active="Campaigns" crumb="Overview" action="New draft">
+  <div class="ws">
+    <section class="ws-board">
+      <div class="ws-head">
+        <div><small>Campaign</small><h4>The weekend edit</h4></div>
+        <div class="app-tabs"><span class="is-on">Board</span><span>Plan</span><span>Calendar</span></div>
+      </div>
+      <div class="ws-columns" data-region="board">
+        {columns.map((column) => (
+          <div class="ws-column">
+            <div class="ws-column-head"><Icon name={column.icon} size={14} />{column.name}<em>{column.cards.length}</em><Icon name="plus" size={13} /></div>
+            {column.cards.map((card) => (
+              <article class="ws-card">
+                {'image' in card && <img src={`/images/products/${card.image}.avif`} alt="" loading="lazy" />}
+                <strong>{card.title}</strong>
+                <footer><small>{card.note}</small><span class="app-state" data-state={card.state}>{card.state}</span></footer>
+              </article>
+            ))}
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <aside class="ws-side">
+      <div class="app-panel">
+        <small>The idea</small>
+        <p class="ws-idea">Slower mornings.</p>
+        <p class="app-muted">A small collection for the hours nobody schedules.</p>
+      </div>
+      <div class="app-panel">
+        <small>Written for</small>
+        <div class="app-chips"><span>Weekend homebodies</span><span>Thoughtful gifters</span></div>
+        <small class="ws-gap">Voice</small>
+        <div class="app-chips"><span>Warm</span><span>Quiet</span><span>Dry humour</span></div>
+      </div>
+      <div class="app-panel" data-region="approvals">
+        <small>Needs your approval</small>
+        {approvals.map((item) => (
+          <div class="ws-approval"><Icon name="clock" size={14} /><span>{item.name}</span><em>{item.state}</em></div>
+        ))}
+        <p class="ws-lock"><Icon name="check" size={14} />Nothing goes live without you.</p>
+      </div>
+    </aside>
+  </div>
+</AppWindow>

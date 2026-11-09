@@ -1,0 +1,27 @@
+---
+import ReviewScreen from '../app/ReviewScreen.astro';
+import Frame from '../Frame.astro';
+import SectionIntro from '../SectionIntro.astro';
+import Spotlight from '../Spotlight.astro';
+import './Review.css';
+
+---
+
+<section class="review paper-field" id="review" aria-labelledby="review-title">
+  <SectionIntro
+    id="review-title"
+    eyebrow="05. Review"
+    title="The last word is always yours."
+    muted="Go on, try it."
+    lede="Every draft stops here. Read it, correct it, approve it or leave it where it is. This example runs in your browser and sends nothing."
+  />
+
+  <div class="page-wrap" data-reveal>
+    <Frame class="review-frame" backdrop="paper-forms" caption="Illustrative">
+      <Spotlight region="main" mobileRegion="decision">
+        <ReviewScreen />
+      </Spotlight>
+    </Frame>
+  </div>
+  <div class="review-end" aria-hidden="true"></div>
+</section>

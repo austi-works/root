@@ -1,0 +1,37 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import './Frame.css';
+
+interface Props extends HTMLAttributes<'figure'> {
+  backdrop: string;
+  /** Describes the illustration as one image. Omit when the frame holds real controls. */
+  alt?: string;
+  caption?: string;
+  dim?: boolean;
+  eager?: boolean;
+}
+
+const { backdrop, alt, caption, dim = false, eager = false, class: className, ...rest } = Astro.props;
+const illustrated = Boolean(alt);
+---
+
+<figure
+  class:list={['frame', { 'frame--dim': dim }, className]}
+  data-frame
+  role={illustrated ? 'img' : undefined}
+  aria-label={alt}
+  {...rest}
+>
+  <div class="frame-media" data-frame-media>
+    <img
+      src={`/images/backdrops/${backdrop}.avif`}
+      alt=""
+      width="1800"
+      height="1200"
+      loading={eager ? 'eager' : 'lazy'}
+      decoding="async"
+    />
+  </div>
+  <div class="frame-stage"><slot /></div>
+  {caption && <figcaption class="frame-caption">{caption}</figcaption>}
+</figure>

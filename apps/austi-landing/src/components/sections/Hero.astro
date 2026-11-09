@@ -1,0 +1,60 @@
+---
+import { heroContent } from '../../lib/landing-content';
+import WorkspaceScreen from '../app/WorkspaceScreen.astro';
+import Frame from '../Frame.astro';
+import IntegrationMarquee from '../IntegrationMarquee.astro';
+import { LiveCounter } from '../LiveCounter';
+import ProofPill from '../ProofPill.astro';
+import ShaderButton from '../ShaderButton.astro';
+import Spotlight from '../Spotlight.astro';
+import './Hero.css';
+
+interface Props {
+  pilotUrl: string;
+}
+
+const { pilotUrl } = Astro.props;
+---
+
+<section class="hero" id="top" aria-label={`${heroContent.product} introduction`}>
+  <div class="hero-track" data-hero>
+  <div class="hero-stage" data-hero-stage>
+    <div class="hero-intro" data-hero-intro>
+      <div class="hero-lead">
+        <ProofPill {...heroContent.proof} />
+        <p class="eyebrow" data-reveal>In development. Early access is open.</p>
+        <h1 class="hero-heading" data-reveal style="--reveal-delay: 80ms">{heroContent.heading}</h1>
+      </div>
+      <div class="hero-side">
+        <p class="lede hero-description" data-reveal style="--reveal-delay: 160ms">
+          {heroContent.paragraph} <strong>{heroContent.paragraphMuted}</strong>
+        </p>
+        <div data-reveal style="--reveal-delay: 240ms">
+          <ShaderButton href={pilotUrl} label={heroContent.cta} priority />
+        </div>
+      </div>
+    </div>
+
+    <Frame
+      class="hero-frame"
+      backdrop="ripple-hero"
+      eager
+      data-hero-frame
+      alt="Illustration of the Austi workspace showing a campaign for a fictional brand, with ads, social posts, an email and a search article in progress."
+    >
+      <Spotlight class="hero-mock" still mobileRegion="board" data-hero-mock data-hero-spot>
+        <WorkspaceScreen />
+      </Spotlight>
+      <span class="float-tag hero-tag hero-tag--c" data-hero-tag>Nothing goes live without you</span>
+    </Frame>
+    <div class="hero-dim" data-hero-dim aria-hidden="true"></div>
+  </div>
+  </div>
+
+  <div class="hero-strip page-wrap">
+    <IntegrationMarquee integrations={heroContent.integrations} label={heroContent.integrationsLabel} />
+    <div class="hero-counter">
+      <LiveCounter client:load endpoint={heroContent.metric.endpoint} label={heroContent.metric.label} />
+    </div>
+  </div>
+</section>

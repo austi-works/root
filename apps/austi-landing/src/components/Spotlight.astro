@@ -1,0 +1,29 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import './Spotlight.css';
+
+interface Props extends HTMLAttributes<'div'> {
+  /** The `data-region` to frame and light. Omit to show the whole interface. */
+  region?: string;
+  /** A tighter region for narrow screens, where a whole panel would be unreadable. */
+  mobileRegion?: string;
+  /** Keep the whole interface in view and only move the light. */
+  still?: boolean;
+}
+
+const { region, mobileRegion, still = false, class: className, ...rest } = Astro.props;
+---
+
+<div
+  class:list={['spot', className]}
+  data-spot
+  data-spot-region={region}
+  data-spot-mobile={mobileRegion}
+  data-spot-still={still ? '' : undefined}
+  {...rest}
+>
+  <div class="spot-canvas" data-spot-canvas>
+    <slot />
+    <i class="spot-hole" data-spot-hole aria-hidden="true"></i>
+  </div>
+</div>

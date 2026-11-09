@@ -1,0 +1,90 @@
+---
+import AppWindow from './AppWindow.astro';
+import Icon from './Icon.astro';
+
+const outline = ['Why the first hour matters', 'A routine that survives Sunday', 'What to keep within reach', 'The case for a heavier mug'];
+const questions = ['how to slow down in the morning', 'best morning routine for weekends', 'gifts for someone who likes staying in'];
+const shelf = ['throw', 'mug', 'candle'];
+---
+
+<AppWindow active="Drafts" crumb="Drafts" action="Ask for a draft">
+  <div class="drafts">
+    <section class="app-card" data-region="ads">
+      <header><Icon name="campaign" size={15} /><h5>Ad set</h5><small>3 formats</small><span class="app-state" data-state="Ready">Ready</span></header>
+      <div class="ads-row">
+        <article class="ad ad--square">
+          <img src="/images/products/scene.avif" alt="" loading="lazy" />
+          <p>Slower mornings<br />start here.</p>
+          <span>Shop the edit</span>
+        </article>
+        <article class="ad ad--story">
+          <img src="/images/products/scene-tall.avif" alt="" loading="lazy" />
+          <p>Nobody ever wished Saturday went faster.</p>
+          <span>The weekend edit</span>
+        </article>
+        <article class="ad ad--note">
+          <small>Creative brief</small>
+          <strong>Natural window light. One object. Room to breathe.</strong>
+          <small>Headlines</small>
+          <ul><li>Slower mornings start here.</li><li>In no hurry since Saturday.</li><li>The weekend, on purpose.</li></ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="app-card" data-region="social">
+      <header><Icon name="heart" size={15} /><h5>Social</h5><small>Post 2 of 6</small><span class="app-state" data-state="Draft">Draft</span></header>
+      <div class="social-row">
+        <article class="post">
+          <div class="post-head"><span class="app-avatar">SS</span><strong>sundaysupply</strong><Icon name="more" size={16} /></div>
+          <img src="/images/products/candle.avif" alt="" loading="lazy" />
+          <div class="post-tools"><Icon name="heart" size={17} /><Icon name="comment" size={17} /><Icon name="send" size={17} /><Icon name="bookmark" size={17} /></div>
+          <p><b>sundaysupply</b> A candle that smells like nothing urgent.</p>
+        </article>
+        <div class="social-queue">
+          <small>Coming up</small>
+          {[['Mon', 'throw', 'What we keep on the sofa.'], ['Wed', 'mug', 'Heavy on purpose.'], ['Sat', 'scene', 'Saturday, unscheduled.']].map(([day, image, line]) => (
+            <div><img src={`/images/products/${image}.avif`} alt="" loading="lazy" /><span><small>{day}</small>{line}</span></div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="app-card" data-region="email">
+      <header><Icon name="mail" size={15} /><h5>Launch email</h5><span class="app-state" data-state="In review">In review</span></header>
+      <div class="email">
+        <div class="email-meta">
+          <span class="app-avatar">SS</span>
+          <div><strong>Put the kettle on. We made you something.</strong><small>Sunday Supply &lt;hello@sundaysupply.example&gt;</small></div>
+        </div>
+        <div class="email-body">
+          <b class="brand-serif">Sunday Supply</b>
+          <img src="/images/products/scene.avif" alt="" loading="lazy" />
+          <h6 class="brand-serif">The weekend edit</h6>
+          <p>A small collection for the slow hours: a linen throw, a good mug and a candle that smells like nothing urgent.</p>
+          <div class="email-shelf">{shelf.map((image) => <img src={`/images/products/${image}.avif`} alt="" loading="lazy" />)}</div>
+          <span>Shop the edit</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="app-card" data-region="search">
+      <header><Icon name="search" size={15} /><h5>Search article</h5><small>Outline</small><span class="app-state" data-state="Draft">Draft</span></header>
+      <div class="search-pane">
+        <div class="search-doc">
+          <div class="search-tools"><Icon name="bold" size={14} /><Icon name="italic" size={14} /><Icon name="list" size={14} /><Icon name="link" size={14} /></div>
+          <h6 class="brand-serif">How to have a slower morning</h6>
+          <ol>{outline.map((heading) => <li>{heading}</li>)}</ol>
+          <div class="serp">
+            <small>sundaysupply.example › journal</small>
+            <b>How to Have a Slower Morning | Sunday Supply</b>
+            <p>A slow morning is mostly a matter of deciding the night before. Here is what we keep within reach.</p>
+          </div>
+        </div>
+        <aside>
+          <small>Customers are asking</small>
+          {questions.map((question) => <span><Icon name="search" size={13} />{question}</span>)}
+        </aside>
+      </div>
+    </section>
+  </div>
+</AppWindow>

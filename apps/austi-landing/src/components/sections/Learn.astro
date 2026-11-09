@@ -1,0 +1,46 @@
+---
+import { learnSteps } from '../../lib/landing-content';
+import BrandScreen from '../app/BrandScreen.astro';
+import Frame from '../Frame.astro';
+import SectionIntro from '../SectionIntro.astro';
+import Spotlight from '../Spotlight.astro';
+import './Split.css';
+import './Learn.css';
+
+const regions = ['site', 'products', 'audience', 'voice'];
+---
+
+<section class="learn dark-field" id="learn" data-steps aria-labelledby="learn-title">
+  <SectionIntro
+    id="learn-title"
+    eyebrow="01. Learn"
+    title="It starts with what makes you, you."
+    muted="Share it once."
+    lede="A brand is more than a logo and a hex code. Austi is being built to hold on to everything a good colleague would remember."
+  />
+
+  <div class="split page-wrap">
+    <div class="split-flow">
+      {learnSteps.map((step, index) => (
+        <article class="split-step learn-step" data-step data-region={regions[index]}>
+          <span class="split-number">{String(index + 1).padStart(2, '0')}. {step.name}</span>
+          <h3>{step.title}</h3>
+          <p>{step.copy}</p>
+        </article>
+      ))}
+    </div>
+
+    <div class="split-float">
+      <Frame
+        class="learn-frame"
+        backdrop="ripple-drift"
+        alt="Illustration of Austi collecting a fictional brand's website, products, audience and voice."
+        caption="Illustrative"
+      >
+        <Spotlight region="site" data-spot-follow>
+          <BrandScreen />
+        </Spotlight>
+      </Frame>
+    </div>
+  </div>
+</section>

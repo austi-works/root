@@ -1,0 +1,57 @@
+/* Compact panels for real form controls, and labels that float over a frame. */
+.mock {
+  position: relative;
+  width: min(100%, var(--mock-width, 42rem));
+  overflow: hidden;
+  border: 1px solid var(--line-window);
+  border-radius: var(--radius-window);
+  background: var(--color-window);
+  box-shadow: var(--shadow-window);
+  color: var(--color-text);
+  font-size: var(--font-size-xs);
+  line-height: 1.4;
+  text-align: left;
+}
+
+.mock-bar {
+  display: flex;
+  padding: 0.875rem 1.125rem;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line-window);
+  color: var(--color-window-muted);
+  font-size: 0.75rem;
+  gap: var(--size-md);
+}
+
+.mock-brand { display: flex; align-items: center; color: var(--color-text); gap: var(--size-xs); }
+.mock-body { display: grid; padding: 1.125rem; gap: var(--size-sm); }
+.mock-label { display: block; color: var(--color-window-muted); font-size: 0.75rem; }
+
+.mock-title {
+  display: block;
+  font-size: clamp(1.15rem, 1.7vw, 1.6rem);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: -0.025em;
+  line-height: 1.18;
+}
+
+.float-tag {
+  position: absolute;
+  z-index: 6;
+  display: inline-flex;
+  padding: 0.55rem 0.8rem;
+  align-items: center;
+  border: 1px solid var(--line-window);
+  border-radius: 0.625rem;
+  background: var(--color-window);
+  box-shadow: 0 1rem 2.5rem color-mix(in srgb, var(--color-black) 36%, transparent);
+  color: var(--color-text);
+  font-size: 0.8125rem;
+  gap: var(--size-xs);
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .float-tag.mock-hide-sm { display: none; }
+}

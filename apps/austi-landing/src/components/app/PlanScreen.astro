@@ -1,0 +1,91 @@
+---
+import { planSteps } from '../../lib/landing-content';
+import AppWindow from './AppWindow.astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  /** Marks the brief rows so a scrolling step list can drive them. Use on one instance per group. */
+  progress?: boolean;
+}
+
+const { progress = false } = Astro.props;
+const rejected = ['Weekends, upgraded', 'Your new ritual'];
+const angles = [
+  { image: 'mug', name: 'The ritual', line: 'What the first hour of a Saturday could be.', on: true },
+  { image: 'throw', name: 'The material', line: 'Linen that gets better the more you ignore it.', on: true },
+  { image: 'candle', name: 'The gift', line: 'For the person who already has everything.', on: false },
+];
+const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const lanes = [
+  { name: 'Ads', items: [{ at: 4, span: 3, label: 'Ad set runs when you say' }] },
+  { name: 'Social', items: [{ at: 1, span: 1, label: 'Teaser' }, { at: 3, span: 1, label: 'Carousel' }, { at: 6, span: 1, label: 'Behind it' }] },
+  { name: 'Email', items: [{ at: 3, span: 1, label: 'Launch' }, { at: 7, span: 1, label: 'Reminder' }] },
+  { name: 'Search', items: [{ at: 2, span: 3, label: 'How to have a slower morning' }] },
+];
+---
+
+<AppWindow active="Campaigns" crumb="Plan" action="Build drafts">
+  <div class="plan-app">
+    <section class="app-card plan-brief-card" data-region="brief">
+      <header><Icon name="drafts" size={15} /><h5>Campaign brief</h5></header>
+      <ol>
+        {planSteps.map((step) => (
+          <li data-progress-item={progress ? '' : undefined} data-state={progress ? 'next' : 'done'}>
+            <i></i><small>{step.name}</small><strong>{step.value}</strong>
+          </li>
+        ))}
+      </ol>
+      <div class="plan-brief-note"><Icon name="sparkle" size={14} />Everything here shapes every draft.</div>
+    </section>
+
+    <section class="app-card plan-idea-card" data-region="idea">
+      <header><Icon name="sparkle" size={15} /><h5>The idea</h5><span class="app-state" data-state="Ready">Chosen</span></header>
+      <p class="plan-big">Slower mornings.</p>
+      <p class="app-muted">Everything in the collection exists for the hours before the day starts asking for things.</p>
+      <div class="plan-rejected">{rejected.map((idea) => <s>{idea}</s>)}</div>
+    </section>
+
+    <section class="app-card plan-offer-card" data-region="offer">
+      <header><Icon name="campaign" size={15} /><h5>The offer</h5></header>
+      <div class="plan-offer">
+        <img src="/images/products/scene-tall.avif" alt="" loading="lazy" />
+        <div>
+          <small>Promoting</small>
+          <strong>The new weekend collection</strong>
+          <small class="plan-gap">Asking people to</small>
+          <span class="app-button app-button--primary">Shop the edit</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="app-card plan-angles-card" data-region="angles">
+      <header><Icon name="list" size={15} /><h5>Angles</h5><small>2 of 3 kept</small></header>
+      <div class="plan-angles-row">
+        {angles.map((angle) => (
+          <article class:list={{ 'is-off': !angle.on }}>
+            <img src={`/images/products/${angle.image}.avif`} alt="" loading="lazy" />
+            <span class="plan-tick">{angle.on && <Icon name="check" size={12} />}</span>
+            <strong>{angle.name}</strong>
+            <small>{angle.line}</small>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="app-card plan-calendar-card" data-region="calendar">
+      <header><Icon name="calendar" size={15} /><h5>The week</h5></header>
+      <div class="plan-calendar">
+        <span></span>
+        {days.map((day) => <small>{day}</small>)}
+        {lanes.map((lane, row) => (
+          <>
+            <b style={`grid-row: ${row + 2}`}>{lane.name}</b>
+            {lane.items.map((item) => (
+              <em style={`grid-row: ${row + 2}; grid-column: ${item.at + 1} / span ${item.span}`}>{item.label}</em>
+            ))}
+          </>
+        ))}
+      </div>
+    </section>
+  </div>
+</AppWindow>

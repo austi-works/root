@@ -1,0 +1,93 @@
+---
+import AppWindow from './AppWindow.astro';
+import Icon from './Icon.astro';
+
+const pages = ['Home', 'Shop all', 'Our story', 'Journal', 'Care guide'];
+const facts = [
+  { label: 'Sells', value: 'Slow-living homewares' },
+  { label: 'Keeps saying', value: '“made for the slow hours”' },
+  { label: 'Ships', value: 'Small batches, seasonal' },
+];
+const products = [
+  { image: 'throw', name: 'Linen throw', detail: 'Stonewashed, Lithuanian linen', price: '$148', role: 'Hero' },
+  { image: 'mug', name: 'Stoneware mug', detail: 'Hand-dipped, 340 ml', price: '$36', role: 'Bestseller' },
+  { image: 'candle', name: 'Morning candle', detail: 'Fig leaf and cedar', price: '$42', role: 'New' },
+];
+const people = [
+  { initials: 'WH', name: 'Weekend homebodies', wants: 'Want their Saturday back', says: '“I just want one slow morning.”' },
+  { initials: 'TG', name: 'Thoughtful gifters', wants: 'Want something that lasts', says: '“She already has everything.”' },
+];
+const tones = [
+  { low: 'Formal', high: 'Warm', value: 82 },
+  { low: 'Loud', high: 'Quiet', value: 70 },
+  { low: 'Serious', high: 'Playful', value: 46 },
+];
+const say = ['Slow hours', 'Made to last', 'Put the kettle on'];
+const never = ['Elevate', 'Must-have', 'Game-changing'];
+---
+
+<AppWindow active="Brand" crumb="Brand context" action="Add source">
+  <div class="brand">
+    <section class="app-card brand-site" data-region="site">
+      <header><Icon name="globe" size={15} /><h5>Website</h5><span class="app-state" data-state="Ready">Read</span></header>
+      <div class="brand-browser">
+        <div class="brand-url"><i></i><i></i><i></i><span>sundaysupply.example</span></div>
+        <div class="brand-page">
+          <div class="brand-page-nav"><b>Sunday Supply</b><span>Shop</span><span>Story</span><span>Journal</span></div>
+          <div class="brand-page-hero">
+            <img src="/images/products/scene.avif" alt="" loading="lazy" />
+            <p>Made for<br />the slow hours.</p>
+          </div>
+        </div>
+      </div>
+      <div class="brand-read">
+        <ul>{pages.map((page) => <li><Icon name="check" size={13} />{page}</li>)}</ul>
+        <dl>{facts.map((fact) => <div><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}</dl>
+      </div>
+    </section>
+
+    <section class="app-card" data-region="products">
+      <header><Icon name="library" size={15} /><h5>Products</h5><small>12 items</small><Icon name="plus" size={14} /></header>
+      <div class="brand-table">
+        {products.map((product) => (
+          <div class="brand-product">
+            <img src={`/images/products/${product.image}.avif`} alt="" loading="lazy" />
+            <span><strong>{product.name}</strong><small>{product.detail}</small></span>
+            <em>{product.price}</em>
+            <span class="app-state" data-state="Ready">{product.role}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="app-card" data-region="audience">
+      <header><Icon name="comment" size={15} /><h5>Audience</h5><Icon name="plus" size={14} /></header>
+      <div class="brand-people">
+        {people.map((person) => (
+          <article>
+            <span class="app-avatar app-avatar--large">{person.initials}</span>
+            <div><strong>{person.name}</strong><small>{person.wants}</small><p>{person.says}</p></div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="app-card" data-region="voice">
+      <header><Icon name="sparkle" size={15} /><h5>Voice</h5><small>From 14 examples</small></header>
+      <div class="brand-voice">
+        <div class="brand-tones">
+          {tones.map((tone) => (
+            <div>
+              <span><small>{tone.low}</small><small>{tone.high}</small></span>
+              <i><b style={`left: ${tone.value}%`}></b></i>
+            </div>
+          ))}
+        </div>
+        <div class="brand-words">
+          <div><small>We say</small>{say.map((word) => <span>{word}</span>)}</div>
+          <div class="is-never"><small>We never say</small>{never.map((word) => <span>{word}</span>)}</div>
+        </div>
+      </div>
+    </section>
+  </div>
+</AppWindow>

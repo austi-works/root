@@ -14,9 +14,8 @@ export const halftoneFragment = `
   const float AXIAL_TILT = 0.41;
   const float SPIN = 0.2;
   const float CLOUD_DRIFT = 0.035;
-  const vec3 PAPER = vec3(1.0, 0.97, 0.9);
-  const vec3 CORAL = vec3(1.0, 0.31, 0.26);
-  const vec3 SIGNAL = vec3(0.87, 1.0, 0.34);
+  const vec3 PAPER = vec3(0.96, 0.96, 0.97);
+  const vec3 SHADE = vec3(0.62, 0.62, 0.65);
 
   mat2 rotation(float a) {
     float c = cos(a);
@@ -98,7 +97,7 @@ export const halftoneFragment = `
     float mark = (1.0 - smoothstep(radius - edge, radius + edge, length(within)))
       * smoothstep(0.0, 0.02, value) * limb;
     float terminator = smoothstep(0.3, 0.02, lit) * smoothstep(0.0, 0.05, lit);
-    vec3 ink = mix(PAPER, mix(CORAL, SIGNAL, 0.5 + 0.5 * centre.y), terminator);
+    vec3 ink = mix(PAPER, SHADE, terminator);
     gl_FragColor = vec4(1.0 - exp(-ink * mark * 2.0), 1.0);
   }
 `;

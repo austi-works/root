@@ -1,77 +1,102 @@
-const tabGroups = document.querySelectorAll<HTMLElement>('[data-tab-group]');
+const setPressed = (buttons: HTMLElement[], active: HTMLElement) =>
+  buttons.forEach((button) => button.setAttribute('aria-pressed', String(button === active)));
 
-tabGroups.forEach((group) => {
-  const tabs = [...group.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
-  const panels = [...group.querySelectorAll<HTMLElement>('[role="tabpanel"]')];
-  const progressSteps = [...group.querySelectorAll<HTMLElement>('[data-progress-phase]')];
+const compare = document.querySelector<HTMLElement>('[data-compare]');
 
-  const activateTab = (nextIndex: number, moveFocus = false) => {
-    const safeIndex = (nextIndex + tabs.length) % tabs.length;
-    const activeTab = tabs[safeIndex];
-    if (!activeTab) return;
+if (compare) {
+  const input = compare.querySelector<HTMLInputElement>('[data-compare-input]');
+  const tabs = [...document.querySelectorAll<HTMLElement>('[data-voice-tab]')];
+  const samples = [...compare.querySelectorAll<HTMLElement>('[data-voice-sample]')];
 
-    group.dataset.activeTab = String(safeIndex);
+  input?.addEventListener('input', () => compare.style.setProperty('--split', `${input.value}%`));
 
-    tabs.forEach((tab, index) => {
-      const selected = index === safeIndex;
-      tab.setAttribute('aria-selected', String(selected));
-      tab.tabIndex = selected ? 0 : -1;
+  tabs.forEach((tab) => tab.addEventListener('click', () => {
+    setPressed(tabs, tab);
+    samples.forEach((sample) => {
+      sample.hidden = sample.dataset.voiceSample !== tab.dataset.voiceTab;
     });
+  }));
+}
 
-    panels.forEach((panel, index) => {
-      panel.hidden = index !== safeIndex;
-    });
+const review = document.querySelector<HTMLElement>('[data-review]');
 
-    progressSteps.forEach((step) => {
-      const phase = Number(step.dataset.progressPhase ?? 0);
-      step.dataset.progressState = phase < safeIndex ? 'done' : phase === safeIndex ? 'active' : 'next';
-    });
-
-    if (moveFocus) activeTab.focus();
+if (review) {
+  const actions = [...review.querySelectorAll<HTMLButtonElement>('[data-review-action]')];
+  const reset = review.querySelector<HTMLButtonElement>('[data-review-reset]');
+  const result = review.querySelector<HTMLElement>('[data-review-result]');
+  const status = review.querySelector<HTMLElement>('[data-review-status]');
+  const outcomes: Record<string, { status: string; result: string }> = {
+    approve: { status: 'Approved', result: 'Approved by you. It is ready to take to your channel.' },
+    edit: { status: 'In revision', result: 'Your note goes back with the draft for another pass.' },
+    hold: { status: 'Held', result: 'On hold. Nothing happens until you come back to it.' },
   };
-
-  tabs.forEach((tab, index) => {
-    tab.addEventListener('click', () => activateTab(index));
-    tab.addEventListener('keydown', (event) => {
-      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
-      event.preventDefault();
-      if (event.key === 'Home') activateTab(0, true);
-      if (event.key === 'End') activateTab(tabs.length - 1, true);
-      if (event.key === 'ArrowLeft') activateTab(index - 1, true);
-      if (event.key === 'ArrowRight') activateTab(index + 1, true);
-    });
-  });
-
-  const selectedIndex = tabs.findIndex((tab) => tab.getAttribute('aria-selected') === 'true');
-  activateTab(selectedIndex >= 0 ? selectedIndex : 0);
-});
-
-const permissionDemo = document.querySelector<HTMLElement>('[data-permission-demo]');
-
-if (permissionDemo) {
-  const actions = [...permissionDemo.querySelectorAll<HTMLButtonElement>('[data-permission-action]')];
-  const reset = permissionDemo.querySelector<HTMLButtonElement>('[data-permission-reset]');
-  const result = permissionDemo.querySelector<HTMLElement>('[data-permission-result]');
-  const status = permissionDemo.querySelector<HTMLElement>('[data-permission-status]');
-
-  const resetPermission = () => {
-    permissionDemo.dataset.permissionState = 'pending';
-    actions.forEach((button) => (button.disabled = false));
-    if (reset) reset.hidden = true;
-    if (result) result.textContent = 'Waiting for a decision.';
-    if (status) status.textContent = 'Review';
-  };
+  const pending = result?.textContent ?? '';
 
   actions.forEach((button) => button.addEventListener('click', () => {
-    const approved = button.dataset.permissionAction === 'approve';
-    permissionDemo.dataset.permissionState = approved ? 'approved' : 'held';
+    const outcome = outcomes[button.dataset.reviewAction ?? ''];
+    if (!outcome) return;
+    review.dataset.reviewState = button.dataset.reviewAction;
     actions.forEach((action) => (action.disabled = true));
     if (reset) reset.hidden = false;
-    if (result) result.textContent = approved
-      ? 'Preferred plumber can be booked.'
-      : 'Returned to the maintenance coordinator.';
-    if (status) status.textContent = approved ? 'Approved' : 'Held';
+    if (result) result.textContent = outcome.result;
+    if (status) status.textContent = outcome.status;
   }));
 
-  reset?.addEventListener('click', resetPermission);
+  reset?.addEventListener('click', () => {
+    review.dataset.reviewState = 'pending';
+    actions.forEach((action) => (action.disabled = false));
+    reset.hidden = true;
+    if (result) result.textContent = pending;
+    if (status) status.textContent = 'Needs your review';
+    actions[0]?.focus();
+  });
 }
+
+const accessLink = document.querySelector<HTMLAnchorElement>('[data-access-link]');
+
+if (accessLink) {
+  const base = accessLink.href.split('&body=')[0];
+  const chips = [...document.querySelectorAll<HTMLButtonElement>('[data-access-channel]')];
+
+  const compose = () => {
+    const picked = chips
+      .filter((chip) => chip.getAttribute('aria-pressed') === 'true')
+      .map((chip) => chip.dataset.accessChannel);
+    const body = [
+      'My website:',
+      '',
+      `Channels I use: ${picked.length > 0 ? picked.join(', ') : ''}`,
+      '',
+      'The marketing task that takes the most time each week:',
+      '',
+    ].join('\n');
+    accessLink.href = `${base}&body=${encodeURIComponent(body)}`;
+  };
+
+  chips.forEach((chip) => chip.addEventListener('click', () => {
+    chip.setAttribute('aria-pressed', String(chip.getAttribute('aria-pressed') !== 'true'));
+    compose();
+  }));
+  compose();
+}
+
+document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((button) => {
+  const label = button.querySelector<HTMLElement>('[data-copy-label]');
+  const original = label?.textContent ?? '';
+  let timer = 0;
+
+  button.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(button.dataset.copy ?? '');
+    } catch {
+      return;
+    }
+    button.dataset.copied = 'true';
+    if (label) label.textContent = 'Copied';
+    window.clearTimeout(timer);
+    timer = window.setTimeout(() => {
+      delete button.dataset.copied;
+      if (label) label.textContent = original;
+    }, 1800);
+  });
+});

@@ -1,0 +1,113 @@
+.voice-body { display: grid; gap: var(--size-lg); }
+
+.voice-tabs { display: flex; flex-wrap: wrap; gap: var(--size-xs); }
+
+.voice-tabs button {
+  min-height: 2.75rem;
+  padding: 0 var(--size-md);
+  border: 1px solid var(--line-paper);
+  border-radius: 99rem;
+  background: transparent;
+  color: var(--color-muted-paper);
+  cursor: pointer;
+  transition: background 220ms ease-out, color 220ms ease-out, scale 220ms var(--ease-out);
+}
+
+.voice-tabs button:hover { color: var(--color-ink); }
+.voice-tabs button:active { scale: 0.96; }
+.voice-tabs button[aria-pressed='true'] { background: var(--color-ink); color: var(--color-paper); }
+.voice-tabs button:focus-visible { outline-color: var(--color-ink); }
+
+.voice-frame { min-height: clamp(26rem, 62svh, 42rem); border-color: var(--line-paper); }
+.voice-frame .frame-stage { height: 100%; }
+
+.compare {
+  position: relative;
+  width: min(100%, 58rem);
+  overflow: hidden;
+  border: 1px solid var(--line-window);
+  border-radius: var(--radius-window);
+  box-shadow: var(--shadow-window);
+}
+
+.compare-sample { display: grid; }
+.compare-sample[hidden] { display: none; }
+
+.compare-side {
+  display: grid;
+  min-height: clamp(16rem, 34svh, 24rem);
+  padding: clamp(1.5rem, 4vw, 3.5rem);
+  align-content: space-between;
+  grid-area: 1 / 1;
+  gap: var(--size-xl);
+}
+
+.compare-side p {
+  margin: 0;
+  font-size: clamp(1.1rem, 2.5vw, 2.25rem);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+/* Each draft owns half the card, so both read in full at the resting position. */
+.compare-side--voice { padding-left: calc(50% + 1.5rem); background: var(--color-window); color: var(--color-text); }
+.compare-side--voice p { color: var(--color-white); }
+
+.compare-side--generic {
+  padding-right: calc(50% + 1.5rem);
+  background: var(--color-surface);
+  clip-path: inset(0 calc(100% - var(--split)) 0 0);
+  color: var(--color-muted-paper);
+}
+
+.compare-side--generic .mock-label { color: var(--color-muted-paper); }
+
+.compare-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--split);
+  width: 1px;
+  background: var(--color-window-muted);
+  pointer-events: none;
+}
+
+.compare-handle i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: 1px solid var(--color-ink);
+  background: var(--color-white);
+  transform: translate(-50%, -50%);
+  transition: scale 260ms var(--ease-out);
+}
+
+.compare-handle i::before {
+  position: absolute;
+  color: var(--color-ink);
+  content: '\2039\00a0\203A';
+  font-size: 1.2rem;
+  inset: 0;
+  line-height: 2.35rem;
+  text-align: center;
+}
+
+.compare:hover .compare-handle i,
+.compare:has(input:focus-visible) .compare-handle i { scale: 1.14; }
+
+.compare input {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: ew-resize;
+  inset: 0;
+  touch-action: pan-y;
+  opacity: 0;
+}

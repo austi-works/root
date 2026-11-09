@@ -1,0 +1,95 @@
+.frame {
+  --px: 0;
+  --py: 0;
+
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  margin: 0;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  overflow: hidden;
+  border: 1px solid var(--line-window);
+  border-radius: var(--radius-frame);
+  background: var(--color-frame-fallback);
+}
+
+.frame-media {
+  position: absolute;
+  z-index: -3;
+  inset: -9%;
+  will-change: transform;
+}
+
+.frame-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translate3d(calc(var(--px) * -16px), calc(var(--py) * -16px), 0);
+  transition: transform 1100ms var(--ease-out);
+}
+
+/* Film grain is one shared tile, which keeps every backdrop file small. */
+.frame::before {
+  position: absolute;
+  z-index: -1;
+  background: url('/images/backdrops/grain.png') 0 0 / 128px;
+  content: '';
+  inset: 0;
+  mix-blend-mode: overlay;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* Light that follows the pointer across the frame. */
+.frame::after {
+  position: absolute;
+  z-index: 2;
+  background: radial-gradient(
+    26rem circle at var(--gx, 50%) var(--gy, 50%),
+    color-mix(in srgb, var(--color-white) 13%, transparent),
+    transparent 70%
+  );
+  content: '';
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 500ms ease-out;
+}
+
+.frame:hover::after { opacity: 1; }
+
+.frame--dim .frame-media::after {
+  position: absolute;
+  background: color-mix(in srgb, var(--color-black) 46%, transparent);
+  content: '';
+  inset: 0;
+}
+
+.frame-stage {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  padding: clamp(1.25rem, 5vw, 4rem);
+  grid-template-columns: minmax(0, 1fr);
+  place-items: center;
+  transform: translate3d(calc(var(--px) * 9px), calc(var(--py) * 9px), 0);
+  transition: transform 900ms var(--ease-out);
+}
+
+.frame-caption {
+  position: absolute;
+  z-index: 3;
+  bottom: var(--size-sm);
+  left: var(--size-sm);
+  padding: 0.2rem 0.55rem;
+  border-radius: 0.3rem;
+  background: color-mix(in srgb, var(--color-black) 62%, transparent);
+  color: var(--color-white);
+  font-size: 0.75rem;
+}
+
+@media (hover: none) {
+  .frame::after { display: none; }
+}

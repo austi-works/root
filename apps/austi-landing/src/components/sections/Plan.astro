@@ -1,0 +1,56 @@
+---
+import { planSteps } from '../../lib/landing-content';
+import PlanScreen from '../app/PlanScreen.astro';
+import Frame from '../Frame.astro';
+import SectionIntro from '../SectionIntro.astro';
+import Spotlight from '../Spotlight.astro';
+import './Split.css';
+import './Plan.css';
+
+const backdrops = ['forms-dune', 'ripple-tide', 'dots-swell', 'forms-arc'];
+const regions = ['idea', 'offer', 'angles', 'calendar'];
+---
+
+<section class="plan dark-field" id="plan" data-steps aria-labelledby="plan-title">
+  <SectionIntro
+    id="plan-title"
+    eyebrow="02. Plan"
+    title="One idea, thought all the way through."
+    muted="Before anyone writes a headline."
+    lede="Scattered posts are what happens when nothing was decided first. The plan is where a campaign becomes one thing."
+  />
+
+  <div class="split split--reverse page-wrap">
+    <div class="split-float plan-float">
+      <Frame
+        class="plan-brief-frame"
+        backdrop="ripple-fold"
+        alt="Illustration of a campaign brief that fills in as the idea, offer, angles and plan are decided."
+        caption="Illustrative"
+      >
+        <Spotlight region="brief">
+          <PlanScreen progress />
+        </Spotlight>
+      </Frame>
+    </div>
+
+    <div class="split-flow plan-flow">
+      {planSteps.map((step, index) => (
+        <article class="split-step plan-step" data-step>
+          <Frame
+            class="plan-frame"
+            backdrop={backdrops[index]!}
+            alt={`Illustration of ${step.name.toLowerCase()} for a fictional campaign.`}
+          >
+            <Spotlight region={regions[index]}>
+              <PlanScreen />
+            </Spotlight>
+          </Frame>
+          <span class="split-number">{String(index + 1).padStart(2, '0')}. {step.name}</span>
+          <h3>{step.title}</h3>
+          <p>{step.copy}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

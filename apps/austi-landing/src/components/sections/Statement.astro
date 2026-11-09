@@ -1,0 +1,24 @@
+---
+import { formats, statement } from '../../lib/landing-content';
+import './Statement.css';
+
+const words = statement.split(' ');
+---
+
+<section class="statement" data-statement aria-label="Why Austi exists">
+  <div class="statement-stage">
+    <p class="statement-text">
+      {words.map((word) => <><span data-word>{word}</span>{' '}</>)}
+    </p>
+  </div>
+</section>
+
+<div class="formats" aria-label="What Austi is being built to draft">
+  <div class="formats-track" data-marquee>
+    {[0, 1].map((copy) => (
+      <ul aria-hidden={copy === 1 ? 'true' : undefined}>
+        {[...formats, ...formats].map((format) => <li>{format}</li>)}
+      </ul>
+    ))}
+  </div>
+</div>

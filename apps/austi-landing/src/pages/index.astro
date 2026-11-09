@@ -1,11 +1,22 @@
 ---
-import Closing from '../components/Closing.astro';
+import ChapterRail from '../components/ChapterRail.astro';
 import Faq from '../components/Faq.astro';
-import Hero from '../components/Hero.astro';
-import Mechanism from '../components/Mechanism.astro';
+import Access from '../components/sections/Access.astro';
+import Audience from '../components/sections/Audience.astro';
+import Closing from '../components/sections/Closing.astro';
+import Create from '../components/sections/Create.astro';
+import Hero from '../components/sections/Hero.astro';
+import Iris from '../components/sections/Iris.astro';
+import Learn from '../components/sections/Learn.astro';
+import Limits from '../components/sections/Limits.astro';
+import Plan from '../components/sections/Plan.astro';
+import Planet from '../components/sections/Planet.astro';
+import Review from '../components/sections/Review.astro';
+import Statement from '../components/sections/Statement.astro';
+import Voice from '../components/sections/Voice.astro';
+import Week from '../components/sections/Week.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
-import Trust from '../components/Trust.astro';
 import Layout from '../layouts/Layout.astro';
 import { faqItems } from '../lib/landing-content';
 
@@ -79,12 +90,32 @@ const structuredData = {
 
 <Layout {title} {description} {structuredData}>
   <SiteHeader {pilotUrl} />
+  <ChapterRail />
   <main id="main-content">
     <Hero {pilotUrl} />
-    <Mechanism />
-    <Trust />
+    <Statement />
+    <Learn />
+    <Plan />
+    <Create />
+    <Iris />
+    <div class="paper-curtain">
+      <div class="paper-run paper-field" data-paper-run>
+        <Voice />
+        <Review />
+      </div>
+      <Planet />
+    </div>
+    <Week />
+    <Limits />
+    <Audience />
+    <Access {pilotUrl} />
     <Faq />
     <Closing {pilotUrl} />
   </main>
   <SiteFooter />
 </Layout>
+
+<script>
+  import '../scripts/landing-interactions';
+  import '../scripts/landing-motion';
+</script>

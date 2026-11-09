@@ -1,0 +1,86 @@
+.week-list {
+  position: relative;
+  padding-bottom: var(--section-block-size);
+}
+
+.week-list ol { display: grid; margin: 0; padding: 0; list-style: none; }
+
+.week-rule {
+  position: absolute;
+  top: 0;
+  bottom: var(--section-block-size);
+  left: 50%;
+  width: 1px;
+  background: var(--line-dark);
+}
+
+.week-rule i {
+  display: block;
+  height: 100%;
+  background: var(--color-text);
+  transform-origin: top;
+}
+
+.week-item {
+  position: relative;
+  display: grid;
+  min-height: 62svh;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: start;
+  column-gap: clamp(3rem, 9vw, 9rem);
+}
+
+.week-dot {
+  position: absolute;
+  top: 0.8rem;
+  left: 50%;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: var(--color-text);
+  transform: translateX(-50%);
+  transition: background 400ms ease-out, box-shadow 500ms ease-out, scale 600ms var(--ease-out);
+}
+
+.motion .week-dot { background: var(--color-muted-paper); scale: 0.6; }
+
+.motion .week-item.is-on .week-dot {
+  background: var(--color-primary);
+  box-shadow: 0 0 0 0.45rem color-mix(in srgb, var(--color-primary) 16%, transparent);
+  scale: 1;
+}
+
+.week-day {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: var(--size-md);
+}
+
+.week-day strong {
+  font-size: var(--font-size-heading-sm);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+}
+
+.week-tag { color: var(--color-muted-dark); font-size: var(--font-size-xs); }
+
+.week-copy { max-width: 30rem; padding-top: 0.5rem; }
+
+.week-copy h3 {
+  margin: 0 0 var(--size-sm);
+  font-size: var(--font-size-title-sm);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+}
+
+.week-copy p { margin: 0; color: var(--color-muted-dark); font-size: var(--font-size-body-lg); line-height: 1.55; }
+
+@media (max-width: 760px) {
+  .week-rule { left: var(--page-gutter); }
+  .week-dot { left: 0; transform: translateX(-50%); }
+  .week-item { min-height: 48svh; padding-left: var(--size-xl); grid-template-columns: minmax(0, 1fr); row-gap: var(--size-sm); }
+  .week-day { justify-content: flex-start; }
+}

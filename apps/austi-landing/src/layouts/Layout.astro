@@ -32,11 +32,24 @@ const socialImageAlt = 'Austi — your AI marketing workspace for ads, social, e
     <meta name="theme-color" content="#0a0a0a" />
     <meta name="color-scheme" content="dark light" />
 
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        if (!matchMedia('(prefers-reduced-motion: no-preference)').matches) return;
+        root.classList.add('motion');
+        // Never leave content hidden if the motion script fails to load.
+        setTimeout(() => {
+          if (!root.dataset.motionReady) root.classList.remove('motion');
+        }, 4000);
+      })();
+    </script>
+
     <title>{title}</title>
     <link rel="canonical" href={canonical} />
     <link rel="sitemap" href="/sitemap.xml" />
     <link rel="icon" type="image/svg+xml" href="/austi-logo.svg" />
     <link rel="preload" href="/fonts/ClarityCity-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/ClarityCity-Medium.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/ClarityCity-Bold.woff2" as="font" type="font/woff2" crossorigin />
 
     <meta property="og:type" content="website" />

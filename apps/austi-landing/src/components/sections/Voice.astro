@@ -1,0 +1,50 @@
+---
+import { voiceSamples } from '../../lib/landing-content';
+import Frame from '../Frame.astro';
+import SectionIntro from '../SectionIntro.astro';
+import './Voice.css';
+---
+
+<section class="voice paper-field" id="voice" aria-labelledby="voice-title">
+  <SectionIntro
+    id="voice-title"
+    eyebrow="04. Voice"
+    title="You can tell when it was written by nobody."
+    muted="So can your customers."
+    lede="Drag across the draft. Same product, same campaign. One version could belong to any brand in the category."
+  />
+
+  <div class="page-wrap voice-body" data-reveal>
+    <div class="voice-tabs" role="group" aria-label="Example format">
+      {voiceSamples.map((sample, index) => (
+        <button type="button" data-voice-tab={sample.id} aria-pressed={index === 0 ? 'true' : 'false'}>{sample.name}</button>
+      ))}
+    </div>
+
+    <Frame class="voice-frame" backdrop="paper-ripple" caption="Illustrative">
+      <div class="compare" data-compare style="--split: 50%">
+        {voiceSamples.map((sample, index) => (
+          <div class="compare-sample" data-voice-sample={sample.id} hidden={index !== 0}>
+            <div class="compare-side compare-side--voice">
+              <span class="mock-label">In your voice</span>
+              <p>{sample.voice}</p>
+            </div>
+            <div class="compare-side compare-side--generic">
+              <span class="mock-label">Could be anyone</span>
+              <p>{sample.generic}</p>
+            </div>
+          </div>
+        ))}
+        <span class="compare-handle" aria-hidden="true"><i></i></span>
+        <input
+          type="range"
+          min="0"
+          max="100"
+          value="50"
+          data-compare-input
+          aria-label="Reveal the generic draft or the draft in your brand's voice"
+        />
+      </div>
+    </Frame>
+  </div>
+</section>

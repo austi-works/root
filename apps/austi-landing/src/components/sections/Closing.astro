@@ -1,0 +1,21 @@
+---
+import Frame from '../Frame.astro';
+import ShaderButton from '../ShaderButton.astro';
+import './Closing.css';
+
+interface Props {
+  pilotUrl: string;
+}
+
+const { pilotUrl } = Astro.props;
+---
+
+<section class="closing" id="pilot" data-closing aria-labelledby="closing-title">
+  <div class="closing-stage">
+    <Frame class="closing-frame" backdrop="forms-dune" dim data-closing-frame />
+    <div class="closing-copy" data-closing-copy>
+      <h2 id="closing-title">Make room for your next big idea.</h2>
+      <ShaderButton href={pilotUrl} label="Get early access" />
+    </div>
+  </div>
+</section>

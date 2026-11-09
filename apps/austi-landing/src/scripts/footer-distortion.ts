@@ -94,10 +94,11 @@ const createRenderer = (canvas: HTMLCanvasElement, host: HTMLElement) => {
   };
   const styles = getComputedStyle(host);
   for (const [uniform, token] of [
-    ['u_night', '--color-night'],
+    // Matches the footer, so the glow has no visible seam where it meets it.
+    ['u_night', '--color-black'],
     ['u_dusk', '--color-glow-dusk'],
-    ['u_accent', '--color-accent'],
-    ['u_signal', '--color-signal'],
+    ['u_accent', '--color-shader-mid'],
+    ['u_signal', '--color-shader-core'],
   ] as const) {
     const hex = styles.getPropertyValue(token).trim().replace('#', '');
     const rgb = hex.length === 3 ? [...hex].map((channel) => channel.repeat(2)).join('') : hex;
